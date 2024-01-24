@@ -66,5 +66,7 @@ public class guns : MonoBehaviour
         main.aimAssets.positionCount = 2;
         main.aimAssets.SetPosition(0, main.canExit.position);
         main.aimAssets.SetPosition(1, main.canExit.position + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward);
+
+        //Raycasthit;
     }
 }
