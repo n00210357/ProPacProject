@@ -353,7 +353,11 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/Scripts/doors.cs"
+"Assets/Scripts/enemy.cs"
 "Assets/Scripts/guns.cs"
+"Assets/Scripts/key.cs"
+"Assets/Scripts/levelCon.cs"
 "Assets/Scripts/player.cs"
 -langversion:9.0
 

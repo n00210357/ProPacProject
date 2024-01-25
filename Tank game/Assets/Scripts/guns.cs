@@ -5,9 +5,17 @@ using UnityEngine;
 
 public class guns : MonoBehaviour
 {
+    public BaseVar basic = new BaseVar();
     public AimVar aim = new AimVar();
     public MainCannon main = new MainCannon();
     public SecondaryCannon sec = new SecondaryCannon();
+
+    //holds the players base variables
+    [Serializable]
+    public class BaseVar
+    {
+        public GameObject keyBindings;
+    }
 
     [Serializable]
     public class AimVar
@@ -20,8 +28,12 @@ public class guns : MonoBehaviour
     [Serializable]
     public class MainCannon
     {
+        public float range;
         public Transform can;
         public Transform canExit;
+        public ParticleSystem fire;
+        public ParticleSystem explosion;
+
         public LineRenderer aimAssets;
     }
 
@@ -34,6 +46,7 @@ public class guns : MonoBehaviour
     void Start()
     {
         main.aimAssets = main.canExit.GetComponent<LineRenderer>();
+        main.aimAssets.positionCount = 2;
     }
 
     void Update()
@@ -62,11 +75,25 @@ public class guns : MonoBehaviour
     }
 
     void mainTurret()
-    {
-        main.aimAssets.positionCount = 2;
+    {       
         main.aimAssets.SetPosition(0, main.canExit.position);
-        main.aimAssets.SetPosition(1, main.canExit.position + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward + main.canExit.forward);
 
-        //Raycasthit;
+        RaycastHit hit;
+        if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, main.range))
+        {
+            main.aimAssets.SetPosition(1, hit.point);
+
+            if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().fire))
+            {
+                ParticleSystem firing = Instantiate(main.fire);
+                ParticleSystem blast = Instantiate(main.explosion);
+                firing.transform.position = main.canExit.position;
+                blast.transform.position = hit.point;
+                Destroy(firing, 0.5f);
+                Destroy(blast, 0.5f);
+            }
+        }
+
+        Debug.DrawRay(main.canExit.position, main.canExit.forward * main.range, Color.red);
     }
 }

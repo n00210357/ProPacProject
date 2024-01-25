@@ -51,7 +51,6 @@ public class player : MonoBehaviour
         public Transform steeringWheel;
     }
 
-    private float test;
     private Rigidbody tankRB;
     private Rigidbody carRB;
 
@@ -120,6 +119,7 @@ public class player : MonoBehaviour
         carRB.AddForce(transform.forward * car.moveInput, ForceMode.Acceleration);
         float newRotation = car.turnInput * car.turn * Time.deltaTime;
         transform.Rotate(0, newRotation, 0, Space.World);
+        car.steeringWheel.GetChild(0).rotation = transform.rotation;
 
         if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().jump))
         {

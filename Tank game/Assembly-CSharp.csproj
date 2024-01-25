@@ -53,8 +53,12 @@
     <UnityVersion>2021.3.13f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\player.cs" />
     <Compile Include="Assets\Scripts\guns.cs" />
+    <Compile Include="Assets\Scripts\key.cs" />
+    <Compile Include="Assets\Scripts\player.cs" />
+    <Compile Include="Assets\Scripts\enemy.cs" />
+    <Compile Include="Assets\Scripts\levelCon.cs" />
+    <Compile Include="Assets\Scripts\doors.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
