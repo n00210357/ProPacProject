@@ -15,13 +15,15 @@ public class enemy : MonoBehaviour
         public int enemyType = 0;
         public bool groEne = false;
         public bool flyEne = false;
-        public Transform level;
+        public GameObject level;
+        public GameObject player;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        basic.level = GameObject.FindGameObjectWithTag("Map");
+        basic.player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
