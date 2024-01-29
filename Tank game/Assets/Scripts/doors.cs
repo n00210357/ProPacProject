@@ -28,6 +28,7 @@ public class doors : MonoBehaviour
         }
     }
 
+    //open the door
     void gate()
     {
         if (open == true)
@@ -36,6 +37,7 @@ public class doors : MonoBehaviour
         }
     }
 
+    //requares the player to kill all enemies first
     void arena()
     {
         foreach (GameObject ene in level.GetComponent<levelCon>().spawnedEnemies)
@@ -52,11 +54,13 @@ public class doors : MonoBehaviour
         }
     }
 
+    //detect when player is at door
     private void OnTriggerEnter(Collider other)
     {
         open = true;
     }
 
+    //detect when player leaves door
     private void OnTriggerExit(Collider other)
     {
         open = false;

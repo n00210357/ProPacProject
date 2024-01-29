@@ -10,13 +10,14 @@ public class guns : MonoBehaviour
     public MainCannon main = new MainCannon();
     public SecondaryCannon sec = new SecondaryCannon();
 
-    //holds the players base variables
+    //holds the guns base variables
     [Serializable]
     public class BaseVar
     {
         public GameObject keyBindings;
     }
 
+     //holds the aiming variables
     [Serializable]
     public class AimVar
     {
@@ -25,6 +26,7 @@ public class guns : MonoBehaviour
         public float total;
     }
 
+    //holds the main cannon variables
     [Serializable]
     public class MainCannon
     {
@@ -37,6 +39,7 @@ public class guns : MonoBehaviour
         public LineRenderer aimAssets;
     }
 
+    //holds the side arms variables
     [Serializable]
     public class SecondaryCannon
     {
@@ -45,8 +48,13 @@ public class guns : MonoBehaviour
 
     void Start()
     {
+        //draws a line at what the tank is aiming at
         main.aimAssets = main.canExit.GetComponent<LineRenderer>();
         main.aimAssets.positionCount = 2;
+
+        // Hides the cursor
+        Cursor.visible = false; 
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
@@ -55,6 +63,7 @@ public class guns : MonoBehaviour
         mainTurret();
     }
 
+    //controls the rotation of the turret
     void camCon()
     {
         aim.yAxis += -Input.GetAxis("Mouse X") * aim.xSen * -1;
@@ -74,15 +83,18 @@ public class guns : MonoBehaviour
         main.can.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
     }
 
+    //allows the player to control the main cannon
     void mainTurret()
     {       
         main.aimAssets.SetPosition(0, main.canExit.position);
 
+        //aims the cannnon
         RaycastHit hit;
         if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, main.range))
         {
             main.aimAssets.SetPosition(1, hit.point);
 
+            //fires main cannon
             if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().fire))
             {
                 ParticleSystem firing = Instantiate(main.fire);
