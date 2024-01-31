@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scripts\key.cs" />
     <Compile Include="Assets\Scripts\levelCon.cs" />
     <Compile Include="Assets\Scripts\doors.cs" />
+    <Compile Include="Assets\Scripts\bullet.cs" />
     <Compile Include="Assets\Scripts\player.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -742,8 +743,14 @@
     <Reference Include="Unity.EditorCoroutines.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Services.Core.Analytics">
       <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.Shared.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>

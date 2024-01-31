@@ -14,6 +14,7 @@ public class player : MonoBehaviour
     [Serializable]
     public class BaseVar
     {
+        public int health;
         public bool vehicalType = false;
         public GameObject keyBindings;
     }
@@ -149,22 +150,22 @@ public class player : MonoBehaviour
                 if (Input.GetKey(basic.keyBindings.GetComponent<key>().backwards))
                 {
                     tankRB.AddForce(-transform.forward * dash.dash * 10, ForceMode.Impulse);
-                    carRB.AddForce(-transform.forward * dash.dash * 5, ForceMode.Impulse);
+                    carRB.AddForce(-transform.forward * dash.dash * 10, ForceMode.Impulse);
                 } 
                 else if (Input.GetKey(basic.keyBindings.GetComponent<key>().rightwards))
                 {
                     tankRB.AddForce(transform.right * dash.dash * 10, ForceMode.Impulse);
-                    carRB.AddForce(transform.right * dash.dash * 5, ForceMode.Impulse);
+                    carRB.AddForce(transform.right * dash.dash * 10, ForceMode.Impulse);
                 }
                 else if (Input.GetKey(basic.keyBindings.GetComponent<key>().leftwards))
                 {
                     tankRB.AddForce(-transform.right * dash.dash * 10, ForceMode.Impulse);
-                    carRB.AddForce(-transform.right * dash.dash * 5, ForceMode.Impulse);
+                    carRB.AddForce(-transform.right * dash.dash * 10, ForceMode.Impulse);
                 }
                 else
                 {
                     tankRB.AddForce(transform.forward * dash.dash * 10, ForceMode.Impulse);
-                    carRB.AddForce(transform.forward * dash.dash * 5, ForceMode.Impulse);
+                    carRB.AddForce(transform.forward * dash.dash * 10, ForceMode.Impulse);
                 }
             }
         }
@@ -179,6 +180,15 @@ public class player : MonoBehaviour
                 dash.dashAmount += 1;
                 dash.dashTimer = dash.dashDelay;
             }            
+        }
+    }
+    public void takeDamage(int dam)
+    {
+        basic.health -= dam;
+
+        if (basic.health <= 0)
+        {
+            Debug.Log("Dead");
         }
     }
 }

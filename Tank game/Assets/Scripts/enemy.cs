@@ -9,18 +9,22 @@ public class enemy : MonoBehaviour
     public BaseVar basic = new BaseVar();
     public ScanVar scan = new ScanVar();
     public CanVar cann = new CanVar();
+    public ProjectileVar proj = new ProjectileVar();
+    public targetVar target = new targetVar();
 
 
     //holds the enemies base variables
     [Serializable]
     public class BaseVar
     {
+        public int health;
         public int enemyType = 0;
         public int detect = 0;
         public bool groEne = false;
         public bool flyEne = false;
         public GameObject level;
         public GameObject player;
+        public LayerMask pla;
     }
 
     //holds the enemies scan variables
@@ -39,15 +43,34 @@ public class enemy : MonoBehaviour
         public float delay;
         public float lockOn;
         public Transform turret;
-        public Transform turEnd;
-        public GameObject bullet;
         public ParticleSystem fired;
-        public LineRenderer cannLine;
+    }
+
+    //holds the enemies base variables
+    [Serializable]
+    public class ProjectileVar
+    {
+        public float speed;
+        public float range;
+        public float lifeTime;
+        public int damage;
+        public GameObject bullet;
+        public ParticleSystem explode;
+    }
+
+    //holds the enemies base variables
+    [Serializable]
+    public class targetVar
+    {
+        public bool spotted = false;
+        public Transform tarEnd;
+        public LineRenderer line;
     }
 
     private int locat;
     private bool dest; 
     private Transform[] pat;
+    private ParticleSystem firing;
     public Vector3 plaPos;
     private NavMeshAgent agent;
 
@@ -61,6 +84,11 @@ public class enemy : MonoBehaviour
         //grabs the maps patrol points
         pat = basic.level.GetComponent<levelCon>().patrolPoint;
         agent = GetComponent<NavMeshAgent>();
+
+        if (basic.enemyType == 0)
+        {
+            target.line = target.tarEnd.GetComponentInChildren<LineRenderer>();
+        }
     }
 
     // Update is called once per frame
@@ -144,25 +172,68 @@ public class enemy : MonoBehaviour
 
             //checks if the cannnon is pointing directly at the player
             RaycastHit cannHit;
-            if (Physics.Raycast(cann.turEnd.position, cann.turEnd.forward, out cannHit, cann.range))
+            if (Physics.Raycast(target.tarEnd.position, target.tarEnd.forward, out cannHit, cann.range, basic.pla))
             {
                 if (cannHit.collider.transform == basic.player.transform)
                 {
                     //countdown until the cannon fires
                     cann.reload -= 1 * Time.deltaTime;
+                    target.spotted = true;
                 }
                 else
                 {
                     cann.reload = cann.delay;
+                    target.spotted = false;
                 }
+            }
+            else
+            {
+                target.spotted = false;
             }
 
             //fires the cannon
             if (cann.reload <= 0)
             {
-                Debug.Log("e");
+                firing = Instantiate(cann.fired);
+                firing.transform.position = target.tarEnd.position;
+                firBull();
+                Destroy(firing);
                 cann.reload = cann.delay;
             }
+
+            targeting(cann.reload, cann.delay);
+        }
+    }
+
+    void firBull()
+    {
+
+    }
+    void targeting(float tar, float max)
+    {
+        if (target.spotted == true)
+        {
+            float check = tar / max;
+            var grad = Color.Lerp(Color.green, Color.red, check);
+            target.line.positionCount = 2;
+            target.line.SetPosition(0, target.tarEnd.position);
+            target.line.SetPosition(1, basic.player.transform.position);
+            target.line.material.SetColor("_Color", grad);
+        }
+        else
+        {
+            target.line.positionCount = 0;
+            target.line.material.SetColor("_Color", Color.red);
+        }
+    }
+
+    public void takeDamage(int dam)
+    {
+        basic.health -= dam;
+
+        if (basic.health <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
