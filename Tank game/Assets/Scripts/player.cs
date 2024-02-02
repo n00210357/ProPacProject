@@ -71,7 +71,7 @@ public class player : MonoBehaviour
             car.steeringWheel.parent = transform;
 
             //enables car mode
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(saveData.keybindings.keys[6]))
             {
                 basic.vehicalType = true;
                 tankRB.isKinematic = true;
@@ -85,7 +85,7 @@ public class player : MonoBehaviour
             car.steeringWheel.parent = null;
 
             //enables tank mode
-            if (Input.GetKeyDown(KeyCode.F))
+            if (Input.GetKeyDown(saveData.keybindings.keys[6]))
             {
                 basic.vehicalType = false;
                 tankRB.isKinematic = false;
@@ -106,7 +106,7 @@ public class player : MonoBehaviour
         tank.movDir = new Vector3(tankDrive.x, -9.81f, tankDrive.z);
         
         //allows the player to junp
-        if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().jump))
+        if (Input.GetKeyDown(saveData.keybindings.keys[4]))
         {
             tankRB.AddForce(transform.up * dash.dash * 2, ForceMode.Impulse);
         }
@@ -130,7 +130,7 @@ public class player : MonoBehaviour
         car.steeringWheel.GetChild(0).rotation = transform.rotation;
 
         //allows the car mode to jump
-        if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().jump))
+        if (Input.GetKeyDown(saveData.keybindings.keys[4]))
         {
             carRB.AddForce(transform.up * dash.dash, ForceMode.Impulse);
         }
@@ -142,22 +142,22 @@ public class player : MonoBehaviour
         //checks if you can dash and which direction
         if (dash.dashAmount >= 1)
         {
-            if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().dash))
+            if (Input.GetKeyDown(saveData.keybindings.keys[3]))
             {
                 dash.dashAmount -= 1;
                 dash.dashTimer = dash.dashDelay;
 
-                if (Input.GetKey(basic.keyBindings.GetComponent<key>().backwards))
+                if (Input.GetKey(KeyCode.S))
                 {
                     tankRB.AddForce(-transform.forward * dash.dash * 10, ForceMode.Impulse);
                     carRB.AddForce(-transform.forward * dash.dash * 10, ForceMode.Impulse);
                 } 
-                else if (Input.GetKey(basic.keyBindings.GetComponent<key>().rightwards))
+                else if (Input.GetKey(KeyCode.D))
                 {
                     tankRB.AddForce(transform.right * dash.dash * 10, ForceMode.Impulse);
                     carRB.AddForce(transform.right * dash.dash * 10, ForceMode.Impulse);
                 }
-                else if (Input.GetKey(basic.keyBindings.GetComponent<key>().leftwards))
+                else if (Input.GetKey(KeyCode.A))
                 {
                     tankRB.AddForce(-transform.right * dash.dash * 10, ForceMode.Impulse);
                     carRB.AddForce(-transform.right * dash.dash * 10, ForceMode.Impulse);

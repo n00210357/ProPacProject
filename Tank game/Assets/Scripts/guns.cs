@@ -95,7 +95,7 @@ public class guns : MonoBehaviour
             main.aimAssets.SetPosition(1, hit.point);
 
             //fires main cannon
-            if (Input.GetKeyDown(basic.keyBindings.GetComponent<key>().fire))
+            if (Input.GetKeyDown(saveData.keybindings.keys[0]))
             {
                 ParticleSystem firing = Instantiate(main.fire);
                 ParticleSystem blast = Instantiate(main.explosion);
