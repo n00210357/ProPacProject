@@ -54,15 +54,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\sceneTran.cs" />
+    <Compile Include="Assets\Scripts\saveData.cs" />
     <Compile Include="Assets\Scripts\menu.cs" />
     <Compile Include="Assets\Scripts\guns.cs" />
     <Compile Include="Assets\Scripts\enemy.cs" />
+    <Compile Include="Assets\Scripts\buttonUI.cs" />
     <Compile Include="Assets\Scripts\levelCon.cs" />
     <Compile Include="Assets\Scripts\doors.cs" />
     <Compile Include="Assets\Scripts\bullet.cs" />
-    <Compile Include="Assets\Scripts\keybindings.cs" />
+    <Compile Include="Assets\Scripts\keyBindings.cs" />
     <Compile Include="Assets\Scripts\player.cs" />
-    <Compile Include="Assets\Scripts\saveData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

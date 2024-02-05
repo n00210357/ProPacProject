@@ -12,7 +12,6 @@ public class saveData : MonoBehaviour
     public static keyBindings keybindings;
     public keyBindings keybinds;
 
-
     //                        infov  bright
     public static float[] cam = { 60, 4 , };
     //                             ma  pl en mu en
