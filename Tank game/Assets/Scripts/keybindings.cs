@@ -7,6 +7,9 @@ public class keyBindings : ScriptableObject
 {
     public static keyBindings instance;
     public KeyCode[] keys;
+    public float xSen;
+    public float ySen;
+
     // 0 = fire1    1 = fire2   2 = fire3  3 = dash   4 = jump 5 = drift   6 = form
     void start()
     {
@@ -43,6 +46,11 @@ public class keyBindings : ScriptableObject
         if (keys[6] == KeyCode.None)
         {
             keys[6] = KeyCode.F;
+        }
+
+        if (keys[7] == KeyCode.None)
+        {
+            keys[7] = KeyCode.R;
         }
     }
 }

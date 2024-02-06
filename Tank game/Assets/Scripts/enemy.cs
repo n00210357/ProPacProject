@@ -10,7 +10,6 @@ public class enemy : MonoBehaviour
     public ScanVar scan = new ScanVar();
     public CanVar cann = new CanVar();
     public ProjectileVar proj = new ProjectileVar();
-    public targetVar target = new targetVar();
 
 
     //holds the enemies base variables
@@ -31,10 +30,16 @@ public class enemy : MonoBehaviour
     [Serializable]
     public class ScanVar
     {
-    
+        public float rad;
+        public float ang;
+        public float searching;
+        public float searchTime;
+        public bool spotted;
+        public Transform tarEnd;
+        public LineRenderer line;
     }
 
-     //holds the enemies base variables
+     //holds the enemies cannon variables
     [Serializable]
     public class CanVar
     {
@@ -46,7 +51,7 @@ public class enemy : MonoBehaviour
         public ParticleSystem fired;
     }
 
-    //holds the enemies base variables
+    //holds the enemies projectile variables
     [Serializable]
     public class ProjectileVar
     {
@@ -54,17 +59,12 @@ public class enemy : MonoBehaviour
         public float range;
         public float lifeTime;
         public int damage;
+        public int type;
+        public bool killable;
         public GameObject bullet;
+        public LayerMask bul;
+        public LayerMask tar;
         public ParticleSystem explode;
-    }
-
-    //holds the enemies base variables
-    [Serializable]
-    public class targetVar
-    {
-        public bool spotted = false;
-        public Transform tarEnd;
-        public LineRenderer line;
     }
 
     private int locat;
@@ -73,6 +73,39 @@ public class enemy : MonoBehaviour
     private ParticleSystem firing;
     public Vector3 plaPos;
     private NavMeshAgent agent;
+
+    public bool InFOV()
+    {
+        Collider[] overlaps = new Collider[10];
+        int count = Physics.OverlapSphereNonAlloc(transform.position, scan.rad, overlaps);
+
+        for (int i = 0; i < count + 1; i++)
+        {
+
+            Vector3 directionBetween = (basic.player.transform.position - transform.position).normalized;
+            directionBetween.y *= 0;
+
+            float angle = Vector3.Angle(cann.turret.forward, directionBetween);
+
+            if (angle <= scan.ang)
+            {
+                Ray ray;
+
+                ray = new Ray(transform.position, basic.player.transform.position - transform.position);
+
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, scan.rad))
+                {
+                    if (hit.transform == basic.player.transform)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -87,7 +120,7 @@ public class enemy : MonoBehaviour
 
         if (basic.enemyType == 0)
         {
-            target.line = target.tarEnd.GetComponentInChildren<LineRenderer>();
+            scan.line = scan.tarEnd.GetComponentInChildren<LineRenderer>();
         }
     }
 
@@ -113,7 +146,37 @@ public class enemy : MonoBehaviour
     //will allow the enemy to detect player
     void scanning()
     {
+         scan.spotted = InFOV();
 
+        if (scan.searching <= 1 && basic.detect == 1)
+        {
+            basic.detect = 0;
+            scan.searching = -1;
+        }
+
+        if (scan.spotted == true)
+        {
+            basic.detect = 2;
+            scan.searching = scan.searchTime;
+        }
+
+        if (basic.detect == 2 && scan.spotted == false)
+        {
+            basic.detect = 2;
+
+            scan.searching -= 1 * Time.deltaTime;
+
+            if (scan.searching <= 1)
+            {
+                basic.detect = 1;
+                scan.searching = scan.searchTime;
+            }
+        }
+        else if (basic.detect == 1 && scan.spotted == false)
+        {
+            basic.detect = 1;
+            scan.searching -= 1 * Time.deltaTime;
+        }
     }
 
     //determines how grounded troop (enemy tanks) move
@@ -172,30 +235,30 @@ public class enemy : MonoBehaviour
 
             //checks if the cannnon is pointing directly at the player
             RaycastHit cannHit;
-            if (Physics.Raycast(target.tarEnd.position, target.tarEnd.forward, out cannHit, cann.range, basic.pla))
+            if (Physics.Raycast(scan.tarEnd.position, scan.tarEnd.forward, out cannHit, cann.range, basic.pla))
             {
                 if (cannHit.collider.transform == basic.player.transform)
                 {
                     //countdown until the cannon fires
                     cann.reload -= 1 * Time.deltaTime;
-                    target.spotted = true;
+                    scan.spotted = true;
                 }
                 else
                 {
                     cann.reload = cann.delay;
-                    target.spotted = false;
+                    scan.spotted = false;
                 }
             }
             else
             {
-                target.spotted = false;
+                scan.spotted = false;
             }
 
             //fires the cannon
             if (cann.reload <= 0)
             {
                 firing = Instantiate(cann.fired);
-                firing.transform.position = target.tarEnd.position;
+                firing.transform.position = scan.tarEnd.position;
                 firBull();
                 Destroy(firing);
                 cann.reload = cann.delay;
@@ -207,23 +270,34 @@ public class enemy : MonoBehaviour
 
     void firBull()
     {
-
+        GameObject projectile = Instantiate(proj.bullet, scan.tarEnd.position, scan.tarEnd.rotation);
+        projectile.layer = gameObject.layer;
+        projectile.GetComponent<bullet>().speed = proj.speed;
+        projectile.GetComponent<bullet>().range = proj.range;
+        projectile.GetComponent<bullet>().lifeTime = proj.lifeTime;
+        projectile.GetComponent<bullet>().damage = proj.damage;
+        projectile.GetComponent<bullet>().type = proj.type;
+        projectile.GetComponent<bullet>().killable = proj.killable;
+        projectile.GetComponent<bullet>().bullLayer = proj.bul;
+        projectile.GetComponent<bullet>().tarLayer = proj.tar;
+        projectile.GetComponent<bullet>().explode = proj.explode;
     }
+
     void targeting(float tar, float max)
     {
-        if (target.spotted == true)
+        if (scan.spotted == true)
         {
             float check = tar / max;
             var grad = Color.Lerp(Color.green, Color.red, check);
-            target.line.positionCount = 2;
-            target.line.SetPosition(0, target.tarEnd.position);
-            target.line.SetPosition(1, basic.player.transform.position);
-            target.line.material.SetColor("_Color", grad);
+            scan.line.positionCount = 2;
+            scan.line.SetPosition(0, scan.tarEnd.position);
+            scan.line.SetPosition(1, basic.player.transform.position);
+            scan.line.material.SetColor("_Color", grad);
         }
         else
         {
-            target.line.positionCount = 0;
-            target.line.material.SetColor("_Color", Color.red);
+            scan.line.positionCount = 0;
+            scan.line.material.SetColor("_Color", Color.red);
         }
     }
 
@@ -235,5 +309,33 @@ public class enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, scan.rad);
+
+        Vector3 fovLine1 = Quaternion.AngleAxis(scan.ang, cann.turret.up) * cann.turret.forward * scan.rad;
+        Vector3 fovLine2 = Quaternion.AngleAxis(-scan.ang, cann.turret.up) * cann.turret.forward * scan.rad;
+
+        Vector3 fovLine3 = Quaternion.AngleAxis(360, -transform.up) * -transform.up * 15;
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, fovLine1);
+        Gizmos.DrawRay(transform.position, fovLine2);
+        Gizmos.DrawRay(transform.position, fovLine3);
+
+        if (!scan.spotted)
+        {
+            Gizmos.color = Color.red;
+        }
+        else
+        {
+            Gizmos.color = Color.green;
+        }
+
+        Gizmos.color = Color.black;
+        Gizmos.DrawRay(transform.position, transform.forward * scan.rad);
     }
 }

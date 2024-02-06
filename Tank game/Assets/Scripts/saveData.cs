@@ -12,8 +12,8 @@ public class saveData : MonoBehaviour
     public static keyBindings keybindings;
     public keyBindings keybinds;
 
-    //                        infov  bright
-    public static float[] cam = { 60, 4 , };
+    //                          fov  bri xSe  ySe 
+    public static float[] cam = { 60, 1, 10, 5};
     //                             ma  pl en mu en
     public static float[] noise = { 1, 1, 1, 1, 1};
 
@@ -42,8 +42,8 @@ public class saveData : MonoBehaviour
     void cameraSettings()
     {
         camer.fieldOfView = cam[0];
-
         RenderSettings.ambientIntensity = cam[1];
-
+        keybindings.xSen = cam[2];
+        keybindings.ySen = cam[3];
     }
 }

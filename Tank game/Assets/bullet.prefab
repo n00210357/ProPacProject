@@ -134,11 +134,13 @@ MonoBehaviour:
   damage: 0
   type: 0
   killable: 0
-  target: {fileID: 0}
   bullLayer:
     serializedVersion: 2
     m_Bits: 0
   tarLayer:
     serializedVersion: 2
     m_Bits: 0
+  notBull:
+    serializedVersion: 2
+    m_Bits: 119
   explode: {fileID: 0}

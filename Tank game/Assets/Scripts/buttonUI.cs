@@ -25,7 +25,7 @@ public class buttonUI : MonoBehaviour
             promt.GetComponent<Slider>().maxValue = 8;
             promt.GetComponent<Slider>().value = saveData.cam[1];
         }
-        else if (buttonID <= -3)
+        else if (buttonID <= -3 && buttonID >= -7)
         {
             promt.GetComponent<Slider>().minValue = 0;
             promt.GetComponent<Slider>().maxValue = 1;
@@ -49,6 +49,20 @@ public class buttonUI : MonoBehaviour
             else if (buttonID == -7)
             {
                 promt.GetComponent<Slider>().value = saveData.noise[4];
+            }
+        }
+        else if (buttonID <= -1)
+        {
+            promt.GetComponent<Slider>().minValue = 0;
+            promt.GetComponent<Slider>().maxValue = 25;
+
+            if (buttonID == -8)
+            {
+                promt.GetComponent<Slider>().value = saveData.cam[2];
+            }
+            else if (buttonID == -9)
+            {
+                promt.GetComponent<Slider>().value = saveData.cam[3];
             }
         }
     }
@@ -117,14 +131,14 @@ public class buttonUI : MonoBehaviour
 
         if (buttonID <= -8)
         {
-            saveData.noise[5] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[5].ToString();
+            saveData.cam[2] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.cam[2].ToString();
         }
 
         if (buttonID <= -9)
         {
-            saveData.noise[6] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[6].ToString();
+            saveData.cam[3] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.cam[3].ToString();
         }
 
         if (scan == true)

@@ -22,7 +22,6 @@ public class guns : MonoBehaviour
     public class AimVar
     {
         public float xAxis, yAxis;
-        public float xSen, ySen;
         public float total;
     }
 
@@ -30,12 +29,15 @@ public class guns : MonoBehaviour
     [Serializable]
     public class MainCannon
     {
+        public float delay;
+        public float reload;
         public float range;
+        public float radius;
+        public int damage;
         public Transform can;
         public Transform canExit;
         public ParticleSystem fire;
         public ParticleSystem explosion;
-
         public LineRenderer aimAssets;
     }
 
@@ -43,8 +45,12 @@ public class guns : MonoBehaviour
     [Serializable]
     public class SecondaryCannon
     {
-
+        public int ammo;
+        public int maxAmmo;
+        public bool reloading;
     }
+
+    public bool UI;
 
     void Start()
     {
@@ -53,23 +59,27 @@ public class guns : MonoBehaviour
         main.aimAssets.positionCount = 2;
 
         // Hides the cursor
-        Cursor.visible = false; 
-        Cursor.lockState = CursorLockMode.Locked;
+        if (UI == false)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     void Update()
     {
         camCon();
         mainTurret();
+        secTurret();
     }
 
     //controls the rotation of the turret
     void camCon()
     {
-        aim.yAxis += -Input.GetAxis("Mouse X") * aim.xSen * -1;
+        aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
         transform.eulerAngles = new Vector3(0, aim.yAxis, 0);
 
-        aim.xAxis += -Input.GetAxis("Mouse Y") * aim.ySen * 1;
+        aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
 
         if (aim.xAxis >= aim.total)
         {
@@ -95,7 +105,7 @@ public class guns : MonoBehaviour
             main.aimAssets.SetPosition(1, hit.point);
 
             //fires main cannon
-            if (Input.GetKeyDown(saveData.keybindings.keys[0]))
+            if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.reload <= 0)
             {
                 ParticleSystem firing = Instantiate(main.fire);
                 ParticleSystem blast = Instantiate(main.explosion);
@@ -103,9 +113,57 @@ public class guns : MonoBehaviour
                 blast.transform.position = hit.point;
                 Destroy(firing, 0.5f);
                 Destroy(blast, 0.5f);
+                main.reload = main.delay;
+
+                Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
+                foreach (Collider tar in hitEnemies)
+                {
+                    if (tar.GetComponent<enemy>())
+                    {
+                        tar.GetComponent<enemy>().takeDamage(main.damage);
+                    }
+                }
             }
         }
 
-        Debug.DrawRay(main.canExit.position, main.canExit.forward * main.range, Color.red);
+        main.reload -= 1 * Time.deltaTime;
+    }
+
+    void secTurret()
+    {
+        //aims the cannnon
+        RaycastHit hit;
+        if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, main.range))
+        {
+            //fires secondary cannon
+            if (Input.GetKey(saveData.keybindings.keys[1]) && sec.ammo >= 1 && sec.reloading == false)
+            {
+                sec.ammo -= 1;
+
+                Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
+                foreach (Collider tar in hitEnemies)
+                {
+                    if (tar.GetComponent<enemy>())
+                    {
+                        tar.GetComponent<enemy>().takeDamage(1);
+                    }
+                }
+            }
+        }
+
+        if (sec.ammo <= 0 || Input.GetKeyDown(saveData.keybindings.keys[7]))
+        {
+            sec.reloading = true;
+        }
+        
+        if (sec.reloading == true && sec.ammo <= sec.maxAmmo)
+        {
+            sec.ammo += 1;
+        }
+        else if (sec.reloading == true)
+        {
+            sec.ammo = sec.maxAmmo;
+            sec.reloading = false;
+        }
     }
 }

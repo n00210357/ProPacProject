@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class doors : MonoBehaviour
 {
+    public float speed;
     public int doorType;
     public bool open;
     public Transform level;
+    public Transform openned;
+    public Transform closed;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -33,7 +36,11 @@ public class doors : MonoBehaviour
     {
         if (open == true)
         {
-            Destroy(gameObject);
+            transform.position = Vector3.MoveTowards(transform.position, openned.position, speed);
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, closed.position, speed);
         }
     }
 
