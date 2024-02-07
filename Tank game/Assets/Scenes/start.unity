@@ -10405,7 +10405,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315851823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -886, z: -10}
+  m_LocalPosition: {x: 0, y: -886, z: -141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13077,7 +13077,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738204638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 250}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13281,7 +13281,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744569736}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 250}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18027,12 +18027,20 @@ MonoBehaviour:
     yAxis: 0
     total: 40
   main:
+    delay: 0
+    reload: 0
     range: 200
+    radius: 0
+    damage: 0
     can: {fileID: 2833612794219303500}
     canExit: {fileID: 2833612794926680543}
-    fire: {fileID: 614243230190578752, guid: 77d0e491cba05ab4b92dd759f35e3b39, type: 3}
+    fire: {fileID: 4721573001558206869, guid: 8b450924d90863d4f9be54538cdd21c4, type: 3}
     explosion: {fileID: 1122234056346025978, guid: f665229eb0dd0004baeb26992a3c726b, type: 3}
     aimAssets: {fileID: 0}
+  sec:
+    ammo: 0
+    maxAmmo: 1000
+    reloading: 0
   UI: 1
 --- !u!4 &2833612794793914996
 Transform:

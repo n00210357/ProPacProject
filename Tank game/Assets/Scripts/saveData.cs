@@ -9,8 +9,8 @@ public class saveData : MonoBehaviour
 {
     public static int saveFile = 0;
     public static saveData instance;
-    public static keyBindings keybindings;
-    public keyBindings keybinds;
+    public static KeyBindings keybindings;
+    public KeyBindings keybinds;
 
     //                          fov  bri xSe  ySe 
     public static float[] cam = { 60, 1, 10, 5};

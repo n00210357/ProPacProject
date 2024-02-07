@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "KeyBindings", menuName = "KeyBindings")]
-public class keyBindings : ScriptableObject
+public class KeyBindings : ScriptableObject
 {
-    public static keyBindings instance;
+    public static KeyBindings instance;
     public KeyCode[] keys;
     public float xSen;
     public float ySen;
@@ -51,7 +51,7 @@ public class keyBindings : ScriptableObject
         if (keys[7] == KeyCode.None)
         {
             keys[7] = KeyCode.R;
-        }
+        }        
     }
 }
 

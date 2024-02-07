@@ -15,6 +15,7 @@ public class player : MonoBehaviour
     public class BaseVar
     {
         public int health;
+        public int maxHealth;
         public bool vehicalType = false;
         public GameObject keyBindings;
     }
@@ -60,6 +61,8 @@ public class player : MonoBehaviour
         //assigns the rigidbodies
         tankRB = GetComponent<Rigidbody>();
         carRB = car.steeringWheel.GetComponent<Rigidbody>();
+
+        basic.health = basic.maxHealth;
     }
 
     void Update()
