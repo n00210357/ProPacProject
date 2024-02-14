@@ -34,6 +34,8 @@ public class guns : MonoBehaviour
         public float range;
         public float radius;
         public int damage;
+        public int ammo;
+        public int maxAmmo;
         public Transform can;
         public Transform canExit;
         public ParticleSystem fire;
@@ -105,7 +107,7 @@ public class guns : MonoBehaviour
             main.aimAssets.SetPosition(1, hit.point);
 
             //fires main cannon
-            if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.reload <= 0)
+            if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.ammo >= 1)
             {
                 ParticleSystem firing = Instantiate(main.fire);
                 ParticleSystem blast = Instantiate(main.explosion);
@@ -113,7 +115,7 @@ public class guns : MonoBehaviour
                 blast.transform.position = hit.point;
                 Destroy(firing, 0.5f);
                 Destroy(blast, 0.5f);
-                main.reload = main.delay;
+                main.ammo -= 1;
 
                 Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
                 foreach (Collider tar in hitEnemies)
@@ -126,7 +128,16 @@ public class guns : MonoBehaviour
             }
         }
 
-        main.reload -= 1 * Time.deltaTime;
+        if (main.ammo <= main.maxAmmo - 1)
+        {
+            main.reload += 1 * Time.deltaTime;
+        }
+
+        if (main.reload >= main.delay)
+        {
+            main.reload = 0;
+            main.ammo += 1;
+        }        
     }
 
     void secTurret()

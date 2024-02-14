@@ -62,7 +62,8 @@
     <Compile Include="Assets\Scripts\levelCon.cs" />
     <Compile Include="Assets\Scripts\doors.cs" />
     <Compile Include="Assets\Scripts\bullet.cs" />
-    <Compile Include="Assets\Scripts\keyBindings.cs" />
+    <Compile Include="Assets\Scripts\KeyBindings.cs" />
+    <Compile Include="Assets\Scripts\UIcon.cs" />
     <Compile Include="Assets\Scripts\player.cs" />
   </ItemGroup>
   <ItemGroup>
