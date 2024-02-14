@@ -59,20 +59,25 @@ public class guns : MonoBehaviour
         //draws a line at what the tank is aiming at
         main.aimAssets = main.canExit.GetComponent<LineRenderer>();
         main.aimAssets.positionCount = 2;
+    }
+
+    void Update()
+    {
+        camCon();
 
         // Hides the cursor
         if (UI == false)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+            mainTurret();
+            secTurret();
         }
-    }
-
-    void Update()
-    {
-        camCon();
-        mainTurret();
-        secTurret();
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     //controls the rotation of the turret
