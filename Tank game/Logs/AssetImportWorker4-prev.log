@@ -1,0 +1,293 @@
+Using pre-set license
+Built from '2021.3/staging' branch; Version is '2021.3.13f1 (9e7d58001ecf) revision 10386776'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'en' Physical Memory: 8061 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity 2021.3.13f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker4
+-projectPath
+C:/Users/eoinz/Desktop/geme/ProPacProject/Tank game
+-logFile
+Logs/AssetImportWorker4.log
+-srvPort
+50521
+Successfully changed project path to: C:/Users/eoinz/Desktop/geme/ProPacProject/Tank game
+C:/Users/eoinz/Desktop/geme/ProPacProject/Tank game
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Refreshing native plugins compatible for Editor in 163.86 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2021.3.13f1 (9e7d58001ecf)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity 2021.3.13f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/eoinz/Desktop/geme/ProPacProject/Tank game/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2060 (ID=0x1f15)
+    Vendor:   NVIDIA
+    VRAM:     5980 MB
+    Driver:   30.0.14.7219
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity 2021.3.13f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity 2021.3.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity 2021.3.13f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56840
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity 2021.3.13f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.012212 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 155.12 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.082 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1082ms)
+		BeginReloadAssembly (136ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		EndReloadAssembly (729ms)
+			LoadAssemblies (130ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (156ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (52ms)
+			SetupLoadedEditorAssemblies (444ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (155ms)
+				BeforeProcessingInitializeOnLoad (2ms)
+				ProcessInitializeOnLoadAttributes (210ms)
+				ProcessInitializeOnLoadMethodAttributes (65ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.011236 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.82 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.714 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1715ms)
+		BeginReloadAssembly (181ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (11ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (31ms)
+		EndReloadAssembly (1338ms)
+			LoadAssemblies (127ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (459ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (81ms)
+			SetupLoadedEditorAssemblies (615ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (8ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (143ms)
+				ProcessInitializeOnLoadAttributes (404ms)
+				ProcessInitializeOnLoadMethodAttributes (43ms)
+				AfterProcessingInitializeOnLoad (16ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3570 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 40 unused Assets / (184.1 KB). Loaded Objects now: 4042.
+Memory consumption went from 140.4 MB to 140.2 MB.
+Total: 4.305300 ms (FindLiveObjects: 0.434000 ms CreateObjectMapping: 0.176700 ms MarkObjects: 3.525000 ms  DeleteObjects: 0.167600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 444477.972047 seconds.
+  path: Assets/packAssets/CityVoxelPack/Assets/pavements/Prefabs/pavement1-10.prefab
+  artifactKey: Guid(adfde29e3d582c24988c04bafc8090e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/packAssets/CityVoxelPack/Assets/pavements/Prefabs/pavement1-10.prefab using Guid(adfde29e3d582c24988c04bafc8090e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3abfa8f2a10d025d2fa529081987ee55') in 0.216617 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 24.503295 seconds.
+  path: Assets/packAssets/CityVoxelPack/Assets/pavements/Mesh/pavement1-5.obj
+  artifactKey: Guid(66209e4b2a39540429bea65d657ef85d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/packAssets/CityVoxelPack/Assets/pavements/Mesh/pavement1-5.obj using Guid(66209e4b2a39540429bea65d657ef85d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12a838b56aafca3034027950a16f5c4d') in 0.099074 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 93.644055 seconds.
+  path: Assets/packAssets/CityVoxelPack
+  artifactKey: Guid(ce922042be529644b8ee51713a05125f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/packAssets/CityVoxelPack using Guid(ce922042be529644b8ee51713a05125f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21adfe4fa907ec1d4892b51380ccbc90') in 0.019041 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.696499 seconds.
+  path: Assets/packAssets/CityVoxelPack/DemoScenes
+  artifactKey: Guid(0d2d415bfcff13d45b4fb471b0d1ba3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/packAssets/CityVoxelPack/DemoScenes using Guid(0d2d415bfcff13d45b4fb471b0d1ba3a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '523f2abc843db84eb9d15e5259746c8f') in 0.003592 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 23.540564 seconds.
+  path: Assets/models/landscape/roads/Materials/roads.mat
+  artifactKey: Guid(12b5ac9ff0218cb439a67cd4aff91cdb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/Materials/roads.mat using Guid(12b5ac9ff0218cb439a67cd4aff91cdb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bc0b8e517694f812a4e7d3bd062a870') in 0.019768 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 36.411569 seconds.
+  path: Assets/models/landscape/roads/tall
+  artifactKey: Guid(ca04eeb5921eb5a4494656d020e02bb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall using Guid(ca04eeb5921eb5a4494656d020e02bb8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99612be64a13e546153827b0994f8d2c') in 0.006197 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 74.295658 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh
+  artifactKey: Guid(dbc9cf8152b85814e9476288974621f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh using Guid(dbc9cf8152b85814e9476288974621f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f204bd1858446efad32714000154d37f') in 0.003761 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.284940 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road10.obj
+  artifactKey: Guid(07c627544057bf342983155ea21aedfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road10.obj using Guid(07c627544057bf342983155ea21aedfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1da2127aa2b7ff3215945897a4c8d32a') in 0.054348 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.009913 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road12bisbis.obj
+  artifactKey: Guid(87a1017fcd16ea442bb0ac930c8904bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road12bisbis.obj using Guid(87a1017fcd16ea442bb0ac930c8904bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96b967efa0cfb661cae3b4eb51a24a4f') in 0.047791 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road14.obj
+  artifactKey: Guid(0aa690373d2aac1418679486d349b0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road14.obj using Guid(0aa690373d2aac1418679486d349b0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e5180920dd96162a110a6fd23ecba3c2') in 0.050454 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000054 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road16bisbis.obj
+  artifactKey: Guid(4cf314ffbb393c24fb42dcafe27a91bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road16bisbis.obj using Guid(4cf314ffbb393c24fb42dcafe27a91bf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c95dd72abf298ad3e0351701fd428020') in 0.045949 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000071 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road15.obj
+  artifactKey: Guid(9960a63a9694b9e4db6a7e85e7558015) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road15.obj using Guid(9960a63a9694b9e4db6a7e85e7558015) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe89728cb6541564f4f5a7c516a59a1c') in 0.045890 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000067 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road17.obj
+  artifactKey: Guid(3be7c1e987879e04194f9d098647b42a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road17.obj using Guid(3be7c1e987879e04194f9d098647b42a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a5e542eeba1bc72e308c3158c75c81d6') in 0.045948 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000078 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road12bis.obj
+  artifactKey: Guid(6d6686f3d1a67e0449d01015efd9dc2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road12bis.obj using Guid(6d6686f3d1a67e0449d01015efd9dc2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b58c24c9f5c377cdede2bc891151e16') in 0.046654 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000057 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road17bisbis.obj
+  artifactKey: Guid(805f1e2a322471f43ba070d2876469e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road17bisbis.obj using Guid(805f1e2a322471f43ba070d2876469e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8428572a21dbd531335aee6b05bf5e10') in 0.043727 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/models/landscape/roads/tall/Mesh/road14bis.obj
+  artifactKey: Guid(93c59148bac7f11428f12afd2d8fdeda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Mesh/road14bis.obj using Guid(93c59148bac7f11428f12afd2d8fdeda) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f481ed5a1ba99496284fbed940ccb25c') in 0.042569 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.212928 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs
+  artifactKey: Guid(c2d967ba38ab8174f8c4336c1c00abd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs using Guid(c2d967ba38ab8174f8c4336c1c00abd6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '02bee215efb764abdb1182e6cbdc5adb') in 0.004557 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 37.086543 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs/road10.prefab
+  artifactKey: Guid(91eddc39f5fc8c84791530a94c64b16a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs/road10.prefab using Guid(91eddc39f5fc8c84791530a94c64b16a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e339a941f08eb631536c995015f35f8') in 0.007098 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 36.781887 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs/road12bis.prefab
+  artifactKey: Guid(70d9e664f8744574ab6b0493d8f2262d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs/road12bis.prefab using Guid(70d9e664f8744574ab6b0493d8f2262d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b06ab891b23db3c0df83737c92e95f9') in 0.007771 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.059884 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs/road13bis.prefab
+  artifactKey: Guid(609a4258914341d49a8240df4cdcef24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs/road13bis.prefab using Guid(609a4258914341d49a8240df4cdcef24) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f0c76871df8f43e6f6b6d49db71ca82') in 0.009800 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000066 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs/road15.prefab
+  artifactKey: Guid(390dc959598a61f41891104c988b6141) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs/road15.prefab using Guid(390dc959598a61f41891104c988b6141) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6133cd0e6ee31c04790d88d2b3e3fb6') in 0.010436 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000063 seconds.
+  path: Assets/models/landscape/roads/tall/Prefabs/road14.prefab
+  artifactKey: Guid(e1aec9f3e312bd84da1b7399487ddef4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/models/landscape/roads/tall/Prefabs/road14.prefab using Guid(e1aec9f3e312bd84da1b7399487ddef4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba2c80d6de167503e78fd67bc7775507') in 0.006968 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
