@@ -9,8 +9,13 @@ public class levelCon : MonoBehaviour
 
     //the maps patrol points
     public Transform[] patrolPoint;
+
     //detect what enemies are alive
     public GameObject[] spawnedEnemies;
+
     //what enemies can be spawned
     public GameObject[] enemiesToSpawn;
+
+    //enemies choice of gun
+    public GameObject[] enemyGuns;
 }
