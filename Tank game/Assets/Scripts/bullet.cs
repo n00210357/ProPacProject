@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-        public float speed;
-        public float range;
-        public float lifeTime;
-        public int health;
-        public int damage;
-        public int type;
-        public bool killable;
-        public LayerMask bullLayer;
-        public LayerMask tarLayer;
-        public LayerMask notBull;
-        public ParticleSystem explode;
-
-        private Rigidbody rigid;
+    public float speed;
+    public float range;
+    public float lifeTime;
+    public int health;
+    public int damage;
+    public int type;
+    public bool killable;
+    public LayerMask bullLayer;
+    public LayerMask tarLayer;
+    public LayerMask notBull;
+    public ParticleSystem explode;
+    private Rigidbody rigid;
 
     // Start is called before the first frame update
     void Start()

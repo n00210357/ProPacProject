@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7155480981111625651}
   - component: {fileID: 7155480981111625650}
   - component: {fileID: 7155480981111625653}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,5 +142,5 @@ MonoBehaviour:
     m_Bits: 0
   notBull:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 0
   explode: {fileID: 0}

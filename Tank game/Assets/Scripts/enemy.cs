@@ -13,6 +13,7 @@ public class enemy : MonoBehaviour
     [Serializable]
     public class BaseVar
     {
+        public float gunRot = 0;
         public int health;
         public int enemyType = 0;
         public int detect = 0;
@@ -21,7 +22,6 @@ public class enemy : MonoBehaviour
         public Transform gun;
         public GameObject level;
         public GameObject player;
-        public LayerMask pla;
     }
 
     //holds the enemies scan variables
@@ -56,8 +56,7 @@ public class enemy : MonoBehaviour
 
             if (angle <= scan.ang)
             {
-                Ray ray;
-
+                Ray ray;              
                 ray = new Ray(transform.position, basic.player.transform.position - transform.position);
 
                 RaycastHit hit;
@@ -88,6 +87,7 @@ public class enemy : MonoBehaviour
         basic.gunType = UnityEngine.Random.Range(0, 1);
         basic.gun = Instantiate(basic.level.GetComponent<levelCon>().enemyGuns[basic.gunType].transform, basic.turConnect.position, basic.turConnect.rotation);
         basic.gun.parent = transform;
+        basic.gun.GetComponent<enemyGuns>().basic.rota = basic.gunRot;
     }
 
     // Update is called once per frame
@@ -109,21 +109,14 @@ public class enemy : MonoBehaviour
          scan.spotted = InFOV();
 
         if (scan.searching <= 1 && basic.detect == 1)
-        {
+        {            
             basic.detect = 0;
             scan.searching = -1;
-        }
-
-        if (scan.spotted == true)
-        {
-            basic.detect = 2;
-            scan.searching = scan.searchTime;
         }
 
         if (basic.detect == 2 && scan.spotted == false)
         {
             basic.detect = 2;
-
             scan.searching -= 1 * Time.deltaTime;
 
             if (scan.searching <= 1)
@@ -133,9 +126,15 @@ public class enemy : MonoBehaviour
             }
         }
         else if (basic.detect == 1 && scan.spotted == false)
-        {
+        {            
             basic.detect = 1;
             scan.searching -= 1 * Time.deltaTime;
+        }
+
+        if (scan.spotted == true)
+        {
+            basic.detect = 2;
+            scan.searching = scan.searchTime;
         }
     }
 
