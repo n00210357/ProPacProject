@@ -7440,6 +7440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keybinds: {fileID: 11400000, guid: dcd4eeb4aefab674ab971e5ef009a1db, type: 2}
+  diff: 100
   camer: {fileID: 1315851824}
 --- !u!1 &819830967
 GameObject:

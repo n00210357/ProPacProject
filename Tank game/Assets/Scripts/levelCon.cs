@@ -7,6 +7,8 @@ public class levelCon : MonoBehaviour
 {
     public NavMeshSurface sur;
 
+    public Transform levCon;
+
     //the enemy spawn points 
     public Transform[] spawnPoint;
 
@@ -22,6 +24,7 @@ public class levelCon : MonoBehaviour
     //detect what enemies are alive
     public GameObject[] spawnedEnemies;
 
+    private int spawnChance;
     void Start()
     {
         sur.BuildNavMesh();
@@ -36,6 +39,22 @@ public class levelCon : MonoBehaviour
             }
         }
 
+        spawnEnemies();
+    }
 
+    void spawnEnemies()
+    {
+        spawnedEnemies = new GameObject[spawnPoint.Length];
+
+        for (int i = 0; i <= spawnPoint.Length - 1; i++)
+        {
+            spawnChance = Random.Range(0, 100);
+
+            if (spawnChance <= saveData.difficulty)
+            {
+                int type = Random.Range(0, enemiesToSpawn.Length);
+                spawnedEnemies[i] = Instantiate(enemiesToSpawn[type], spawnPoint[i].position, spawnPoint[i].rotation); 
+            }
+        }
     }
 }

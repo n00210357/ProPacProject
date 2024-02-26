@@ -78,7 +78,9 @@ public class player : MonoBehaviour
             {
                 basic.vehicalType = true;
                 tankRB.isKinematic = true;
-                carRB.isKinematic = false;                
+                carRB.isKinematic = false;        
+                car.steeringWheel.localPosition = new Vector3(0, 0, 0);  
+                car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);  
             }
         }
         else
@@ -92,7 +94,7 @@ public class player : MonoBehaviour
             {
                 basic.vehicalType = false;
                 tankRB.isKinematic = false;
-                carRB.isKinematic = true;                
+                carRB.isKinematic = true;
             }
         }
 
@@ -131,12 +133,6 @@ public class player : MonoBehaviour
         float newRotation = car.turnInput * car.turn * Time.deltaTime;
         transform.Rotate(0, newRotation, 0, Space.World);
         car.steeringWheel.GetChild(0).rotation = transform.rotation;
-
-        //allows the car mode to jump
-        if (Input.GetKeyDown(saveData.keybindings.keys[4]))
-        {
-            carRB.AddForce(transform.up * dash.dash, ForceMode.Impulse);
-        }
     }
 
     //dashes
@@ -145,6 +141,12 @@ public class player : MonoBehaviour
         //checks if you can dash and which direction
         if (dash.dashAmount >= 1)
         {
+            //allows the car mode to jump
+            if (Input.GetKeyDown(saveData.keybindings.keys[4]))
+            {
+                carRB.AddForce(transform.up * dash.dash, ForceMode.Impulse);
+            }
+
             if (Input.GetKeyDown(saveData.keybindings.keys[3]))
             {
                 dash.dashAmount -= 1;
