@@ -5,17 +5,9 @@ using UnityEngine;
 
 public class guns : MonoBehaviour
 {
-    public BaseVar basic = new BaseVar();
     public AimVar aim = new AimVar();
     public MainCannon main = new MainCannon();
     public SecondaryCannon sec = new SecondaryCannon();
-
-    //holds the guns base variables
-    [Serializable]
-    public class BaseVar
-    {
-        public GameObject keyBindings;
-    }
 
      //holds the aiming variables
     [Serializable]
@@ -23,6 +15,8 @@ public class guns : MonoBehaviour
     {
         public float xAxis, yAxis;
         public float total;
+        public float range;
+        public LayerMask lockOn;
     }
 
     //holds the main cannon variables
@@ -31,7 +25,6 @@ public class guns : MonoBehaviour
     {
         public float delay;
         public float reload;
-        public float range;
         public float radius;
         public int damage;
         public int ammo;
@@ -53,6 +46,7 @@ public class guns : MonoBehaviour
     }
 
     public bool UI;
+    private RaycastHit hit;
 
     void Start()
     {
@@ -64,6 +58,7 @@ public class guns : MonoBehaviour
     void Update()
     {
         camCon();
+        gunAim();
 
         // Hides the cursor
         if (UI == false)
@@ -100,38 +95,41 @@ public class guns : MonoBehaviour
         main.can.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
     }
 
+    void gunAim()
+    {
+        if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, aim.range, aim.lockOn))
+        {
+            hit.point = hit.point;
+        }
+    }
+
     //allows the player to control the main cannon
     void mainTurret()
     {       
         main.aimAssets.SetPosition(0, main.canExit.position);
+        main.aimAssets.SetPosition(1, hit.point);
 
-        //aims the cannnon
-        RaycastHit hit;
-        if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, main.range))
+        //fires main cannon
+        if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.ammo >= 1)
         {
-            main.aimAssets.SetPosition(1, hit.point);
+            ParticleSystem firing = Instantiate(main.fire);
+            ParticleSystem blast = Instantiate(main.explosion);
+            firing.transform.position = main.canExit.position;
+            blast.transform.position = hit.point;
+            Destroy(firing, 0.5f);
+            Destroy(blast, 0.5f);
+            main.ammo -= 1;
 
-            //fires main cannon
-            if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.ammo >= 1)
+            Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
+            foreach (Collider tar in hitEnemies)
             {
-                ParticleSystem firing = Instantiate(main.fire);
-                ParticleSystem blast = Instantiate(main.explosion);
-                firing.transform.position = main.canExit.position;
-                blast.transform.position = hit.point;
-                Destroy(firing, 0.5f);
-                Destroy(blast, 0.5f);
-                main.ammo -= 1;
-
-                Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
-                foreach (Collider tar in hitEnemies)
+                if (tar.GetComponent<enemy>())
                 {
-                    if (tar.GetComponent<enemy>())
-                    {
-                        tar.GetComponent<enemy>().takeDamage(main.damage);
-                    }
+                    tar.GetComponent<enemy>().takeDamage(main.damage);
                 }
             }
         }
+        
 
         if (main.ammo <= main.maxAmmo - 1)
         {
@@ -147,25 +145,21 @@ public class guns : MonoBehaviour
 
     void secTurret()
     {
-        //aims the cannnon
-        RaycastHit hit;
-        if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, main.range))
+        //fires secondary cannon
+        if (Input.GetKey(saveData.keybindings.keys[1]) && sec.ammo >= 1 && sec.reloading == false)
         {
-            //fires secondary cannon
-            if (Input.GetKey(saveData.keybindings.keys[1]) && sec.ammo >= 1 && sec.reloading == false)
-            {
-                sec.ammo -= 1;
+            sec.ammo -= 1;
 
-                Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
-                foreach (Collider tar in hitEnemies)
+            Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
+            foreach (Collider tar in hitEnemies)
+            {
+                if (tar.GetComponent<enemy>())
                 {
-                    if (tar.GetComponent<enemy>())
-                    {
-                        tar.GetComponent<enemy>().takeDamage(1);
-                    }
+                    tar.GetComponent<enemy>().takeDamage(1);
                 }
             }
         }
+        
 
         if (sec.ammo <= 0 || Input.GetKeyDown(saveData.keybindings.keys[7]))
         {
@@ -181,5 +175,11 @@ public class guns : MonoBehaviour
             sec.ammo = sec.maxAmmo;
             sec.reloading = false;
         }
+    }
+
+       private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(hit.point, main.radius);
     }
 }

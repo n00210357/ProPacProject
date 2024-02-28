@@ -216,13 +216,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c8b4ed88a4e464e98365bd4d07ad98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.05
+  speed: 0.1
   doorType: 0
   open: 0
-  level: {fileID: 0}
   openned: {fileID: 7924002054977662747}
   closed: {fileID: 7924002054216370574}
   oldTunnel: {fileID: 0}
+  level: {fileID: 0}
   player: {fileID: 0}
 --- !u!4 &7673303219872261755 stripped
 Transform:

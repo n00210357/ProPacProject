@@ -7,10 +7,10 @@ public class doors : MonoBehaviour
     public float speed;
     public int doorType;
     public bool open;
-    public Transform level;
     public Transform openned;
     public Transform closed;
     public GameObject oldTunnel;
+    public GameObject level;
     public GameObject player;
 
     // Start is called before the first frame update
@@ -21,6 +21,7 @@ public class doors : MonoBehaviour
             oldTunnel = GameObject.FindGameObjectWithTag("Tunnel");
         }
 
+        level = GameObject.FindGameObjectWithTag("Map");
         player = GameObject.FindGameObjectWithTag("Player");
     }
 

@@ -38,7 +38,10 @@ public class player : MonoBehaviour
         public float speed;
         public float turnSpeed;
         public float jump;
+        public float gravity;
+        public float touchDown;
         public Vector3 movDir;
+        public LayerMask land;
     }
 
     //holds the car modes variables
@@ -55,14 +58,15 @@ public class player : MonoBehaviour
 
     private Rigidbody tankRB;
     private Rigidbody carRB;
+    private RaycastHit grav;
 
     void Start()
     {        
         //assigns the rigidbodies
         tankRB = GetComponent<Rigidbody>();
         carRB = car.steeringWheel.GetComponent<Rigidbody>();
-
         basic.health = basic.maxHealth;
+        basic.vehicalType = false;
     }
 
     void Update()
@@ -105,20 +109,28 @@ public class player : MonoBehaviour
     //tank controls
     void tankSteer()
     {
+        gravize();
+
         //grants the player control of the tanks direction
         transform.Rotate(0, Input.GetAxis("Horizontal") * tank.turnSpeed * Time.deltaTime, 0);
-        Vector3 tankDrive = transform.forward * Input.GetAxis("Vertical") * tank.speed;
-        tank.movDir = new Vector3(tankDrive.x, -9.81f, tankDrive.z);
-        
-        //allows the player to junp
-        if (Input.GetKeyDown(saveData.keybindings.keys[4]))
-        {
-            tankRB.AddForce(transform.up * dash.dash * 2, ForceMode.Impulse);
-        }
+        Vector3 tankDrive = transform.forward * Input.GetAxis("Vertical") * tank.speed * Time.deltaTime;
+        tank.movDir = new Vector3(tankDrive.x, tank.gravity, tankDrive.z);
 
         //moves the tank in tank mode
         tankRB.AddForce(tank.movDir);
-        tank.jump = tankRB.velocity.y;
+        tank.jump = tankRB.velocity.y * Time.deltaTime;
+    }
+
+    void gravize()
+    {
+        if (Physics.Raycast(transform.position, -transform.up, out grav, tank.touchDown, tank.land))
+        {
+            tank.gravity = 0;
+        }
+        else
+        {
+            tank.gravity = -9.81f;
+        }
     }
 
     //car controls
@@ -144,7 +156,10 @@ public class player : MonoBehaviour
             //allows the car mode to jump
             if (Input.GetKeyDown(saveData.keybindings.keys[4]))
             {
+                tankRB.AddForce(transform.up * dash.dash * 2, ForceMode.Impulse);
                 carRB.AddForce(transform.up * dash.dash, ForceMode.Impulse);
+                dash.dashAmount -= 1;
+                dash.dashTimer = dash.dashDelay;
             }
 
             if (Input.GetKeyDown(saveData.keybindings.keys[3]))

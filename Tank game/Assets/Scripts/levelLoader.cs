@@ -10,8 +10,8 @@ public class levelLoader : MonoBehaviour
     public Transform tunnelExit;
     public GameObject map;
 
-    void Start ()
-    {        
+    void Start()
+    {         
         map = GameObject.FindGameObjectWithTag("Map");
 
         if (starter == false)
@@ -23,16 +23,14 @@ public class levelLoader : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (starter == false)
+        if (desMap == false)
         {
-            if (desMap == false)
-            {
-                Destroy(map);
-                desMap = true;
-            }
-
+            desMap = true;
+            Destroy(map);           
+        
             int t = Random.Range(0, saveData.levels.Length);
-            Instantiate(saveData.levels[t], tunnelExit.position, tunnelExit.rotation);
+            Transform newMap = Instantiate(saveData.levels[t], tunnelExit.position, tunnelExit.rotation);
+            transform.parent.transform.parent = newMap;
         }
     }
 }

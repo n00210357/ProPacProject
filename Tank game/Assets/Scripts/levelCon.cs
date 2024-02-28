@@ -6,8 +6,10 @@ using UnityEngine.AI;
 public class levelCon : MonoBehaviour
 {
     public NavMeshSurface sur;
-
     public Transform levCon;
+    public GameObject tunnel;
+
+    public Transform[] connectionPoints;
 
     //the enemy spawn points 
     public Transform[] spawnPoint;
@@ -39,7 +41,16 @@ public class levelCon : MonoBehaviour
             }
         }
 
+        spawnTunnels();
         spawnEnemies();
+    }
+
+    void spawnTunnels()
+    {
+        foreach(Transform con in connectionPoints)
+        {
+            Instantiate(tunnel, con.position, con.rotation);
+        }
     }
 
     void spawnEnemies()
