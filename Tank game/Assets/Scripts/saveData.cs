@@ -9,6 +9,7 @@ public class saveData : MonoBehaviour
 {
     public static int difficulty;
     public static int saveFile = 0;
+    public static Transform[] levels;
     public static saveData instance;
     public static KeyBindings keybindings;
     public KeyBindings keybinds;
@@ -19,10 +20,12 @@ public class saveData : MonoBehaviour
     public static float[] noise = { 1, 1, 1, 1, 1};
 
     public int diff;
+    public Transform[] maps;
     public Camera camer;
 
     void Start()
     {
+        levels = maps;
         difficulty = diff;
 
         if (keybindings != null && keybinds == null)

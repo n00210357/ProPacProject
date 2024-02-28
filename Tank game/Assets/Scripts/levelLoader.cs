@@ -5,12 +5,13 @@ using UnityEngine;
 public class levelLoader : MonoBehaviour
 {    
     public bool starter;
+    public bool desMap;
     public Transform tunnelEnter;
     public Transform tunnelExit;
     public GameObject map;
 
     void Start ()
-    {
+    {        
         map = GameObject.FindGameObjectWithTag("Map");
 
         if (starter == false)
@@ -24,11 +25,14 @@ public class levelLoader : MonoBehaviour
     {
         if (starter == false)
         {
-            if (map != null)
+            if (desMap == false)
             {
-                Destroy(map);                
+                Destroy(map);
+                desMap = true;
             }
 
+            int t = Random.Range(0, saveData.levels.Length);
+            Instantiate(saveData.levels[t], tunnelExit.position, tunnelExit.rotation);
         }
     }
 }

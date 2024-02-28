@@ -10,11 +10,17 @@ public class doors : MonoBehaviour
     public Transform level;
     public Transform openned;
     public Transform closed;
+    public GameObject oldTunnel;
     public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
+        if (gameObject.transform.parent.transform.parent.tag != "Tunnel")
+        {
+            oldTunnel = GameObject.FindGameObjectWithTag("Tunnel");
+        }
+
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -37,6 +43,7 @@ public class doors : MonoBehaviour
         if (open == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, openned.position, speed);
+            Destroy(oldTunnel);
         }
         else
         {
