@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basic:
+    rota: 0
     detect: 0
     gunType: 0
     enemy: {fileID: 0}
@@ -217,7 +218,7 @@ MonoBehaviour:
     notBull:
       serializedVersion: 2
       m_Bits: 375
-    explode: {fileID: 1122234056346025978, guid: f665229eb0dd0004baeb26992a3c726b, type: 3}
+    explode: {fileID: 4402831619136587078, guid: 2170da423244b2c4bab48a321b937177, type: 3}
 --- !u!1001 &4379008563941763709
 PrefabInstance:
   m_ObjectHideFlags: 0

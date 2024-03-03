@@ -7,19 +7,21 @@ using UnityEngine.UI;
 [System.Serializable]
 public class saveData : MonoBehaviour
 {
-    public static int difficulty;
-    public static int saveFile = 0;
-    public static Transform[] levels;
     public static saveData instance;
+
     public static KeyBindings keybindings;
     public KeyBindings keybinds;
+    public static upgrades upgrades;
+    public upgrades upgrad;
 
     //                          fov  bri xSe  ySe 
     public static float[] cam = { 60, 1, 10, 5};
     //                             ma  pl en mu en
     public static float[] noise = { 1, 1, 1, 1, 1};
 
+    public static int difficulty;
     public int diff;
+    public static Transform[] levels;
     public Transform[] maps;
     public Camera camer;
 
@@ -36,6 +38,16 @@ public class saveData : MonoBehaviour
         if (keybindings == null && keybinds != null)
         {
             keybindings = keybinds;
+        }
+
+        if (upgrades != null && upgrad == null)
+        {
+            upgrad = upgrades;
+        }
+
+        if (upgrades == null && upgrad != null)
+        {
+            upgrades = upgrad;
         }
 
         cameraSettings();

@@ -11,7 +11,7 @@ public class UIcon : MonoBehaviour
     public MainCanVar main = new MainCanVar();
     public SecCanVar sec = new SecCanVar();
     public DashVar dash = new DashVar();
-    public AbilityVar abi = new AbilityVar();
+    public ModeVar mode = new ModeVar();
 
     //holds the UI base variables
     [Serializable]
@@ -55,32 +55,22 @@ public class UIcon : MonoBehaviour
     [Serializable]
     public class DashVar
     {
-
+        public float maxFuel;
+        public float fuel;
+        public Image fuelBar;
     }
 
     [Serializable]
-    public class AbilityVar
+    public class ModeVar
     {
-
+        public bool type;
+        public Image car;
+        public Image tank;
     }
 
     // Start is called before the first frame update
     void Start()
-    {
-        hea.maxHealth = GetComponent<player>().basic.maxHealth;
-        hea.hearts = new Transform[hea.maxHealth];
-        hea.hearts[0] = hea.firstHeart;
-
-        if (hea.maxHealth >= 1)
-        {
-            for(int i = 1; i < hea.maxHealth; i++)
-            {
-                hea.hearts[i] = Instantiate(hea.firstHeart);
-                hea.hearts[i].transform.SetParent(hea.heartHolder);
-                hea.hearts[i].position = new Vector3(hea.hearts[0].position.x + (hea.dist * i), hea.hearts[0].position.y, hea.hearts[0].position.z);
-            }
-        }
-
+    {       
         main.delay = basic.guns.GetComponent<guns>().main.delay;
         main.ammoBar = main.ammoBar.GetComponent<Image>();
         main.maxAmmo = basic.guns.GetComponent<guns>().main.maxAmmo;
@@ -98,6 +88,12 @@ public class UIcon : MonoBehaviour
         }
 
         sec.ammoBar = sec.ammoBar.GetComponent<Image>();
+        sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
+
+        dash.fuelBar = dash.fuelBar.GetComponent<Image>();
+        dash.maxFuel = GetComponent<player>().dash.dashTotal;
+
+        mode.car.enabled = false;
     }
 
     // Update is called once per frame
@@ -106,10 +102,30 @@ public class UIcon : MonoBehaviour
         healthTrack();
         primaryCannon();
         secondaryGun();
+        dashTrack();
+
+        if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+        {
+            modeTrack();
+        }
     }
 
     void healthTrack()
     {
+        hea.maxHealth = GetComponent<player>().basic.maxHealth;
+        hea.hearts = new Transform[hea.maxHealth];
+        hea.hearts[0] = hea.firstHeart;
+
+        if (hea.maxHealth >= 1)
+        {
+            for (int i = 1; i < hea.maxHealth; i++)
+            {
+                hea.hearts[i] = Instantiate(hea.firstHeart);
+                hea.hearts[i].transform.SetParent(hea.heartHolder);
+                hea.hearts[i].position = new Vector3(hea.hearts[0].position.x + (hea.dist * i), hea.hearts[0].position.y, hea.hearts[0].position.z);
+            }
+        }
+
         Color tempColor;
         foreach (Transform he in hea.hearts)
         {
@@ -157,8 +173,29 @@ public class UIcon : MonoBehaviour
 
     void secondaryGun()
     {
-        sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
         sec.ammo = basic.guns.GetComponent<guns>().sec.ammo;
         sec.ammoBar.fillAmount = sec.ammo / sec.maxAmmo;
+    }
+
+    void dashTrack()
+    {
+        dash.fuel = GetComponent<player>().dash.dashAmount;
+        dash.fuelBar.fillAmount = dash.fuel / dash.maxFuel;
+    }
+
+    void modeTrack()
+    {
+        mode.type = GetComponent<player>().basic.vehicalType;
+
+        if (mode.type == true)
+        {
+            mode.tank.enabled = false;
+            mode.car.enabled = true;
+        }
+        else
+        {
+            mode.tank.enabled = true;
+            mode.car.enabled = false;
+        }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1927060799404715640}
   - component: {fileID: 119475400492003343}
+  - component: {fileID: 1264592693208070916}
   m_Layer: 0
   m_Name: 4WayRoad
   m_TagString: Untagged
@@ -48,7 +49,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 73, y: 1, z: 73}
+  m_Size: {x: 73.5, y: 1, z: 61}
+  m_Center: {x: 0, y: 0.5, z: 17}
+--- !u!65 &1264592693208070916
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927060799404715643}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 61, y: 1, z: 73.5}
   m_Center: {x: 0, y: 0.5, z: 17}
 --- !u!1 &8810353722381555402
 GameObject:

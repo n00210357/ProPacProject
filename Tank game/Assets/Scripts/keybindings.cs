@@ -11,6 +11,7 @@ public class KeyBindings : ScriptableObject
     public float ySen;
 
     // 0 = fire1    1 = fire2   2 = fire3  3 = dash   4 = jump 5 = drift   6 = form
+    // 7 = reload
     void start()
     {
         if (keys[0] == KeyCode.None)

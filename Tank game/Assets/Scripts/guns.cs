@@ -14,7 +14,8 @@ public class guns : MonoBehaviour
     public class AimVar
     {
         public float xAxis, yAxis;
-        public float total;
+        public float pTotal;
+        public float mTotal;
         public float range;
         public LayerMask lockOn;
     }
@@ -43,9 +44,12 @@ public class guns : MonoBehaviour
         public int ammo;
         public int maxAmmo;
         public bool reloading;
+        public Transform[] guns;
     }
 
     public bool UI;
+    private GameObject firing;
+    private GameObject blast;
     private RaycastHit hit;
 
     void Start()
@@ -78,20 +82,50 @@ public class guns : MonoBehaviour
     //controls the rotation of the turret
     void camCon()
     {
-        aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
-        transform.eulerAngles = new Vector3(0, aim.yAxis, 0);
-
-        aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
-
-        if (aim.xAxis >= aim.total)
+        if (transform.parent.GetComponent<player>().basic.vehicalType == false)
         {
-            aim.xAxis = aim.total;
+            aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
+            aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
+
+            if (aim.xAxis >= aim.pTotal)
+            {
+                aim.xAxis = aim.pTotal;
+            }
+            else if (aim.xAxis <= aim.mTotal)
+            {
+                aim.xAxis = aim.mTotal;
+            }
         }
-        else if (aim.xAxis <= -aim.total)
+        else
         {
-            aim.xAxis = -aim.total;
+            if (aim.xAxis >= -0.5 && aim.xAxis <= 0.5)
+            {
+                aim.xAxis = 0;
+            }
+            else if (aim.xAxis > 0)
+            {
+                aim.xAxis -= 1;
+            }
+            else if(aim.xAxis < 0)
+            {
+                aim.xAxis += 1;
+            }
+
+            if (aim.yAxis >= -0.5 && aim.yAxis <= 0.5)
+            {
+                aim.yAxis = 0;
+            }
+            else if (aim.yAxis > 0)
+            {
+                aim.yAxis -= 1;
+            }
+            else if (aim.yAxis < 0)
+            {
+                aim.yAxis += 1;
+            }
         }
 
+        transform.localEulerAngles = new Vector3(0, aim.yAxis, 0);
         main.can.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
     }
 
@@ -112,12 +146,10 @@ public class guns : MonoBehaviour
         //fires main cannon
         if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.ammo >= 1)
         {
-            ParticleSystem firing = Instantiate(main.fire);
-            ParticleSystem blast = Instantiate(main.explosion);
+            firing = Instantiate(main.fire.gameObject);
+            blast = Instantiate(main.explosion.gameObject);
             firing.transform.position = main.canExit.position;
             blast.transform.position = hit.point;
-            Destroy(firing, 0.5f);
-            Destroy(blast, 0.5f);
             main.ammo -= 1;
 
             Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
@@ -140,7 +172,10 @@ public class guns : MonoBehaviour
         {
             main.reload = 0;
             main.ammo += 1;
-        }        
+        }
+
+        Destroy(firing, 2f);
+        Destroy(blast, 2f);
     }
 
     void secTurret()
@@ -158,6 +193,11 @@ public class guns : MonoBehaviour
                     tar.GetComponent<enemy>().takeDamage(1);
                 }
             }
+        }
+
+        foreach(Transform gu in sec.guns)
+        {
+            gu.LookAt(hit.point);
         }
         
 
@@ -177,7 +217,7 @@ public class guns : MonoBehaviour
         }
     }
 
-       private void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(hit.point, main.radius);
