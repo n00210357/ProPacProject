@@ -9,8 +9,8 @@ public class saveData : MonoBehaviour
 {
     public static saveData instance;
 
-    public static KeyBindings keybindings;
-    public KeyBindings keybinds;
+    public static keybindings keybindings;
+    public keybindings keybinds;
     public static upgrades upgrades;
     public upgrades upgrad;
 
@@ -39,6 +39,46 @@ public class saveData : MonoBehaviour
         {
             keybindings = keybinds;
         }
+
+         if (keybinds.keys[0] == KeyCode.None)
+        {
+            keybinds.keys[0] = KeyCode.Mouse0;
+        }
+
+        if (keybinds.keys[1] == KeyCode.None)
+        {
+            keybinds.keys[1] = KeyCode.Mouse1;
+        }
+
+        if (keybinds.keys[2] == KeyCode.None)
+        {
+            keybinds.keys[2] = KeyCode.Mouse2;
+        }
+
+        if (keybinds.keys[3] == KeyCode.None)
+        {
+            keybinds.keys[3] = KeyCode.LeftShift;
+        }
+
+        if (keybinds.keys[4] == KeyCode.None)
+        {
+            keybinds.keys[4] = KeyCode.Space;
+        }
+
+        if (keybinds.keys[5] == KeyCode.None)
+        {
+            keybinds.keys[5] = KeyCode.LeftControl;
+        }
+
+        if (keybinds.keys[6] == KeyCode.None)
+        {
+            keybinds.keys[6] = KeyCode.F;
+        }
+
+        if (keybinds.keys[7] == KeyCode.None)
+        {
+            keybinds.keys[7] = KeyCode.R;
+        }     
 
         if (upgrades != null && upgrad == null)
         {

@@ -58,6 +58,7 @@ public class UIcon : MonoBehaviour
         public float maxFuel;
         public float fuel;
         public Image fuelBar;
+        public Text liter;
     }
 
     [Serializable]
@@ -71,6 +72,8 @@ public class UIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {       
+        hea.hearts[0] = hea.firstHeart;
+
         main.delay = basic.guns.GetComponent<guns>().main.delay;
         main.ammoBar = main.ammoBar.GetComponent<Image>();
         main.maxAmmo = basic.guns.GetComponent<guns>().main.maxAmmo;
@@ -91,8 +94,6 @@ public class UIcon : MonoBehaviour
         sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
 
         dash.fuelBar = dash.fuelBar.GetComponent<Image>();
-        dash.maxFuel = GetComponent<player>().dash.dashTotal;
-
         mode.car.enabled = false;
     }
 
@@ -112,18 +113,36 @@ public class UIcon : MonoBehaviour
 
     void healthTrack()
     {
-        hea.maxHealth = GetComponent<player>().basic.maxHealth;
-        hea.hearts = new Transform[hea.maxHealth];
-        hea.hearts[0] = hea.firstHeart;
-
-        if (hea.maxHealth >= 1)
+        if (hea.maxHealth != GetComponent<player>().basic.maxHealth)
         {
-            for (int i = 1; i < hea.maxHealth; i++)
+            if (hea.maxHealth != GetComponent<player>().basic.maxHealth)
             {
-                hea.hearts[i] = Instantiate(hea.firstHeart);
-                hea.hearts[i].transform.SetParent(hea.heartHolder);
-                hea.hearts[i].position = new Vector3(hea.hearts[0].position.x + (hea.dist * i), hea.hearts[0].position.y, hea.hearts[0].position.z);
+                hea.maxHealth = 1;
+
+                foreach(Transform hear in hea.hearts)
+                {
+                    if (hear != hea.firstHeart)
+                    {
+                        hear.gameObject.SetActive(false);
+                        Destroy(hear.gameObject);
+                    }
+                }
             }
+
+            if (hea.maxHealth <= GetComponent<player>().basic.maxHealth)
+            {
+                hea.hearts = new Transform[GetComponent<player>().basic.maxHealth];
+                hea.hearts[0] = hea.firstHeart;
+
+                for (int i = 1; i < GetComponent<player>().basic.maxHealth; i++)
+                {
+                    hea.hearts[i] = Instantiate(hea.firstHeart);
+                    hea.hearts[i].transform.SetParent(hea.heartHolder);
+                    hea.hearts[i].position = new Vector3(hea.hearts[0].position.x + (hea.dist * i), hea.hearts[0].position.y, hea.hearts[0].position.z);
+                }
+            }
+
+            hea.maxHealth = GetComponent<player>().basic.maxHealth;
         }
 
         Color tempColor;
@@ -179,8 +198,10 @@ public class UIcon : MonoBehaviour
 
     void dashTrack()
     {
+        dash.maxFuel = GetComponent<player>().dash.dashTotal;
         dash.fuel = GetComponent<player>().dash.dashAmount;
         dash.fuelBar.fillAmount = dash.fuel / dash.maxFuel;
+        dash.liter.text = (dash.maxFuel / 10).ToString();
     }
 
     void modeTrack()

@@ -27,9 +27,10 @@ public class player : MonoBehaviour
         public float dash;
         public float dashTimer;
         public float dashDelay;
+        public float dashWait;
         public float dashAmount;
-        public float dashTotal;
         public float thrust;
+        public int dashTotal;
     }
 
     //holds the tank modes variables
@@ -70,18 +71,11 @@ public class player : MonoBehaviour
         tankRB = GetComponent<Rigidbody>();
         carRB = car.steeringWheel.GetComponent<Rigidbody>();
         baseRB = car.tread.GetComponent<Rigidbody>();
-    }
-
-    void FixedStart()
-    {
-        upgrades();
-        basic.health = basic.maxHealth;
         basic.vehicalType = false;
     }
 
     void Update()
     {
-        upgrades();
         angle();
 
         //sets drive type to tank
@@ -120,7 +114,12 @@ public class player : MonoBehaviour
 
         //allows player to dash
         dashes();
-    }   
+    }  
+
+    void FixedUpdate()
+    {
+        upgrades();
+    }
 
     void angle()
     {
@@ -262,19 +261,55 @@ public class player : MonoBehaviour
 
     void upgrades()
     {
-        if (saveData.upgrades.health[saveData.upgrades.health.Length - 1] == false)
+        //health upgrades
+        saveData.upgrades.health[0] = true;
+
+        if (basic.maxHealth < saveData.upgrades.health.Length)
         {
-            if (saveData.upgrades.health[basic.maxHealth + 1] == true)
-            {
+            if (saveData.upgrades.health[basic.maxHealth - 1] == true)
+            {   
                 basic.maxHealth += 1;
             }
         }
 
         if (saveData.upgrades.health[basic.maxHealth - 1] == false)
         {
-            basic.maxHealth -= 1;
+            basic.maxHealth -= 1;            
         }
 
-        saveData.upgrades.health[0] = true;
+        if (basic.health > basic.maxHealth)
+        {
+            basic.health -= 1;
+        }
+
+        //Dash upgrades
+        if (saveData.upgrades.dashRechargeSpeed == true)
+        {
+            dash.dashDelay = dash.dashWait / 10;
+        }
+        else
+        {
+            dash.dashDelay = dash.dashWait;
+        }
+
+        saveData.upgrades.dashAmount[0] = true;
+
+        if ((dash.dashTotal / 10) < saveData.upgrades.dashAmount.Length)
+        {
+            if (saveData.upgrades.dashAmount[(dash.dashTotal / 10) - 1] == true)
+            {   
+                dash.dashTotal += 10;
+            }
+        }
+
+        if (saveData.upgrades.dashAmount[(dash.dashTotal / 10) - 1] == false)
+        {
+            dash.dashTotal -= 10;            
+        }
+
+        if (dash.dashAmount > dash.dashTotal)
+        {
+            dash.dashAmount -= 10;
+        }
     }
 }
