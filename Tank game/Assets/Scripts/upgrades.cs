@@ -9,8 +9,8 @@ public class upgrades : ScriptableObject
     public bool canReloadSpeed;
     public bool shotRadius;
 
-    public bool[] machSpeed  = new bool[6];
-    public bool[] machAmmo  = new bool[3];
+    public bool[] machSpeed  = new bool[3];
+    public bool[] machAmmo  = new bool[4];
     public bool machReloadSpeed;
 
     public bool[] dashAmount  = new bool[3];

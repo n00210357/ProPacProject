@@ -26,14 +26,18 @@ public class guns : MonoBehaviour
     {
         public float delay;
         public float reload;
+        public float reloadSpeed;
         public float radius;
         public int damage;
         public int ammo;
         public int maxAmmo;
-        public Transform can;
+        public Transform canHold;
         public Transform canExit;
+        public Transform canFirst;
+        public Transform[] cannons;
         public ParticleSystem fire;
-        public ParticleSystem explosion;
+        public ParticleSystem smaBla;
+        public ParticleSystem bigBla;
         public LineRenderer aimAssets;
     }
 
@@ -41,6 +45,8 @@ public class guns : MonoBehaviour
     [Serializable]
     public class SecondaryCannon
     {
+        public int fireSpeed;
+        public int reloadSpeed;
         public int ammo;
         public int maxAmmo;
         public bool reloading;
@@ -48,12 +54,17 @@ public class guns : MonoBehaviour
     }
 
     public bool UI;
+    private bool canPos;
     private GameObject firing;
     private GameObject blast;
+    private Vector3 positioning;
+    private ParticleSystem explosion;
     private RaycastHit hit;
 
     void Start()
     {
+        positioning = main.canFirst.localPosition;
+
         //draws a line at what the tank is aiming at
         main.aimAssets = main.canExit.GetComponent<LineRenderer>();
         main.aimAssets.positionCount = 2;
@@ -77,6 +88,11 @@ public class guns : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+    }
+
+    void FixedUpdate()
+    {
+        upgrades();
     }
 
     //controls the rotation of the turret
@@ -126,7 +142,7 @@ public class guns : MonoBehaviour
         }
 
         transform.localEulerAngles = new Vector3(0, aim.yAxis, 0);
-        main.can.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
+        main.canHold.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
     }
 
     void gunAim()
@@ -139,7 +155,7 @@ public class guns : MonoBehaviour
 
     //allows the player to control the main cannon
     void mainTurret()
-    {       
+    {
         main.aimAssets.SetPosition(0, main.canExit.position);
         main.aimAssets.SetPosition(1, hit.point);
 
@@ -147,7 +163,7 @@ public class guns : MonoBehaviour
         if (Input.GetKeyDown(saveData.keybindings.keys[0]) && main.ammo >= 1)
         {
             firing = Instantiate(main.fire.gameObject);
-            blast = Instantiate(main.explosion.gameObject);
+            blast = Instantiate(explosion.gameObject);
             firing.transform.position = main.canExit.position;
             blast.transform.position = hit.point;
             main.ammo -= 1;
@@ -160,12 +176,11 @@ public class guns : MonoBehaviour
                     tar.GetComponent<enemy>().takeDamage(main.damage);
                 }
             }
-        }
-        
+        }        
 
         if (main.ammo <= main.maxAmmo - 1)
         {
-            main.reload += 1 * Time.deltaTime;
+            main.reload += main.reloadSpeed * Time.deltaTime;
         }
 
         if (main.reload >= main.delay)
@@ -183,14 +198,13 @@ public class guns : MonoBehaviour
         //fires secondary cannon
         if (Input.GetKey(saveData.keybindings.keys[1]) && sec.ammo >= 1 && sec.reloading == false)
         {
-            sec.ammo -= 1;
+            sec.ammo -= sec.fireSpeed;
 
-            Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
-            foreach (Collider tar in hitEnemies)
-            {
-                if (tar.GetComponent<enemy>())
+            if (hit.transform.gameObject.layer == 7)
+            { 
+                if (hit.transform.GetComponent<enemy>())
                 {
-                    tar.GetComponent<enemy>().takeDamage(1);
+                    hit.transform.GetComponent<enemy>().takeDamage(sec.fireSpeed);
                 }
             }
         }
@@ -200,7 +214,6 @@ public class guns : MonoBehaviour
             gu.LookAt(hit.point);
         }
         
-
         if (sec.ammo <= 0 || Input.GetKeyDown(saveData.keybindings.keys[7]))
         {
             sec.reloading = true;
@@ -208,7 +221,7 @@ public class guns : MonoBehaviour
         
         if (sec.reloading == true && sec.ammo <= sec.maxAmmo)
         {
-            sec.ammo += 1;
+            sec.ammo += sec.reloadSpeed;
         }
         else if (sec.reloading == true)
         {
@@ -217,6 +230,161 @@ public class guns : MonoBehaviour
         }
     }
 
+    void upgrades()
+    {
+        //cannon upgrades
+        saveData.upgrades.cannShots[0] = true;
+
+        if (main.maxAmmo != main.cannons.Length)
+        {
+            for (int i = 1; i < main.cannons.Length; i++)
+            {
+                if (main.cannons[i] != null)
+                {
+                    Destroy(main.cannons[i].gameObject);
+                }
+            }
+
+            main.cannons = new Transform[main.maxAmmo];
+            main.cannons[0] = main.canFirst;
+            positioning.x = 0;
+            main.canFirst.localPosition = positioning;
+        }
+ 
+        for (int i = 1; i < main.cannons.Length; i++)
+        {
+            if (main.cannons[i] == null)
+            {
+                main.cannons[i] = Instantiate(main.canFirst);
+                main.cannons[i].transform.SetParent(main.canHold);
+                positioning = main.canFirst.localPosition;
+
+                if (i == 1 || i == 3 || i == 5)
+                {
+                    positioning.x += 0.2f;
+                }
+                else
+                {
+                    positioning.x -= 0.2f;
+                }
+
+                if (i >= 4)
+                {
+                    positioning.y += 0.2f;
+                    positioning.z -= 0.2f;
+                }
+                else if (i >= 2)
+                {
+                    positioning.y += 0.4f;
+                    positioning.z -= 0.4f;
+                }
+
+                main.cannons[i].localPosition = positioning;
+                canPos = false;
+            }
+        }
+
+        if (canPos == false)
+        {
+            if (main.maxAmmo == 1 || main.maxAmmo == 3 || main.maxAmmo == 5)
+            {
+                positioning = main.canFirst.localPosition;
+                positioning.x = main.canFirst.localPosition.x;
+                main.canFirst.localPosition = positioning;
+                canPos = true;
+            }
+            else
+            {
+                positioning = main.canFirst.localPosition;
+                positioning.x = main.canFirst.localPosition.x + -0.2f;
+                main.canFirst.localPosition = positioning;
+                canPos = true;
+            }
+        }
+
+        if (main.maxAmmo < saveData.upgrades.cannShots.Length)
+        {
+            if (saveData.upgrades.cannShots[main.maxAmmo - 1] == true)
+            {                
+                main.maxAmmo += 1;
+            }
+        }
+
+        if (saveData.upgrades.cannShots[main.maxAmmo - 1] == false)
+        {
+            main.maxAmmo -= 1;
+        }
+
+        if (main.ammo > main.maxAmmo)
+        {
+            main.ammo -= 1;
+        }
+
+        if (saveData.upgrades.canReloadSpeed == true)
+        {
+            main.reloadSpeed = 2;
+        }
+        else
+        {
+            main.reloadSpeed = 1;
+        }
+
+        if (saveData.upgrades.shotRadius == true)
+        {
+            main.radius = 20;
+            explosion = main.bigBla;
+        }
+        else
+        {
+            main.radius = 10;
+            explosion = main.smaBla;
+        }
+
+        //mach upgrades
+        if (sec.fireSpeed < saveData.upgrades.machAmmo.Length - 1)
+        {
+            if (saveData.upgrades.machSpeed[sec.fireSpeed] == true)
+            {
+                sec.fireSpeed += 1;
+            }
+        }
+        
+        if (saveData.upgrades.machSpeed[sec.fireSpeed - 1] == false)
+        {
+            sec.fireSpeed -= 1;
+        }
+        
+        if (((sec.maxAmmo / 500) - 1) < saveData.upgrades.machAmmo.Length)
+        {
+            if (((sec.maxAmmo / 500) - 1) <= 2)
+            {
+                if (saveData.upgrades.machAmmo[sec.maxAmmo / 500] == true)
+                {
+                    sec.maxAmmo += 500;
+                }
+            }
+        }
+ 
+        if (saveData.upgrades.machAmmo[(sec.maxAmmo / 500) - 1] == false)
+        {
+            sec.maxAmmo -= 500;
+        }
+
+        if (sec.ammo > sec.maxAmmo)
+        {
+            sec.ammo -= 500;
+        }
+
+        if (saveData.upgrades.machReloadSpeed == true)
+        {
+            sec.reloadSpeed = 2;
+        }
+        else
+        {
+            sec.reloadSpeed = 1;
+        }
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

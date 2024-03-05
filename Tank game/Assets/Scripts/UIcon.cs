@@ -77,21 +77,8 @@ public class UIcon : MonoBehaviour
         main.delay = basic.guns.GetComponent<guns>().main.delay;
         main.ammoBar = main.ammoBar.GetComponent<Image>();
         main.maxAmmo = basic.guns.GetComponent<guns>().main.maxAmmo;
-        main.shells = new Transform[main.maxAmmo];
-        main.shells[0] = main.firstShell;
-
-        if (main.maxAmmo >= 1)
-        {
-            for (int i = 1; i < main.maxAmmo; i++)
-            {
-                main.shells[i] = Instantiate(main.firstShell);
-                main.shells[i].transform.SetParent(main.shellHolder);
-                main.shells[i].position = new Vector3(main.shells[0].position.x + (main.dist * i), main.shells[0].position.y, main.shells[0].position.z);
-            }
-        }
 
         sec.ammoBar = sec.ammoBar.GetComponent<Image>();
-        sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
 
         dash.fuelBar = dash.fuelBar.GetComponent<Image>();
         mode.car.enabled = false;
@@ -115,19 +102,16 @@ public class UIcon : MonoBehaviour
     {
         if (hea.maxHealth != GetComponent<player>().basic.maxHealth)
         {
-            if (hea.maxHealth != GetComponent<player>().basic.maxHealth)
-            {
-                hea.maxHealth = 1;
+            hea.maxHealth = 1;
 
-                foreach(Transform hear in hea.hearts)
+            foreach(Transform hear in hea.hearts)
+            {
+                if (hear != hea.firstHeart)
                 {
-                    if (hear != hea.firstHeart)
-                    {
-                        hear.gameObject.SetActive(false);
-                        Destroy(hear.gameObject);
-                    }
+                    hear.gameObject.SetActive(false);
+                    Destroy(hear.gameObject);
                 }
-            }
+            } 
 
             if (hea.maxHealth <= GetComponent<player>().basic.maxHealth)
             {
@@ -149,7 +133,7 @@ public class UIcon : MonoBehaviour
         foreach (Transform he in hea.hearts)
         {
             tempColor = he.GetComponent<Image>().color;
-            tempColor.a = 0.5f;
+            tempColor.a = 0.25f;
             he.GetComponent<Image>().color = tempColor;
         }
 
@@ -162,8 +146,9 @@ public class UIcon : MonoBehaviour
     }
 
     void primaryCannon()
-    {
+    {        
         main.reload = basic.guns.GetComponent<guns>().main.reload;
+        main.shells[0] = main.firstShell;
 
         if (main.reload != 0)
         {
@@ -174,26 +159,84 @@ public class UIcon : MonoBehaviour
             main.ammoBar.fillAmount = 1;
         }
 
+        if (main.maxAmmo != basic.guns.GetComponent<guns>().main.maxAmmo)
+        {          
+            foreach (Transform she in main.shells)
+            {
+                if (she != main.firstShell && she != null)
+                {
+                    Destroy(she.gameObject);
+                }
+            }     
+            
+            if (main.maxAmmo != basic.guns.GetComponent<guns>().main.maxAmmo)
+            {
+                main.shells = new Transform[basic.guns.GetComponent<guns>().main.maxAmmo];
+                main.shells[0] = main.firstShell;
+                
+                for (int i = 1; i < basic.guns.GetComponent<guns>().main.maxAmmo; i++)
+                {
+                    main.shells[i] = Instantiate(main.firstShell);
+                    main.shells[i].transform.SetParent(main.shellHolder);
+                    main.shells[i].position = new Vector3(main.shells[0].position.x + (main.dist * i), main.shells[0].position.y, main.shells[0].position.z);
+                }
+            }
+
+            main.maxAmmo = basic.guns.GetComponent<guns>().main.maxAmmo;
+        }
+           
         Color tempColor;
         foreach (Transform shell in main.shells)
         {
-            tempColor = shell.GetComponent<Image>().color;
-            tempColor.a = 0.5f;
-            shell.GetComponent<Image>().color = tempColor;
+            if (shell != null)
+            {
+                tempColor = shell.GetComponent<Image>().color;
+                tempColor.a = 0.5f;
+                shell.GetComponent<Image>().color = tempColor;
+            }
         }
 
         for (int i = 0; i < basic.guns.GetComponent<guns>().main.ammo; i++)
         {
-            tempColor = main.shells[i].GetComponent<Image>().color;
-            tempColor.a = 1f;
-            main.shells[i].GetComponent<Image>().color = tempColor;
-        }
+            if (main.shells[i] != null)
+            {
+                tempColor = main.shells[i].GetComponent<Image>().color;
+                tempColor.a = 1f;
+                main.shells[i].GetComponent<Image>().color = tempColor;
+            }
+        } 
     }
 
     void secondaryGun()
     {
+        sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
         sec.ammo = basic.guns.GetComponent<guns>().sec.ammo;
         sec.ammoBar.fillAmount = sec.ammo / sec.maxAmmo;
+
+        Color tempColor = sec.ammoBar.GetComponent<Image>().color;
+
+        if (sec.maxAmmo >= 600 && sec.maxAmmo <= 1400)
+        {
+            tempColor.g = 0.75f;
+            tempColor.b = 0.75f;            
+        }
+        else if (sec.maxAmmo >= 1401 && sec.maxAmmo <= 1900)
+        {
+            tempColor.g = 0.5f;
+            tempColor.b = 0.5f;
+        }
+        else if (sec.maxAmmo >= 1901)
+        {
+            tempColor.g = 0.25f;
+            tempColor.b = 0.25f;
+        }
+        else
+        {
+            tempColor.g = 1f;
+            tempColor.b = 1f;
+        }
+
+        sec.ammoBar.GetComponent<Image>().color = tempColor;
     }
 
     void dashTrack()

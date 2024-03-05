@@ -261,27 +261,6 @@ public class player : MonoBehaviour
 
     void upgrades()
     {
-        //health upgrades
-        saveData.upgrades.health[0] = true;
-
-        if (basic.maxHealth < saveData.upgrades.health.Length)
-        {
-            if (saveData.upgrades.health[basic.maxHealth - 1] == true)
-            {   
-                basic.maxHealth += 1;
-            }
-        }
-
-        if (saveData.upgrades.health[basic.maxHealth - 1] == false)
-        {
-            basic.maxHealth -= 1;            
-        }
-
-        if (basic.health > basic.maxHealth)
-        {
-            basic.health -= 1;
-        }
-
         //Dash upgrades
         if (saveData.upgrades.dashRechargeSpeed == true)
         {
@@ -310,6 +289,27 @@ public class player : MonoBehaviour
         if (dash.dashAmount > dash.dashTotal)
         {
             dash.dashAmount -= 10;
+        }
+
+        //health upgrades
+        saveData.upgrades.health[0] = true;
+
+        if (basic.maxHealth < saveData.upgrades.health.Length)
+        {
+            if (saveData.upgrades.health[basic.maxHealth - 1] == true)
+            {
+                basic.maxHealth += 1;
+            }
+        }
+
+        if (saveData.upgrades.health[basic.maxHealth - 1] == false)
+        {
+            basic.maxHealth -= 1;
+        }
+
+        if (basic.health > basic.maxHealth)
+        {
+            basic.health -= 1;
         }
     }
 }

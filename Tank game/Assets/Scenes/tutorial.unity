@@ -256,13 +256,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20733373}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.303, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.14849997, z: 3.9500008}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 141313932}
-  m_RootOrder: 1
+  m_Father: {fileID: 1623228084}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &20733375
 LineRenderer:
@@ -1777,7 +1777,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 292460026}
-  m_LocalRotation: {x: -0, y: 2.5329735e-11, z: -1.418471e-12, w: 1}
+  m_LocalRotation: {x: -0, y: -1.9900623e-10, z: 1.1144351e-11, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.33333334, y: 1, z: 0.33333334}
   m_ConstrainProportionsScale: 0
@@ -2020,7 +2020,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: fcbb54f53c16a8e4885b1c3e060eccfc, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: fcbb54f53c16a8e4885b1c3e060eccfc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcbb54f53c16a8e4885b1c3e060eccfc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3224,18 +3228,25 @@ MonoBehaviour:
   main:
     delay: 3
     reload: 0
+    reloadSpeed: 0
     radius: 10
     damage: 1000
     ammo: 0
     maxAmmo: 3
-    can: {fileID: 1623228084}
+    canHold: {fileID: 1623228084}
     canExit: {fileID: 20733374}
+    canFirst: {fileID: 141313932}
+    cannons:
+    - {fileID: 0}
     fire: {fileID: 7155011986353224963, guid: 6817323154e56104da5a0ff5ed7c3fd0, type: 3}
-    explosion: {fileID: 4402831619136587078, guid: 2170da423244b2c4bab48a321b937177, type: 3}
+    smaBla: {fileID: 4402831619136587078, guid: 2170da423244b2c4bab48a321b937177, type: 3}
+    bigBla: {fileID: 700810423538036734, guid: db3ab18420964e74ab7a93462223b557, type: 3}
     aimAssets: {fileID: 0}
   sec:
-    ammo: 1000
-    maxAmmo: 1000
+    fireSpeed: 0
+    reloadSpeed: 0
+    ammo: 500
+    maxAmmo: 0
     reloading: 0
     guns:
     - {fileID: 291215106}
@@ -4560,7 +4571,8 @@ MonoBehaviour:
     ammoBar: {fileID: 1325496854}
     firstShell: {fileID: 1126713482}
     shellHolder: {fileID: 893439695}
-    shells: []
+    shells:
+    - {fileID: 1126713482}
   sec:
     maxAmmo: 0
     ammo: 0
@@ -4794,7 +4806,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.02796714, y: 0.0000000010547133, z: -2.9508857e-11, w: 0.9996089}
+  m_LocalRotation: {x: 0.02796714, y: 0.0000000012294628, z: -3.439801e-11, w: 0.9996089}
   m_LocalPosition: {x: -0.09958267, y: 9.6, z: -32.6}
   m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
@@ -7234,6 +7246,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 20733374}
   - {fileID: 141313932}
   m_Father: {fileID: 680476829}
   m_RootOrder: 1
