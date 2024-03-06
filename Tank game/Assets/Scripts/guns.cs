@@ -54,7 +54,6 @@ public class guns : MonoBehaviour
     }
 
     public bool UI;
-    private bool canPos;
     private GameObject firing;
     private GameObject blast;
     private Vector3 positioning;
@@ -98,7 +97,7 @@ public class guns : MonoBehaviour
     //controls the rotation of the turret
     void camCon()
     {
-        if (transform.parent.GetComponent<player>().basic.vehicalType == false)
+        if (transform.parent.transform.parent.GetComponent<player>().basic.vehicalType == false)
         {
             aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
             aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
@@ -235,72 +234,32 @@ public class guns : MonoBehaviour
         //cannon upgrades
         saveData.upgrades.cannShots[0] = true;
 
-        if (main.maxAmmo != main.cannons.Length)
-        {
-            for (int i = 1; i < main.cannons.Length; i++)
+        for (int i = 0; i < main.maxAmmo; i++)
+        {    
+            main.cannons[i].GetComponentInChildren<MeshRenderer>().enabled = saveData.upgrades.cannShots[i];
+                
+            if ((main.maxAmmo == 1 || main.maxAmmo == 3 || (main.maxAmmo == 5)) && i == (main.maxAmmo - 1))
             {
-                if (main.cannons[i] != null)
-                {
-                    Destroy(main.cannons[i].gameObject);
-                }
+                main.cannons[i].localPosition = new Vector3(0f, main.cannons[i].localPosition.y, main.cannons[i].localPosition.z);
             }
-
-            main.cannons = new Transform[main.maxAmmo];
-            main.cannons[0] = main.canFirst;
-            positioning.x = 0;
-            main.canFirst.localPosition = positioning;
-        }
- 
-        for (int i = 1; i < main.cannons.Length; i++)
-        {
-            if (main.cannons[i] == null)
+            else if (i == 0 || i == 2 || i == 4)
             {
-                main.cannons[i] = Instantiate(main.canFirst);
-                main.cannons[i].transform.SetParent(main.canHold);
-                positioning = main.canFirst.localPosition;
-
-                if (i == 1 || i == 3 || i == 5)
-                {
-                    positioning.x += 0.2f;
-                }
-                else
-                {
-                    positioning.x -= 0.2f;
-                }
-
-                if (i >= 4)
-                {
-                    positioning.y += 0.2f;
-                    positioning.z -= 0.2f;
-                }
-                else if (i >= 2)
-                {
-                    positioning.y += 0.4f;
-                    positioning.z -= 0.4f;
-                }
-
-                main.cannons[i].localPosition = positioning;
-                canPos = false;
-            }
-        }
-
-        if (canPos == false)
-        {
-            if (main.maxAmmo == 1 || main.maxAmmo == 3 || main.maxAmmo == 5)
-            {
-                positioning = main.canFirst.localPosition;
-                positioning.x = main.canFirst.localPosition.x;
-                main.canFirst.localPosition = positioning;
-                canPos = true;
+                main.cannons[i].localPosition = new Vector3(0.2f, main.cannons[i].localPosition.y, main.cannons[i].localPosition.z);
             }
             else
             {
-                positioning = main.canFirst.localPosition;
-                positioning.x = main.canFirst.localPosition.x + -0.2f;
-                main.canFirst.localPosition = positioning;
-                canPos = true;
+                main.cannons[i].localPosition = new Vector3(-0.2f, main.cannons[i].localPosition.y, main.cannons[i].localPosition.z);
             }
-        }
+
+            if (i <= main.ammo - 1)
+            {
+                main.cannons[i].localPosition = new Vector3(main.cannons[i].localPosition.x, main.cannons[i].localPosition.y, 1.65f);
+            }
+            else
+            {
+                main.cannons[i].localPosition = new Vector3(main.cannons[i].localPosition.x, main.cannons[i].localPosition.y, 0.48f);
+            }
+        }        
 
         if (main.maxAmmo < saveData.upgrades.cannShots.Length)
         {
