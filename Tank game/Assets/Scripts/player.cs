@@ -16,7 +16,9 @@ public class player : MonoBehaviour
     {
         public int health;
         public int maxHealth;
+        public bool moving;
         public bool vehicalType = false;
+        public GameObject lights;
         public GameObject keyBindings;
     }
 
@@ -31,6 +33,7 @@ public class player : MonoBehaviour
         public float dashAmount;
         public float thrust;
         public int dashTotal;
+        public Transform[] nitroHolders;
     }
 
     //holds the tank modes variables
@@ -42,6 +45,7 @@ public class player : MonoBehaviour
         public float jump;
         public float gravity;
         public float touchDown;
+        public Transform treads;
         public Vector3 movDir;
         public LayerMask land;
     }
@@ -57,8 +61,10 @@ public class player : MonoBehaviour
         public float turnInput;
         public Transform steeringWheel;
         public Transform tread;
+        public Transform[] hudCaps;
     }
 
+    private float xRot;
     private Quaternion roty;
     private Rigidbody tankRB;
     private Rigidbody carRB;
@@ -78,6 +84,15 @@ public class player : MonoBehaviour
     {
         angle();
 
+        if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.active == false)
+        {
+            basic.lights.SetActive(true);
+        }
+        else if (Input.GetKeyDown(saveData.keybindings.keys[8]))
+        {
+            basic.lights.SetActive(false);
+        }
+
         //sets drive type to tank
         if (basic.vehicalType == false)
         {
@@ -93,7 +108,12 @@ public class player : MonoBehaviour
                 tankRB.isKinematic = true;
                 carRB.isKinematic = false;        
                 car.steeringWheel.localPosition = new Vector3(0, 0, 0);  
-                car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);  
+                car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);
+                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0.09f, tank.treads.localPosition.z);
+                foreach (Transform hud in car.hudCaps)
+                {
+                    hud.localPosition = new Vector3(hud.localPosition.x, -0.2f, hud.localPosition.z);
+                }                
             }
         }
         else
@@ -109,6 +129,11 @@ public class player : MonoBehaviour
                 basic.vehicalType = false;
                 tankRB.isKinematic = false;
                 carRB.isKinematic = true;
+                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0, tank.treads.localPosition.z);
+                foreach (Transform hud in car.hudCaps)
+                {
+                    hud.localPosition = new Vector3(hud.localPosition.x, 0, hud.localPosition.z);
+                }
             }
         }
 
@@ -135,6 +160,28 @@ public class player : MonoBehaviour
         transform.Rotate(0, Input.GetAxis("Horizontal") * tank.turnSpeed * Time.deltaTime, 0);
         Vector3 tankDrive = transform.forward * Input.GetAxis("Vertical") * tank.speed * Time.deltaTime;
         tank.movDir = new Vector3(tankDrive.x, tank.gravity, tankDrive.z);
+
+        if (tank.movDir.x != 0 || tank.movDir.z != 0)
+        {
+            if (tank.treads.localPosition.z >= 0.15f)
+            {
+                basic.moving = true;
+            }                
+                
+            if (tank.treads.localPosition.z <= -0.15f)
+            {
+                basic.moving = false;
+            }  
+
+            if (basic.moving == true)
+            {
+                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, tank.treads.localPosition.y, tank.treads.localPosition.z - 2 * Time.deltaTime);
+            }
+            else
+            {
+                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, tank.treads.localPosition.y, tank.treads.localPosition.z + 2 * Time.deltaTime);
+            }
+        }
 
         //moves the tank in tank mode
         tankRB.AddForce(tank.movDir);
@@ -164,6 +211,47 @@ public class player : MonoBehaviour
         carRB.AddForce(transform.forward * car.moveInput, ForceMode.Acceleration);
         float newRotation = car.turnInput * car.turn * Time.deltaTime;
         transform.Rotate(0, newRotation, 0, Space.World);
+
+        if (Input.GetKey(saveData.keybindings.keys[5]))
+        {
+            car.turn = 180f;
+            car.speed = 25;
+        }
+        else
+        {
+            car.turn = 90f;
+            car.speed = 50;
+        }
+
+        if (car.turnInput < 0)
+        {
+            car.hudCaps[0].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, -45, car.hudCaps[0].GetChild(1).localRotation.z);
+            car.hudCaps[1].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, -45, car.hudCaps[1].GetChild(1).localRotation.z);
+        }
+        else if (car.turnInput > 0)
+        {
+            car.hudCaps[0].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, 45, car.hudCaps[0].GetChild(1).localRotation.z);
+            car.hudCaps[1].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, 45, car.hudCaps[1].GetChild(1).localRotation.z);
+        }
+        else
+        {
+            if (car.moveInput != 0)
+            {
+                car.hudCaps[0].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, 0, car.hudCaps[0].GetChild(1).localRotation.z);
+                car.hudCaps[1].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, 0, car.hudCaps[1].GetChild(1).localRotation.z);
+            }
+            else
+            {
+                car.hudCaps[0].GetChild(1).localRotation = Quaternion.Euler(xRot, 0, car.hudCaps[0].GetChild(1).localRotation.z);
+                car.hudCaps[1].GetChild(1).localRotation = Quaternion.Euler(xRot, 0, car.hudCaps[1].GetChild(1).localRotation.z);
+            }
+        }
+
+        if (car.moveInput != 0)
+        {
+            car.hudCaps[2].GetChild(1).Rotate(-5f, car.hudCaps[2].GetChild(1).localRotation.y, car.hudCaps[2].GetChild(1).localRotation.z, Space.Self);
+            car.hudCaps[3].GetChild(1).Rotate(-5f, car.hudCaps[3].GetChild(1).localRotation.y, car.hudCaps[3].GetChild(1).localRotation.z, Space.Self);
+        }
     }
 
     //dashes
@@ -187,18 +275,36 @@ public class player : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.S))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[4].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                        dash.nitroHolders[5].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     carRB.AddForce(-transform.forward * dash.dash * 3, ForceMode.Acceleration);
                 }
                 else if (Input.GetKey(KeyCode.D))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[1].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     carRB.AddForce(transform.right * dash.dash * 3, ForceMode.Acceleration);
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[0].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     carRB.AddForce(-transform.right * dash.dash * 3, ForceMode.Acceleration);
                 }
                 else
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[2].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                        dash.nitroHolders[3].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     carRB.AddForce(transform.forward * dash.dash * 3, ForceMode.Acceleration);
                 }
             }
@@ -209,21 +315,82 @@ public class player : MonoBehaviour
 
                 if (Input.GetKey(KeyCode.S))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[4].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                        dash.nitroHolders[5].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     tankRB.AddForce(-transform.forward * dash.dash * 1000, ForceMode.Impulse);
                 }
                 else if (Input.GetKey(KeyCode.D))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[1].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     tankRB.AddForce(transform.right * dash.dash * 1000, ForceMode.Impulse);
                 }
                 else if (Input.GetKey(KeyCode.A))
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[0].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     tankRB.AddForce(-transform.right * dash.dash * 1000, ForceMode.Impulse);
                 }
-                else
+                else 
                 {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        dash.nitroHolders[2].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                        dash.nitroHolders[3].GetChild(i).gameObject.GetComponent<ParticleSystem>().Play();
+                    }
                     tankRB.AddForce(transform.forward * dash.dash * 1000, ForceMode.Impulse);
                 }
-            }                             
+            }
+
+            foreach(Transform da in dash.nitroHolders)
+            {
+                for (var i = 0; i < 3; i++)
+                {
+                    var em = da.GetChild(i).gameObject.GetComponent<ParticleSystem>().main;
+                    em.loop = Input.GetKey(saveData.keybindings.keys[3]);
+                }
+            }
+
+            if (Input.GetKey(KeyCode.S) == false || dash.dashAmount <= 0)
+            {
+                for (var i = 0; i < 3; i++)
+                {
+                    dash.nitroHolders[4].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                    dash.nitroHolders[5].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                }
+            }
+            
+            if (Input.GetKey(KeyCode.D) == false || dash.dashAmount <= 0)
+            {
+                for (var i = 0; i < 3; i++)
+                {
+                    dash.nitroHolders[1].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                }
+            }
+            
+            if (Input.GetKey(KeyCode.A) == false || dash.dashAmount <= 0)
+            {
+                for (var i = 0; i < 3; i++)
+                {
+                    dash.nitroHolders[0].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                }
+            }
+            
+            if (Input.GetKey(KeyCode.W) == false || dash.dashAmount <= 0)
+            {
+                for (var i = 0; i < 3; i++)
+                {
+                    dash.nitroHolders[2].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                    dash.nitroHolders[3].GetChild(i).gameObject.GetComponent<ParticleSystem>().Stop();
+                }
+            }
         }
 
         //restores dash after a set amount of time

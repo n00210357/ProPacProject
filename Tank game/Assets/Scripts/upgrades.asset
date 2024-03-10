@@ -18,6 +18,6 @@ MonoBehaviour:
   machSpeed: 010101
   machAmmo: 01010101
   machReloadSpeed: 1
-  dashAmount: 010100
+  dashAmount: 010101
   dashRechargeSpeed: 1
   health: 010101010101

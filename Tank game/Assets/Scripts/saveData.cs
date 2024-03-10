@@ -72,13 +72,23 @@ public class saveData : MonoBehaviour
 
         if (keybinds.keys[6] == KeyCode.None)
         {
-            keybinds.keys[6] = KeyCode.F;
+            keybinds.keys[6] = KeyCode.Q;
         }
 
         if (keybinds.keys[7] == KeyCode.None)
         {
             keybinds.keys[7] = KeyCode.R;
-        }     
+        }
+
+        if (keybinds.keys[8] == KeyCode.None)
+        {
+            keybinds.keys[8] = KeyCode.R;
+        }
+
+        if (keybinds.keys[9] == KeyCode.None)
+        {
+            keybinds.keys[9] = KeyCode.Escape;
+        }
 
         if (upgrades != null && upgrad == null)
         {

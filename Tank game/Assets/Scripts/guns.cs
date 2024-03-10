@@ -17,6 +17,7 @@ public class guns : MonoBehaviour
         public float pTotal;
         public float mTotal;
         public float range;
+        public bool recenter;
         public LayerMask lockOn;
     }
 
@@ -50,7 +51,9 @@ public class guns : MonoBehaviour
         public int ammo;
         public int maxAmmo;
         public bool reloading;
+        public bool firing;
         public Transform[] guns;
+        public GameObject hole;
     }
 
     public bool UI;
@@ -97,21 +100,12 @@ public class guns : MonoBehaviour
     //controls the rotation of the turret
     void camCon()
     {
-        if (transform.parent.transform.parent.GetComponent<player>().basic.vehicalType == false)
+        if (Input.GetKeyDown(saveData.keybindings.keys[2]))
         {
-            aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
-            aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
-
-            if (aim.xAxis >= aim.pTotal)
-            {
-                aim.xAxis = aim.pTotal;
-            }
-            else if (aim.xAxis <= aim.mTotal)
-            {
-                aim.xAxis = aim.mTotal;
-            }
+            aim.recenter = true;
         }
-        else
+
+        if (transform.parent.transform.parent.GetComponent<player>().basic.vehicalType == true || aim.recenter == true)
         {
             if (aim.xAxis >= -0.5 && aim.xAxis <= 0.5)
             {
@@ -121,7 +115,7 @@ public class guns : MonoBehaviour
             {
                 aim.xAxis -= 1;
             }
-            else if(aim.xAxis < 0)
+            else if (aim.xAxis < 0)
             {
                 aim.xAxis += 1;
             }
@@ -138,10 +132,38 @@ public class guns : MonoBehaviour
             {
                 aim.yAxis += 1;
             }
+
+            if (aim.yAxis == 0 && aim.xAxis == 0)
+            {
+                aim.recenter = false;
+            }
+        }
+        else
+        {
+            aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
+            aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
+
+            if (aim.xAxis >= aim.pTotal)
+            {
+                aim.xAxis = aim.pTotal;
+            }
+            else if (aim.xAxis <= aim.mTotal)
+            {
+                aim.xAxis = aim.mTotal;
+            }
         }
 
         transform.localEulerAngles = new Vector3(0, aim.yAxis, 0);
         main.canHold.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
+
+        if (aim.yAxis <= -361)
+        {
+            aim.yAxis = 359;
+        }
+        else if (aim.yAxis >= 361)
+        {
+            aim.yAxis = -359;
+        }
     }
 
     void gunAim()
@@ -194,9 +216,36 @@ public class guns : MonoBehaviour
 
     void secTurret()
     {
+        sec.guns[0].LookAt(hit.point);
+        sec.guns[1].LookAt(hit.point);
+
         //fires secondary cannon
         if (Input.GetKey(saveData.keybindings.keys[1]) && sec.ammo >= 1 && sec.reloading == false)
         {
+            foreach (Transform gu in sec.guns)
+            {
+                gu.GetChild(2).GetComponent<ParticleSystem>().Play();
+
+                if (gu.localPosition.z >= 0.25f)
+                {
+                    sec.firing = true;
+                }                
+                
+                if (gu.localPosition.z <= -0.25f)
+                {
+                    sec.firing = false;
+                }                
+
+                if (sec.firing == true)
+                {
+                    gu.localPosition = new Vector3(gu.localPosition.x, gu.localPosition.y, gu.localPosition.z - 5 * Time.deltaTime);
+                }
+                else
+                {
+                    gu.localPosition = new Vector3(gu.localPosition.x, gu.localPosition.y, gu.localPosition.z + 5 * Time.deltaTime);
+                }
+            }
+                        
             sec.ammo -= sec.fireSpeed;
 
             if (hit.transform.gameObject.layer == 7)
@@ -206,13 +255,15 @@ public class guns : MonoBehaviour
                     hit.transform.GetComponent<enemy>().takeDamage(sec.fireSpeed);
                 }
             }
-        }
 
-        foreach(Transform gu in sec.guns)
-        {
-            gu.LookAt(hit.point);
+            if (hit.transform.gameObject.layer == 0)
+            {
+                GameObject newHole = Instantiate(sec.hole, hit.point + hit.normal * 0.001f, Quaternion.identity) as GameObject;
+                newHole.transform.LookAt(hit.point + hit.normal * 0.001f);
+                Destroy(newHole, 5f);
+            }
         }
-        
+ 
         if (sec.ammo <= 0 || Input.GetKeyDown(saveData.keybindings.keys[7]))
         {
             sec.reloading = true;
@@ -307,7 +358,38 @@ public class guns : MonoBehaviour
                 sec.fireSpeed += 1;
             }
         }
-        
+                
+        for (int i = 1; i < saveData.upgrades.machSpeed.Length; i++)
+        {
+            if (saveData.upgrades.machSpeed[i] == false && i == 1)
+            {
+                sec.guns[0].GetChild(0).localPosition = new Vector3(0.73f, sec.guns[0].GetChild(0).localPosition.y, sec.guns[0].GetChild(0).localPosition.z);
+                sec.guns[0].GetChild(1).GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                sec.guns[1].parent.gameObject.SetActive(false);
+                break;
+            }
+
+            if (saveData.upgrades.machSpeed[i] == false && i == 2)
+            {
+                sec.guns[0].GetChild(0).localPosition = new Vector3(0.73f, sec.guns[0].GetChild(0).localPosition.y, sec.guns[0].GetChild(0).localPosition.z);
+                sec.guns[0].GetChild(1).GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                sec.guns[1].parent.gameObject.SetActive(true);
+                sec.guns[1].GetChild(0).localPosition = new Vector3(-0.77f, sec.guns[0].GetChild(0).localPosition.y, sec.guns[0].GetChild(0).localPosition.z);
+                sec.guns[1].GetChild(1).GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                break;
+            }
+
+            if (saveData.upgrades.machSpeed[i] == true && i == 2)
+            {
+                sec.guns[0].GetChild(0).localPosition = new Vector3(0.63f, sec.guns[0].GetChild(0).localPosition.y, sec.guns[0].GetChild(0).localPosition.z);
+                sec.guns[0].GetChild(1).GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                sec.guns[1].parent.gameObject.SetActive(true);
+                sec.guns[1].GetChild(0).localPosition = new Vector3(-0.67f, sec.guns[0].GetChild(0).localPosition.y, sec.guns[0].GetChild(0).localPosition.z);
+                sec.guns[1].GetChild(1).GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                break;
+            }
+        }
+
         if (saveData.upgrades.machSpeed[sec.fireSpeed - 1] == false)
         {
             sec.fireSpeed -= 1;

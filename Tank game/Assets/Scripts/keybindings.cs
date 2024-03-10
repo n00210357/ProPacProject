@@ -10,8 +10,8 @@ public class keybindings : ScriptableObject
     public float xSen;
     public float ySen;
 
-    // 0 = fire1    1 = fire2   2 = fire3  3 = dash   4 = jump 5 = drift   6 = form
-    // 7 = reload
+    // 0 = fire1    1 = fire2   2 = fire3  3 = dash  4 = jump  5 = drift  6 = form
+    // 7 = reload   8 = lights  9 = pause
     void Start()
     {
         if (keys[0] == KeyCode.None)
@@ -46,13 +46,18 @@ public class keybindings : ScriptableObject
 
         if (keys[6] == KeyCode.None)
         {
-            keys[6] = KeyCode.F;
+            keys[6] = KeyCode.Q;
         }
 
         if (keys[7] == KeyCode.None)
         {
             keys[7] = KeyCode.R;
-        }        
+        }
+
+        if (keys[8] == KeyCode.None)
+        {
+            keys[8] = KeyCode.Escape;
+        }
     }
 }
 
