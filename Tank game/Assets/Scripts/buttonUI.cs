@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class buttonUI : MonoBehaviour
 {
+    public bool started;
     public int buttonID = 0;
     public Text tex;
     public Transform promt;
@@ -13,17 +14,24 @@ public class buttonUI : MonoBehaviour
 
     void Start()
     {
+        started = false;
+        StartCoroutine(LateStart(0.1f));
+    }
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
         if (buttonID == -1)
         {
-            promt.GetComponent<Slider>().minValue = 0;
-            promt.GetComponent<Slider>().maxValue = 179;
-            promt.GetComponent<Slider>().value = saveData.cam[0];
+            promt.GetComponent<Slider>().minValue = 5;
+            promt.GetComponent<Slider>().maxValue = 110;
+            promt.GetComponent<Slider>().value = saveData.keybindings.cam[0];
         }
         else if (buttonID == -2)
         {
             promt.GetComponent<Slider>().minValue = 0;
             promt.GetComponent<Slider>().maxValue = 8;
-            promt.GetComponent<Slider>().value = saveData.cam[1];
+            promt.GetComponent<Slider>().value = saveData.keybindings.cam[1];
         }
         else if (buttonID <= -3 && buttonID >= -7)
         {
@@ -32,23 +40,23 @@ public class buttonUI : MonoBehaviour
 
             if (buttonID == -3)
             {
-                promt.GetComponent<Slider>().value = saveData.noise[0];
+                promt.GetComponent<Slider>().value = saveData.keybindings.noise[0];
             }
             else if (buttonID == -4)
             {
-                promt.GetComponent<Slider>().value = saveData.noise[1];
+                promt.GetComponent<Slider>().value = saveData.keybindings.noise[1];
             }
             else if (buttonID == -5)
             {
-                promt.GetComponent<Slider>().value = saveData.noise[2];
+                promt.GetComponent<Slider>().value = saveData.keybindings.noise[2];
             }
             else if (buttonID == -6)
             {
-                promt.GetComponent<Slider>().value = saveData.noise[3];
+                promt.GetComponent<Slider>().value = saveData.keybindings.noise[3];
             }
             else if (buttonID == -7)
             {
-                promt.GetComponent<Slider>().value = saveData.noise[4];
+                promt.GetComponent<Slider>().value = saveData.keybindings.noise[4];
             }
         }
         else if (buttonID <= -1)
@@ -58,13 +66,15 @@ public class buttonUI : MonoBehaviour
 
             if (buttonID == -8)
             {
-                promt.GetComponent<Slider>().value = saveData.cam[2];
+                promt.GetComponent<Slider>().value = saveData.keybindings.cam[2];
             }
             else if (buttonID == -9)
             {
-                promt.GetComponent<Slider>().value = saveData.cam[3];
+                promt.GetComponent<Slider>().value = saveData.keybindings.cam[3];
             }
         }
+
+        started = true;
     }
 
     public void Update()
@@ -87,58 +97,60 @@ public class buttonUI : MonoBehaviour
 
     void OnGUI()
     {
+        if (started == true)
+        {            
         if (buttonID == -1)
         {
-            saveData.cam[0] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.cam[0].ToString();
+            saveData.keybindings.cam[0] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.cam[0].ToString();
         }
 
         if (buttonID == -2)
         {
-            saveData.cam[1] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.cam[1].ToString();
+            saveData.keybindings.cam[1] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.cam[1].ToString();
         }
 
         if (buttonID <= -3)
         {
-            saveData.noise[0] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[0].ToString();
+            saveData.keybindings.noise[0] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.noise[0].ToString();
         }
 
         if (buttonID <= -4)
         {
-            saveData.noise[1] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[1].ToString();
+            saveData.keybindings.noise[1] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.noise[1].ToString();
         }
 
         if (buttonID <= -5)
         {
-            saveData.noise[2] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[2].ToString();
+            saveData.keybindings.noise[2] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.noise[2].ToString();
         }
 
         if (buttonID <= -6)
         {
-            saveData.noise[3] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[3].ToString();
+            saveData.keybindings.noise[3] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.noise[3].ToString();
         }
 
         if (buttonID <= -7)
         {
-            saveData.noise[4] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.noise[4].ToString();
+            saveData.keybindings.noise[4] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.noise[4].ToString();
         }
 
         if (buttonID <= -8)
         {
-            saveData.cam[2] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.cam[2].ToString();
+            saveData.keybindings.cam[2] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.cam[2].ToString();
         }
 
         if (buttonID <= -9)
         {
-            saveData.cam[3] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.cam[3].ToString();
+            saveData.keybindings.cam[3] = promt.GetComponent<Slider>().value;
+            tex.text = saveData.keybindings.cam[3].ToString();
         }
 
         if (scan == true)
@@ -181,7 +193,7 @@ public class buttonUI : MonoBehaviour
                 promt.gameObject.SetActive(false);
                 scan = false;
             }
+            }
         }
-
     }
 }

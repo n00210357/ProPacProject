@@ -65,6 +65,18 @@ public class guns : MonoBehaviour
 
     void Start()
     {
+        // Hides the cursor
+        if (UI == false)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+
         positioning = main.canFirst.localPosition;
 
         //draws a line at what the tank is aiming at
@@ -76,20 +88,9 @@ public class guns : MonoBehaviour
     {
         camCon();
         gunAim();
+        mainTurret();
+        secTurret();
 
-        // Hides the cursor
-        if (UI == false)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            mainTurret();
-            secTurret();
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
     }
 
     void FixedUpdate()
@@ -140,8 +141,8 @@ public class guns : MonoBehaviour
         }
         else
         {
-            aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.xSen * -1;
-            aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.ySen * 1;
+            aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.cam[2] * -1;
+            aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.cam[3] * 1;
 
             if (aim.xAxis >= aim.pTotal)
             {

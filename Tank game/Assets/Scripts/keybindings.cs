@@ -6,58 +6,14 @@ using UnityEngine;
 public class keybindings : ScriptableObject
 {
     public static keybindings instance;
-    public KeyCode[] keys = new KeyCode[8];
-    public float xSen;
-    public float ySen;
-
     // 0 = fire1    1 = fire2   2 = fire3  3 = dash  4 = jump  5 = drift  6 = form
     // 7 = reload   8 = lights  9 = pause
-    void Start()
-    {
-        if (keys[0] == KeyCode.None)
-        {
-            keys[0] = KeyCode.Mouse0;
-        }
+    public KeyCode[] keys = new KeyCode[10];
 
-        if (keys[1] == KeyCode.None)
-        {
-            keys[1] = KeyCode.Mouse1;
-        }
+    //0 = fov 1 = bright 2 = xsen 3 = ysen
+    public float[] cam = {90, 1, 10, 5};
 
-        if (keys[2] == KeyCode.None)
-        {
-            keys[2] = KeyCode.Mouse2;
-        }
-
-        if (keys[3] == KeyCode.None)
-        {
-            keys[3] = KeyCode.LeftShift;
-        }
-
-        if (keys[4] == KeyCode.None)
-        {
-            keys[4] = KeyCode.Space;
-        }
-
-        if (keys[5] == KeyCode.None)
-        {
-            keys[5] = KeyCode.LeftControl;
-        }
-
-        if (keys[6] == KeyCode.None)
-        {
-            keys[6] = KeyCode.Q;
-        }
-
-        if (keys[7] == KeyCode.None)
-        {
-            keys[7] = KeyCode.R;
-        }
-
-        if (keys[8] == KeyCode.None)
-        {
-            keys[8] = KeyCode.Escape;
-        }
-    }
+     //0 = master 1 = player 2 = enemies 3 = music 4 = enviroment
+    public float[] noise = { 1, 1, 1, 1, 1};
 }
 

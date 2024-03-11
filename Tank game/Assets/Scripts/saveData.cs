@@ -13,12 +13,6 @@ public class saveData : MonoBehaviour
     public keybindings keybinds;
     public static upgrades upgrades;
     public upgrades upgrad;
-
-    //                          fov  bri xSe  ySe 
-    public static float[] cam = { 60, 1, 10, 5};
-    //                             ma  pl en mu en
-    public static float[] noise = { 1, 1, 1, 1, 1};
-
     public static int difficulty;
     public int diff;
     public static Transform[] levels;
@@ -90,6 +84,26 @@ public class saveData : MonoBehaviour
             keybinds.keys[9] = KeyCode.Escape;
         }
 
+        if (keybindings.cam[0] == 0)
+        {
+            keybindings.cam[0] = 90;
+        }
+
+        if (keybindings.cam[1] == 0)
+        {
+            keybindings.cam[1] = 1;
+        }
+
+        if (keybindings.cam[2] == 0)
+        {
+            keybindings.cam[2] = 10;
+        }
+
+        if (keybindings.cam[3] == 0)
+        {
+            keybindings.cam[3] = 5;
+        }
+
         if (upgrades != null && upgrad == null)
         {
             upgrad = upgrades;
@@ -99,22 +113,12 @@ public class saveData : MonoBehaviour
         {
             upgrades = upgrad;
         }
-
-        cameraSettings();
     }
 
     void Update()
     {
-        cameraSettings();
-        
+        camer.fieldOfView = keybindings.cam[0];
+        RenderSettings.ambientIntensity = keybindings.cam[1];
         difficulty = diff;
-    }
-
-    void cameraSettings()
-    {
-        camer.fieldOfView = cam[0];
-        RenderSettings.ambientIntensity = cam[1];
-        keybindings.xSen = cam[2];
-        keybindings.ySen = cam[3];
     }
 }

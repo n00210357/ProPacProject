@@ -84,7 +84,7 @@ public class player : MonoBehaviour
     {
         angle();
 
-        if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.active == false)
+        if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.activeInHierarchy == false)
         {
             basic.lights.SetActive(true);
         }
