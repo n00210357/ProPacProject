@@ -17,6 +17,8 @@ public class saveData : MonoBehaviour
     public int diff;
     public static Transform[] levels;
     public Transform[] maps;
+    public GameObject[] player;
+
     public Camera camer;
 
     void Start()
@@ -76,7 +78,7 @@ public class saveData : MonoBehaviour
 
         if (keybinds.keys[8] == KeyCode.None)
         {
-            keybinds.keys[8] = KeyCode.R;
+            keybinds.keys[8] = KeyCode.F;
         }
 
         if (keybinds.keys[9] == KeyCode.None)
@@ -120,5 +122,23 @@ public class saveData : MonoBehaviour
         camer.fieldOfView = keybindings.cam[0];
         RenderSettings.ambientIntensity = keybindings.cam[1];
         difficulty = diff;
+
+        if (Input.GetKeyDown(saveData.keybindings.keys[9]))
+        {
+            if (Time.timeScale == 1)
+            {
+                Time.timeScale = 0;
+                player[0].GetComponent<player>().enabled = false;
+                player[0].GetComponent<UIcon>().enabled = false;
+                player[1].GetComponent<guns>().enabled = false;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                player[0].GetComponent<player>().enabled = true;
+                player[0].GetComponent<UIcon>().enabled = true;
+                player[1].GetComponent<guns>().enabled = true;
+            }
+        }
     }
 }

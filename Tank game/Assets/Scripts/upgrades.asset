@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a56eb6cde835d4f89b4bd0172f4fe9, type: 3}
   m_Name: upgrades
   m_EditorClassIdentifier: 
-  cannShots: 010101010101
-  canReloadSpeed: 1
-  shotRadius: 1
-  machSpeed: 010101
-  machAmmo: 01010101
-  machReloadSpeed: 1
-  dashAmount: 010101
-  dashRechargeSpeed: 1
-  health: 010101010101
+  cannShots: 010000000000
+  canReloadSpeed: 0
+  shotRadius: 0
+  machSpeed: 010000
+  machAmmo: 01000000
+  machReloadSpeed: 0
+  dashAmount: 010000
+  dashRechargeSpeed: 0
+  health: 010000000000
