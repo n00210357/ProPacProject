@@ -56,7 +56,6 @@ public class guns : MonoBehaviour
         public GameObject hole;
     }
 
-    public bool UI;
     private GameObject firing;
     private GameObject blast;
     private Vector3 positioning;
@@ -65,18 +64,6 @@ public class guns : MonoBehaviour
 
     void Start()
     {
-        // Hides the cursor
-        if (UI == false)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-
         positioning = main.canFirst.localPosition;
 
         //draws a line at what the tank is aiming at
@@ -85,12 +72,11 @@ public class guns : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         camCon();
         gunAim();
         mainTurret();
         secTurret();
-
     }
 
     void FixedUpdate()
@@ -260,7 +246,9 @@ public class guns : MonoBehaviour
             if (hit.transform.gameObject.layer == 0)
             {
                 GameObject newHole = Instantiate(sec.hole, hit.point + hit.normal * 0.001f, Quaternion.identity) as GameObject;
-                newHole.transform.LookAt(hit.point + hit.normal * 0.001f);
+                //newHole.transform.LookAt(hit.point + hit.normal * 0.001f);
+                newHole.transform.rotation = Quaternion.FromToRotation (Vector3.up, hit.normal);
+                newHole.transform.parent = hit.transform;
                 Destroy(newHole, 5f);
             }
         }
@@ -286,7 +274,7 @@ public class guns : MonoBehaviour
         //cannon upgrades
         saveData.upgrades.cannShots[0] = true;
 
-        for (int i = 0; i < main.maxAmmo; i++)
+        for (int i = 0; i < 6; i++)
         {    
             main.cannons[i].GetComponentInChildren<MeshRenderer>().enabled = saveData.upgrades.cannShots[i];
                 

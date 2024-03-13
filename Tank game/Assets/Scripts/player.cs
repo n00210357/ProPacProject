@@ -268,7 +268,7 @@ public class player : MonoBehaviour
                 dash.dashAmount -= dash.thrust;
                 dash.dashTimer = dash.dashDelay;
             }
-            
+
             if (basic.vehicalType == true &&Input.GetKey(saveData.keybindings.keys[3]))
             {
                 dash.dashAmount -= 3 * Time.deltaTime;
@@ -310,6 +310,7 @@ public class player : MonoBehaviour
             }
             else if (basic.vehicalType == false && Input.GetKeyDown(saveData.keybindings.keys[3]) && dash.dashAmount >= 0)
             {
+                Debug.Log("e");
                 dash.dashAmount -= dash.thrust;
                 dash.dashTimer = dash.dashDelay;
 

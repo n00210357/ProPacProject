@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Cinemachine;
 
 [System.Serializable]
 public class saveData : MonoBehaviour
@@ -15,11 +16,11 @@ public class saveData : MonoBehaviour
     public upgrades upgrad;
     public static int difficulty;
     public int diff;
+    public bool UI;
     public static Transform[] levels;
     public Transform[] maps;
     public GameObject[] player;
-
-    public Camera camer;
+    public CinemachineVirtualCamera vcam;
 
     void Start()
     {
@@ -119,26 +120,56 @@ public class saveData : MonoBehaviour
 
     void Update()
     {
-        camer.fieldOfView = keybindings.cam[0];
+        vcam.m_Lens.FieldOfView = keybindings.cam[0];
         RenderSettings.ambientIntensity = keybindings.cam[1];
         difficulty = diff;
 
-        if (Input.GetKeyDown(saveData.keybindings.keys[9]))
+        if (Input.GetKeyDown(saveData.keybindings.keys[9]) && Time.timeScale == 1)
         {
-            if (Time.timeScale == 1)
-            {
-                Time.timeScale = 0;
+            Time.timeScale = 0;
+        }     
+        else if (Input.GetKeyDown(saveData.keybindings.keys[9]))
+        {
+            Time.timeScale = 1;
+        }   
+
+        if (player[0] != null)
+        {
+            if (Time.timeScale == 0)
+            { 
+                UI = true;
                 player[0].GetComponent<player>().enabled = false;
                 player[0].GetComponent<UIcon>().enabled = false;
                 player[1].GetComponent<guns>().enabled = false;
             }
-            else
+            else if (Time.timeScale == 1)
             {
-                Time.timeScale = 1;
+                UI = false;
                 player[0].GetComponent<player>().enabled = true;
                 player[0].GetComponent<UIcon>().enabled = true;
                 player[1].GetComponent<guns>().enabled = true;
             }
+        }
+        else
+        {
+            UI = true;
+        }
+
+        cursorCon();
+    }
+
+    void cursorCon()
+    {
+        // Hides the cursor
+        if (UI == false)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 }

@@ -91,11 +91,8 @@ public class UIcon : MonoBehaviour
         primaryCannon();
         secondaryGun();
         dashTrack();
-
-        if (Input.GetKeyDown(saveData.keybindings.keys[6]))
-        {
-            modeTrack();
-        }
+        modeTrack();
+        
     }
 
     void healthTrack()

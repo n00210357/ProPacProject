@@ -18,7 +18,6 @@ public class enemyGuns : MonoBehaviour
         public int gunType = 0;
         public Transform enemy;
         public GameObject player;
-        public LayerMask pla;
     }
 
     //holds the gun setting variables
@@ -109,7 +108,7 @@ public class enemyGuns : MonoBehaviour
     void bulletBased()
     {
         RaycastHit hit;
-        if (Physics.Raycast(gun.gunEnd.position, gun.gunEnd.forward, out hit, gun.range, basic.pla))
+        if (Physics.Raycast(gun.gunEnd.position, gun.gunEnd.forward, out hit, gun.range, pro.tarLayer))
         {
             gun.line.enabled = true;
             gun.line.positionCount = 2;

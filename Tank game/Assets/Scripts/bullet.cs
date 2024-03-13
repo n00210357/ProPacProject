@@ -15,7 +15,9 @@ public class bullet : MonoBehaviour
     public LayerMask tarLayer;
     public LayerMask notBull;
     public ParticleSystem explode;
+
     private Rigidbody rigid;
+    private GameObject exp;
 
     // Start is called before the first frame update
     void Start()
@@ -50,9 +52,8 @@ public class bullet : MonoBehaviour
         Collider[] colli = Physics.OverlapSphere(transform.position, range, notBull);
         foreach (Collider tar in colli)
         {
-            ParticleSystem exp = Instantiate(explode, transform.position, transform.rotation);
-            Destroy(exp, 0.4f);
-            Destroy(gameObject);
+            die();
+            break;
         }
 
         rigid.AddForce(transform.forward * speed, ForceMode.VelocityChange);
@@ -61,7 +62,7 @@ public class bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
         lifeTime -= 1 * Time.deltaTime;
     }
 
@@ -73,11 +74,18 @@ public class bullet : MonoBehaviour
 
             if (health <= 0)
             {
-                Debug.Log("Dead");
+                die();
             }
         }
     }
 
+    void die()
+    {
+        exp = Instantiate(explode.gameObject, transform.position, transform.rotation);    
+        Destroy(exp, 0.4f);        
+        Destroy(gameObject);
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
