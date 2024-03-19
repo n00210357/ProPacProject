@@ -310,7 +310,6 @@ public class player : MonoBehaviour
             }
             else if (basic.vehicalType == false && Input.GetKeyDown(saveData.keybindings.keys[3]) && dash.dashAmount >= 0)
             {
-                Debug.Log("e");
                 dash.dashAmount -= dash.thrust;
                 dash.dashTimer = dash.dashDelay;
 
@@ -359,7 +358,7 @@ public class player : MonoBehaviour
                 }
             }
 
-            if (Input.GetKey(KeyCode.S) == false || dash.dashAmount <= 0)
+            if ((Input.GetKey(KeyCode.S) == false || dash.dashAmount <= 0) && basic.vehicalType == true)
             {
                 for (var i = 0; i < 3; i++)
                 {
@@ -368,7 +367,7 @@ public class player : MonoBehaviour
                 }
             }
             
-            if (Input.GetKey(KeyCode.D) == false || dash.dashAmount <= 0)
+            if ((Input.GetKey(KeyCode.D) == false || dash.dashAmount <= 0) && basic.vehicalType == true)
             {
                 for (var i = 0; i < 3; i++)
                 {
@@ -376,7 +375,7 @@ public class player : MonoBehaviour
                 }
             }
             
-            if (Input.GetKey(KeyCode.A) == false || dash.dashAmount <= 0)
+            if ((Input.GetKey(KeyCode.A) == false || dash.dashAmount <= 0) && basic.vehicalType == true)
             {
                 for (var i = 0; i < 3; i++)
                 {
@@ -384,7 +383,7 @@ public class player : MonoBehaviour
                 }
             }
             
-            if (Input.GetKey(KeyCode.W) == false || dash.dashAmount <= 0)
+            if ((Input.GetKey(KeyCode.W) == false || dash.dashAmount <= 0) && basic.vehicalType == true)
             {
                 for (var i = 0; i < 3; i++)
                 {

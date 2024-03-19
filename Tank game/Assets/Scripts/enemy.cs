@@ -8,6 +8,7 @@ public class enemy : MonoBehaviour
 {
     public BaseVar basic = new BaseVar();
     public ScanVar scan = new ScanVar();
+    public AniVar ani = new AniVar();
 
     //holds the enemies base variables
     [Serializable]
@@ -18,10 +19,11 @@ public class enemy : MonoBehaviour
         public int enemyType = 0;
         public int detect = 0;
         public int gunType = 0;
-        public Transform turConnect;
-        public Transform gun;
+        public Transform[] gun;
+        public Transform[] turConnect;
         public GameObject level;
         public GameObject player;
+        public Vector3 gunSize;
     }
 
     //holds the enemies scan variables
@@ -33,6 +35,14 @@ public class enemy : MonoBehaviour
         public float searching;
         public float searchTime;
         public bool spotted;
+    }
+
+    //holds the enemies ani variables
+    [Serializable]
+    public class AniVar
+    {
+        public Transform model;
+        public Animator anim;
     }
 
     private int locat;
@@ -84,10 +94,22 @@ public class enemy : MonoBehaviour
         pat = basic.level.GetComponent<levelCon>().patrolPoint;
         agent = GetComponent<NavMeshAgent>();
 
-        basic.gunType = UnityEngine.Random.Range(0, 1);
-        basic.gun = Instantiate(basic.level.GetComponent<levelCon>().enemyGuns[basic.gunType].transform, basic.turConnect.position, basic.turConnect.rotation);
-        basic.gun.parent = transform;
-        basic.gun.GetComponent<enemyGuns>().basic.rota = basic.gunRot;
+        basic.gun = new Transform[basic.turConnect.Length];
+
+        for(int i = 0; i < basic.turConnect.Length; i++)
+        { 
+            basic.gunType = UnityEngine.Random.Range(0, 1);
+            basic.gun[i] = Instantiate(basic.level.GetComponent<levelCon>().enemyGuns[basic.gunType].transform, basic.turConnect[i].position, basic.turConnect[i].rotation);
+            basic.gun[i].localScale = basic.gunSize;
+            basic.gun[i].parent = basic.turConnect[i].parent;
+            basic.gun[i].GetComponent<enemyGuns>().basic.rota = basic.gunRot;
+            basic.gun[i].GetComponent<enemyGuns>().basic.enemy = gameObject.transform;
+
+            if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2)
+            {
+                basic.gun[i].GetComponent<enemyGuns>().basic.spin = true;
+            }
+        }
     }
 
     // Update is called once per frame
@@ -97,9 +119,15 @@ public class enemy : MonoBehaviour
         scanning();
 
         //runs the tank enemies enemies
-        if (basic.enemyType == 0)
+        if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2 || basic.enemyType == 3 || basic.enemyType == 4)
         {
             groundTroop();
+        }
+
+
+        if (basic.enemyType == 2)
+        {
+            animate();
         }
     }
 
@@ -171,13 +199,32 @@ public class enemy : MonoBehaviour
             plaPos = basic.player.transform.position;
         }
     }
+
+    void animate()
+    {
+        ani.model.Rotate(0, 1, 0, Space.Self);
+    }
+
     public void takeDamage(int dam)
     {
         basic.health -= dam;
 
-        if (basic.health <= 0)
+        if (basic.enemyType == 4 && dam >= 10)
         {
-            Destroy(gameObject);
+            ani.anim.SetTrigger("hit");
+        }
+
+        if (basic.health <= 0)
+        {           
+            if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                ani.anim.SetBool("dead", true);
+                Destroy(gameObject, 0.75f);
+            }
         }
     }
 

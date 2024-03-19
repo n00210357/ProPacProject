@@ -16,6 +16,7 @@ public class enemyGuns : MonoBehaviour
         public float rota = 0;
         public int detect = 0;
         public int gunType = 0;
+        public bool spin;
         public Transform enemy;
         public GameObject player;
     }
@@ -60,7 +61,6 @@ public class enemyGuns : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        basic.enemy = transform.parent;
         basic.gunType = basic.enemy.GetComponent<enemy>().basic.gunType;
         basic.player = basic.enemy.GetComponent<enemy>().basic.player;
 
@@ -81,11 +81,11 @@ public class enemyGuns : MonoBehaviour
 
     void targeter()
     {
-        if (basic.detect == 0)
+        if (basic.detect == 0 && basic.spin == true)
         {
             transform.Rotate(0, (gun.speed / 2) * Time.deltaTime, 0);
         }
-        else if (basic.detect == 1)
+        else if (basic.detect == 1 && basic.spin == true)
         {
             transform.Rotate(0, gun.speed * Time.deltaTime, 0);
         }

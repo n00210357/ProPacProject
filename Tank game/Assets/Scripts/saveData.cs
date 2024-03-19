@@ -22,6 +22,8 @@ public class saveData : MonoBehaviour
     public GameObject[] player;
     public CinemachineVirtualCamera vcam;
 
+    private bool start = false;
+
     void Start()
     {
         levels = maps;
@@ -116,6 +118,11 @@ public class saveData : MonoBehaviour
         {
             upgrades = upgrad;
         }
+
+        if (UI == true)
+        {
+            start = true;
+        }
     }
 
     void Update()
@@ -133,7 +140,7 @@ public class saveData : MonoBehaviour
             Time.timeScale = 1;
         }   
 
-        if (player[0] != null)
+        if (player[0] != null && start == false)
         {
             if (Time.timeScale == 0)
             { 
