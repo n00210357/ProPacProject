@@ -15,12 +15,16 @@ public class buttonUI : MonoBehaviour
     void Start()
     {
         started = false;
+
+        //runs slightly late allowing other start functions to finsh
         StartCoroutine(LateStart(0.1f));
     }
+
     IEnumerator LateStart(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
 
+        //set ui starting slider positions and values for both sound and graphics
         if (buttonID == -1)
         {
             promt.GetComponent<Slider>().minValue = 5;
@@ -81,6 +85,7 @@ public class buttonUI : MonoBehaviour
     {
         if (buttonID >= 0)
         {
+            //show keybind for the keybind settings
             tex.text = saveData.keybindings.keys[buttonID].ToString();
 
             if (scan == true)
@@ -98,101 +103,104 @@ public class buttonUI : MonoBehaviour
     void OnGUI()
     {
         if (started == true)
-        {            
-        if (buttonID == -1)
         {
-            saveData.keybindings.cam[0] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.cam[0].ToString();
-        }
-
-        if (buttonID == -2)
-        {
-            saveData.keybindings.cam[1] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.cam[1].ToString();
-        }
-
-        if (buttonID <= -3)
-        {
-            saveData.keybindings.noise[0] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.noise[0].ToString();
-        }
-
-        if (buttonID <= -4)
-        {
-            saveData.keybindings.noise[1] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.noise[1].ToString();
-        }
-
-        if (buttonID <= -5)
-        {
-            saveData.keybindings.noise[2] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.noise[2].ToString();
-        }
-
-        if (buttonID <= -6)
-        {
-            saveData.keybindings.noise[3] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.noise[3].ToString();
-        }
-
-        if (buttonID <= -7)
-        {
-            saveData.keybindings.noise[4] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.noise[4].ToString();
-        }
-
-        if (buttonID <= -8)
-        {
-            saveData.keybindings.cam[2] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.cam[2].ToString();
-        }
-
-        if (buttonID <= -9)
-        {
-            saveData.keybindings.cam[3] = promt.GetComponent<Slider>().value;
-            tex.text = saveData.keybindings.cam[3].ToString();
-        }
-
-        if (scan == true)
-        {
-            Event e = Event.current;
-
-            if (Input.GetKeyDown(KeyCode.LeftShift))
+            //allow for the alteration of sound and graphics
+            if (buttonID == -1)
             {
-                saveData.keybindings.keys[buttonID] = KeyCode.LeftShift;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.cam[0] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.cam[0].ToString();
             }
-            else if (Input.GetKeyDown(KeyCode.RightShift))
+
+            if (buttonID == -2)
             {
-                saveData.keybindings.keys[buttonID] = KeyCode.RightShift;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.cam[1] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.cam[1].ToString();
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse0))
+
+            if (buttonID == -3)
             {
-                saveData.keybindings.keys[buttonID] = KeyCode.Mouse0;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.noise[0] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.noise[0].ToString();
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse1))
+
+            if (buttonID == -4)
             {
-                saveData.keybindings.keys[buttonID] = KeyCode.Mouse1;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.noise[1] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.noise[1].ToString();
             }
-            else if (Input.GetKeyDown(KeyCode.Mouse2))
+
+            if (buttonID == -5)
             {
-                saveData.keybindings.keys[buttonID] = KeyCode.Mouse2;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.noise[2] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.noise[2].ToString();
             }
-            if ((e.isKey))
+
+            if (buttonID == -6)
             {
-                saveData.keybindings.keys[buttonID] = e.keyCode;
-                promt.gameObject.SetActive(false);
-                scan = false;
+                saveData.keybindings.noise[3] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.noise[3].ToString();
             }
+
+            if (buttonID == -7)
+            {
+                saveData.keybindings.noise[4] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.noise[4].ToString();
+            }
+
+            if (buttonID == -8)
+            {
+                saveData.keybindings.cam[2] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.cam[2].ToString();
+            }
+
+            if (buttonID == -9)
+            {
+                saveData.keybindings.cam[3] = promt.GetComponent<Slider>().value;
+                tex.text = saveData.keybindings.cam[3].ToString();
+            }
+
+            //allows for keycode binding
+            if (scan == true)
+            {
+                Event e = Event.current;
+
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    saveData.keybindings.keys[buttonID] = KeyCode.LeftShift;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
+                else if (Input.GetKeyDown(KeyCode.RightShift))
+                {
+                    saveData.keybindings.keys[buttonID] = KeyCode.RightShift;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
+                else if (Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    saveData.keybindings.keys[buttonID] = KeyCode.Mouse0;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
+                else if (Input.GetKeyDown(KeyCode.Mouse1))
+                {
+                    saveData.keybindings.keys[buttonID] = KeyCode.Mouse1;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
+                else if (Input.GetKeyDown(KeyCode.Mouse2))
+                {
+                    saveData.keybindings.keys[buttonID] = KeyCode.Mouse2;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
+
+                if ((e.isKey))
+                {
+                    saveData.keybindings.keys[buttonID] = e.keyCode;
+                    promt.gameObject.SetActive(false);
+                    scan = false;
+                }
             }
         }
     }

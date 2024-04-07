@@ -19,6 +19,8 @@ public class guns : MonoBehaviour
         public float range;
         public bool recenter;
         public LayerMask lockOn;
+        public AudioClip[] sounds;
+        public AudioSource source;
     }
 
     //holds the main cannon variables
@@ -56,6 +58,7 @@ public class guns : MonoBehaviour
         public GameObject hole;
     }
 
+    private bool played;
     private GameObject firing;
     private GameObject blast;
     private Vector3 positioning;
@@ -64,6 +67,7 @@ public class guns : MonoBehaviour
 
     void Start()
     {
+        aim.source = GetComponent<AudioSource>();
         positioning = main.canFirst.localPosition;
 
         //draws a line at what the tank is aiming at
@@ -71,6 +75,7 @@ public class guns : MonoBehaviour
         main.aimAssets.positionCount = 2;
     }
 
+    //runs every frame
     void Update()
     {        
         camCon();
@@ -79,6 +84,7 @@ public class guns : MonoBehaviour
         secTurret();
     }
 
+    //runs after every update
     void FixedUpdate()
     {
         upgrades();
@@ -87,11 +93,13 @@ public class guns : MonoBehaviour
     //controls the rotation of the turret
     void camCon()
     {
+        //allows camera to be recenter
         if (Input.GetKeyDown(saveData.keybindings.keys[2]))
         {
             aim.recenter = true;
         }
 
+        //allows the player to turn the turret and camera
         if (transform.parent.transform.parent.GetComponent<player>().basic.vehicalType == true || aim.recenter == true)
         {
             if (aim.xAxis >= -0.5 && aim.xAxis <= 0.5)
@@ -130,6 +138,26 @@ public class guns : MonoBehaviour
             aim.yAxis += -Input.GetAxis("Mouse X") * saveData.keybindings.cam[2] * -1;
             aim.xAxis += -Input.GetAxis("Mouse Y") * saveData.keybindings.cam[3] * 1;
 
+            //plays turning sound
+            if ((Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0) && Input.GetKey(saveData.keybindings.keys[1]) == false)
+            {               
+                if (played == false)
+                {
+                    aim.source.clip = aim.sounds[0];
+                    aim.source.volume = 0.1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                    aim.source.pitch = 3;
+                    aim.source.loop = true;
+                    aim.source.Play();
+                    played = true;
+                }
+            }
+            else if (Input.GetAxis("Mouse X") == 0 && Input.GetAxis("Mouse Y") == 0  && played == true)
+            {
+                aim.source.Stop();
+                played = false;
+            }
+               
+            //maxs out look up
             if (aim.xAxis >= aim.pTotal)
             {
                 aim.xAxis = aim.pTotal;
@@ -143,6 +171,7 @@ public class guns : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, aim.yAxis, 0);
         main.canHold.localRotation = Quaternion.Euler(aim.xAxis, 0, 0);
 
+        //maxes radius
         if (aim.yAxis <= -361)
         {
             aim.yAxis = 359;
@@ -153,6 +182,7 @@ public class guns : MonoBehaviour
         }
     }
 
+    //aims the guns
     void gunAim()
     {
         if (Physics.Raycast(main.canExit.position, main.canExit.forward, out hit, aim.range, aim.lockOn))
@@ -176,6 +206,7 @@ public class guns : MonoBehaviour
             blast.transform.position = hit.point;
             main.ammo -= 1;
 
+            //detect enemies
             Collider[] hitEnemies = Physics.OverlapSphere(hit.point, main.radius);
             foreach (Collider tar in hitEnemies)
             {
@@ -183,6 +214,16 @@ public class guns : MonoBehaviour
                 {
                     tar.GetComponent<enemy>().takeDamage(main.damage);
                 }
+
+                GameObject blasty = new GameObject();
+                blasty.transform.position = tar.transform.position;
+                blasty.AddComponent<AudioSource>();
+                blasty.GetComponent<AudioSource>().clip = aim.sounds[2];
+                blasty.GetComponent<AudioSource>().volume = 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                blasty.GetComponent<AudioSource>().pitch = 2f;
+                blasty.GetComponent<AudioSource>().loop = false;
+                blasty.GetComponent<AudioSource>().Play();
+                Destroy(blast, 0.5f);
             }
         }        
 
@@ -235,6 +276,7 @@ public class guns : MonoBehaviour
                         
             sec.ammo -= sec.fireSpeed;
 
+            //damages enemies
             if (hit.transform.gameObject.layer == 7)
             { 
                 if (hit.transform.GetComponent<enemy>())
@@ -250,6 +292,17 @@ public class guns : MonoBehaviour
                 newHole.transform.rotation = Quaternion.FromToRotation (Vector3.up, hit.normal);
                 newHole.transform.parent = hit.transform;
                 Destroy(newHole, 5f);
+            }
+
+            //plays machine gun sounds
+            if (played == false)
+            {
+                aim.source.clip = aim.sounds[1];
+                aim.source.volume = 0.1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                aim.source.pitch = 3;
+                aim.source.loop = true;
+                aim.source.Play();
+                played = true;
             }
         }
  
@@ -269,11 +322,13 @@ public class guns : MonoBehaviour
         }
     }
 
+    //allows for gun upgrades
     void upgrades()
     {
         //cannon upgrades
         saveData.upgrades.cannShots[0] = true;
 
+        //cannon upgrades
         for (int i = 0; i < 6; i++)
         {    
             main.cannons[i].GetComponentInChildren<MeshRenderer>().enabled = saveData.upgrades.cannShots[i];

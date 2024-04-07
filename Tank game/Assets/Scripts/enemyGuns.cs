@@ -19,6 +19,8 @@ public class enemyGuns : MonoBehaviour
         public bool spin;
         public Transform enemy;
         public GameObject player;
+        public AudioClip sound;
+        public AudioSource source;
     }
 
     //holds the gun setting variables
@@ -79,8 +81,10 @@ public class enemyGuns : MonoBehaviour
         }
     }
 
+    //targets the player
     void targeter()
     {
+        //spins the turret when it has can't see the player
         if (basic.detect == 0 && basic.spin == true)
         {
             transform.Rotate(0, (gun.speed / 2) * Time.deltaTime, 0);
@@ -91,6 +95,7 @@ public class enemyGuns : MonoBehaviour
         }
         else
         {
+            //turns the turret to look at the player
             if (m_lastKnownPosition != basic.player.transform.position)
             {
                 m_lastKnownPosition = basic.player.transform.position;
@@ -105,8 +110,10 @@ public class enemyGuns : MonoBehaviour
         }
     }
 
+    //prepares ther bullet and fires
     void bulletBased()
     {
+        //arms the guns
         RaycastHit hit;
         if (Physics.Raycast(gun.gunEnd.position, gun.gunEnd.forward, out hit, gun.range, pro.tarLayer))
         {
@@ -116,6 +123,7 @@ public class enemyGuns : MonoBehaviour
             gun.line.SetPosition(1, hit.point);
             gun.line.material.color = Color.Lerp(gun.line.material.color, gun.c[gun.index], gun.timing * Time.deltaTime);
 
+            //shoots the gun
             if (gun.index == 2)
             {
                 gun.line.material.color = Color.green;
@@ -136,6 +144,7 @@ public class enemyGuns : MonoBehaviour
             gun.line.enabled = false;
         }
 
+        //arms the gun
         if (gun.timer > .9f)
         {
             gun.timer = 0;
@@ -144,8 +153,15 @@ public class enemyGuns : MonoBehaviour
         }
     }
 
+    //fires a projectile
     void shoot()
     {
+        basic.source.clip = basic.sound;
+        basic.source.volume = 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+        basic.source.pitch = 1;
+        basic.source.loop = false;
+        basic.source.Play();
+
         GameObject bull = Instantiate(pro.bullet, gun.gunEnd.position, gun.gunEnd.rotation);
         bull.transform.localScale = pro.scale;
         bull.GetComponent<bullet>().speed = pro.speed;

@@ -31,6 +31,7 @@ public class UIcon : MonoBehaviour
         public Transform[] hearts;
     }
 
+    //cann UI
     [Serializable]
     public class MainCanVar
     {
@@ -44,6 +45,7 @@ public class UIcon : MonoBehaviour
         public Transform[] shells;
     }
 
+    //sec UI
     [Serializable]
     public class SecCanVar
     {
@@ -52,6 +54,7 @@ public class UIcon : MonoBehaviour
         public Image ammoBar;
     }
 
+    //dash UI
     [Serializable]
     public class DashVar
     {
@@ -61,6 +64,7 @@ public class UIcon : MonoBehaviour
         public Text liter;
     }
 
+    //mode UI
     [Serializable]
     public class ModeVar
     {
@@ -95,8 +99,10 @@ public class UIcon : MonoBehaviour
         
     }
 
+    //tracks health
     void healthTrack()
     {
+        //adds or removes max health
         if (hea.maxHealth != GetComponent<player>().basic.maxHealth)
         {
             hea.maxHealth = 1;
@@ -126,11 +132,12 @@ public class UIcon : MonoBehaviour
             hea.maxHealth = GetComponent<player>().basic.maxHealth;
         }
 
+        //colours health
         Color tempColor;
         foreach (Transform he in hea.hearts)
         {
             tempColor = he.GetComponent<Image>().color;
-            tempColor.a = 0.25f;
+            tempColor.a = 0.15f;
             he.GetComponent<Image>().color = tempColor;
         }
 
@@ -142,8 +149,10 @@ public class UIcon : MonoBehaviour
         }
     }
 
+    //tracks cannon
     void primaryCannon()
     {        
+        //reload icons
         main.reload = basic.guns.GetComponent<guns>().main.reload;
         main.shells[0] = main.firstShell;
 
@@ -156,6 +165,7 @@ public class UIcon : MonoBehaviour
             main.ammoBar.fillAmount = 1;
         }
 
+        //adds or removes ammo icon
         if (main.maxAmmo != basic.guns.GetComponent<guns>().main.maxAmmo)
         {          
             foreach (Transform she in main.shells)
@@ -182,13 +192,14 @@ public class UIcon : MonoBehaviour
             main.maxAmmo = basic.guns.GetComponent<guns>().main.maxAmmo;
         }
            
+        //colours ammo icon
         Color tempColor;
         foreach (Transform shell in main.shells)
         {
             if (shell != null)
             {
                 tempColor = shell.GetComponent<Image>().color;
-                tempColor.a = 0.5f;
+                tempColor.a = 0.15f;
                 shell.GetComponent<Image>().color = tempColor;
             }
         }
@@ -204,14 +215,17 @@ public class UIcon : MonoBehaviour
         } 
     }
 
+    //sec UI
     void secondaryGun()
     {
+        //fills ammo bar
         sec.maxAmmo = basic.guns.GetComponent<guns>().sec.maxAmmo;
         sec.ammo = basic.guns.GetComponent<guns>().sec.ammo;
         sec.ammoBar.fillAmount = sec.ammo / sec.maxAmmo;
 
         Color tempColor = sec.ammoBar.GetComponent<Image>().color;
 
+        //ammo colour
         if (sec.maxAmmo >= 600 && sec.maxAmmo <= 1400)
         {
             tempColor.g = 0.75f;
@@ -236,16 +250,20 @@ public class UIcon : MonoBehaviour
         sec.ammoBar.GetComponent<Image>().color = tempColor;
     }
 
+    //dash UI
     void dashTrack()
     {
+        //fills dash bar
         dash.maxFuel = GetComponent<player>().dash.dashTotal;
         dash.fuel = GetComponent<player>().dash.dashAmount;
         dash.fuelBar.fillAmount = dash.fuel / dash.maxFuel;
         dash.liter.text = (dash.maxFuel / 10).ToString();
     }
 
+    //mode UI
     void modeTrack()
     {
+        //swaps mode icon
         mode.type = GetComponent<player>().basic.vehicalType;
 
         if (mode.type == true)

@@ -16,10 +16,13 @@ public class player : MonoBehaviour
     {
         public int health;
         public int maxHealth;
+        public bool dead;
         public bool moving;
         public bool vehicalType = false;
         public GameObject lights;
         public GameObject keyBindings;
+        public AudioClip[] sounds;
+        public AudioSource source;
     }
 
     //hold the dash variables
@@ -65,6 +68,7 @@ public class player : MonoBehaviour
     }
 
     private float xRot;
+    private bool played;
     private Quaternion roty;
     private Rigidbody tankRB;
     private Rigidbody carRB;
@@ -77,68 +81,75 @@ public class player : MonoBehaviour
         tankRB = GetComponent<Rigidbody>();
         carRB = car.steeringWheel.GetComponent<Rigidbody>();
         baseRB = car.tread.GetComponent<Rigidbody>();
+        basic.source = GetComponent<AudioSource>();
         basic.vehicalType = false;
     }
 
     void Update()
     {
-        angle();
-
-        if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.activeInHierarchy == false)
+        if (basic.dead == false)
         {
-            basic.lights.SetActive(true);
-        }
-        else if (Input.GetKeyDown(saveData.keybindings.keys[8]))
-        {
-            basic.lights.SetActive(false);
-        }
+            angle();
 
-        //sets drive type to tank
-        if (basic.vehicalType == false)
-        {
-            tankSteer();
-            car.steeringWheel.parent = transform;
-            car.tread.position = transform.position;
-            car.tread.rotation = transform.rotation;
-
-            //enables car mode
-            if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+            //activates lights
+            if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.activeInHierarchy == false)
             {
-                basic.vehicalType = true;
-                tankRB.isKinematic = true;
-                carRB.isKinematic = false;        
-                car.steeringWheel.localPosition = new Vector3(0, 0, 0);  
-                car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);
-                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0.09f, tank.treads.localPosition.z);
-                foreach (Transform hud in car.hudCaps)
-                {
-                    hud.localPosition = new Vector3(hud.localPosition.x, -0.2f, hud.localPosition.z);
-                }                
+                basic.lights.SetActive(true);
             }
-        }
-        else
-        {
-            //sets driving type to car
-            carSteer();
-            car.steeringWheel.parent = null;
-            car.tread.position = transform.position;
-
-            //enables tank mode
-            if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+            else if (Input.GetKeyDown(saveData.keybindings.keys[8]))
             {
-                basic.vehicalType = false;
-                tankRB.isKinematic = false;
-                carRB.isKinematic = true;
-                tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0, tank.treads.localPosition.z);
-                foreach (Transform hud in car.hudCaps)
+                basic.lights.SetActive(false);
+            }
+
+            //sets drive type to tank
+            if (basic.vehicalType == false)
+            {
+                tankSteer();
+                car.steeringWheel.parent = transform;
+                car.tread.position = transform.position;
+                car.tread.rotation = transform.rotation;
+
+                //enables car mode
+                if (Input.GetKeyDown(saveData.keybindings.keys[6]))
                 {
-                    hud.localPosition = new Vector3(hud.localPosition.x, 0, hud.localPosition.z);
+                    basic.source.Stop();
+                    basic.vehicalType = true;
+                    tankRB.isKinematic = true;
+                    carRB.isKinematic = false;
+                    car.steeringWheel.localPosition = new Vector3(0, 0, 0);
+                    car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);
+                    tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0.09f, tank.treads.localPosition.z);
+                    foreach (Transform hud in car.hudCaps)
+                    {
+                        hud.localPosition = new Vector3(hud.localPosition.x, -0.2f, hud.localPosition.z);
+                    }
                 }
             }
-        }
+            else
+            {
+                //sets driving type to car
+                carSteer();
+                car.steeringWheel.parent = null;
+                car.tread.position = transform.position;
 
-        //allows player to dash
-        dashes();
+                //enables tank mode
+                if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+                {
+                    basic.source.Stop();
+                    basic.vehicalType = false;
+                    tankRB.isKinematic = false;
+                    carRB.isKinematic = true;
+                    tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0, tank.treads.localPosition.z);
+                    foreach (Transform hud in car.hudCaps)
+                    {
+                        hud.localPosition = new Vector3(hud.localPosition.x, 0, hud.localPosition.z);
+                    }
+                }
+            }
+
+            //allows player to dash
+            dashes();
+        }
     }  
 
     void FixedUpdate()
@@ -173,6 +184,7 @@ public class player : MonoBehaviour
                 basic.moving = false;
             }  
 
+            //animates treads
             if (basic.moving == true)
             {
                 tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, tank.treads.localPosition.y, tank.treads.localPosition.z - 2 * Time.deltaTime);
@@ -181,13 +193,41 @@ public class player : MonoBehaviour
             {
                 tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, tank.treads.localPosition.y, tank.treads.localPosition.z + 2 * Time.deltaTime);
             }
+
+            //playes sound
+            if (played == false)
+            {
+                basic.source.clip = basic.sounds[0];
+                basic.source.volume = 0.25f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 1;
+                basic.source.loop = true;
+                basic.source.Play();
+                played = true;
+            }
+        }
+        else if (Input.GetAxis("Horizontal") != 0)
+        {
+            if (played == false)
+            {
+                basic.source.clip = basic.sounds[0];
+                basic.source.volume = 0.25f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 1;
+                basic.source.loop = true;
+                basic.source.Play();
+                played = true;
+            }
+        }
+        else if (tank.movDir.x == 0 && tank.movDir.z == 0 && Input.GetAxis("Horizontal") == 0 && played == true)
+        {
+            basic.source.Stop();
+            played = false;
         }
 
         //moves the tank in tank mode
         tankRB.AddForce(tank.movDir);
         tank.jump = tankRB.velocity.y * Time.deltaTime;
     }
-
+    //activates gravity
     void gravize()
     {
         if (Physics.Raycast(transform.position, -transform.up, out grav, tank.touchDown, tank.land))
@@ -212,6 +252,25 @@ public class player : MonoBehaviour
         float newRotation = car.turnInput * car.turn * Time.deltaTime;
         transform.Rotate(0, newRotation, 0, Space.World);
 
+        //plays car sound
+        if (car.moveInput != 0 || car.turnInput != 0)
+        {
+            if (played == false)
+            {
+                basic.source.clip = basic.sounds[1];
+                basic.source.volume = 0.4f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 1;
+                basic.source.loop = true;
+                basic.source.Play();
+                played = true;
+            }
+        }
+        else if (played == true)
+        {
+            played = false;
+            basic.source.Stop();
+        }
+
         if (Input.GetKey(saveData.keybindings.keys[5]))
         {
             car.turn = 180f;
@@ -223,6 +282,7 @@ public class player : MonoBehaviour
             car.speed = 50;
         }
 
+        //animates wheels
         if (car.turnInput < 0)
         {
             car.hudCaps[0].GetChild(1).localRotation = Quaternion.Euler(xRot += 5f, -45, car.hudCaps[0].GetChild(1).localRotation.z);
@@ -264,15 +324,23 @@ public class player : MonoBehaviour
             if (Input.GetKeyDown(saveData.keybindings.keys[4]))
             {
                 tankRB.AddForce(transform.up * dash.dash * 200, ForceMode.Impulse);
-                carRB.AddForce(transform.up * dash.dash, ForceMode.Impulse);
+                carRB.AddForce(transform.up * dash.dash * 2, ForceMode.Impulse);
                 dash.dashAmount -= dash.thrust;
                 dash.dashTimer = dash.dashDelay;
+
+                basic.source.Stop();
+                played = false;
+                basic.source.clip = basic.sounds[2];
+                basic.source.volume = 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 1f;
+                basic.source.loop = false;
+                basic.source.PlayOneShot(basic.sounds[2], 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1]);
             }
 
+            //cars nitro
             if (basic.vehicalType == true &&Input.GetKey(saveData.keybindings.keys[3]))
             {
                 dash.dashAmount -= 3 * Time.deltaTime;
-
                 if (Input.GetKey(KeyCode.S))
                 {
                     for (var i = 0; i < 3; i++)
@@ -307,11 +375,19 @@ public class player : MonoBehaviour
                     }
                     carRB.AddForce(transform.forward * dash.dash * 3, ForceMode.Acceleration);
                 }
-            }
+            } // tank dash
             else if (basic.vehicalType == false && Input.GetKeyDown(saveData.keybindings.keys[3]) && dash.dashAmount >= 0)
             {
                 dash.dashAmount -= dash.thrust;
                 dash.dashTimer = dash.dashDelay;
+
+                basic.source.Stop();
+                played = false;
+                basic.source.clip = basic.sounds[2];
+                basic.source.volume = 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 3f;
+                basic.source.loop = false;
+                basic.source.PlayOneShot(basic.sounds[2], 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1]);
 
                 if (Input.GetKey(KeyCode.S))
                 {
@@ -348,7 +424,19 @@ public class player : MonoBehaviour
                     tankRB.AddForce(transform.forward * dash.dash * 1000, ForceMode.Impulse);
                 }
             }
-
+            
+            //plays dash sound
+            if (basic.vehicalType == true && Input.GetKeyDown(saveData.keybindings.keys[3]))
+            {
+                basic.source.Stop();
+                played = false;
+                basic.source.clip = basic.sounds[2];
+                basic.source.volume = 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                basic.source.pitch = 1f;
+                basic.source.loop = false;
+                basic.source.PlayOneShot(basic.sounds[2], 1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1]);
+            }
+            //actives particles
             foreach(Transform da in dash.nitroHolders)
             {
                 for (var i = 0; i < 3; i++)
@@ -416,13 +504,14 @@ public class player : MonoBehaviour
         }
     }
 
+    //takes damage
     public void takeDamage(int dam)
     {
         basic.health -= dam;
 
         if (basic.health <= 0)
         {
-            Debug.Log("Dead");
+            basic.dead = true;
         }
     }
 

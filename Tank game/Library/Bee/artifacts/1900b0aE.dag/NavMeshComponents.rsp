@@ -338,10 +338,10 @@
 -r:"C:/Users/eoinz/Desktop/geme/ProPacProject/Tank game/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/packAssets/Assets/NavMeshComponents/Scripts/NavMeshLink.cs"
-"Assets/packAssets/Assets/NavMeshComponents/Scripts/NavMeshModifier.cs"
-"Assets/packAssets/Assets/NavMeshComponents/Scripts/NavMeshModifierVolume.cs"
-"Assets/packAssets/Assets/NavMeshComponents/Scripts/NavMeshSurface.cs"
+"Assets/packAssets/Nav/NavMeshComponents/Scripts/NavMeshLink.cs"
+"Assets/packAssets/Nav/NavMeshComponents/Scripts/NavMeshModifier.cs"
+"Assets/packAssets/Nav/NavMeshComponents/Scripts/NavMeshModifierVolume.cs"
+"Assets/packAssets/Nav/NavMeshComponents/Scripts/NavMeshSurface.cs"
 -langversion:9.0
 
 /deterministic

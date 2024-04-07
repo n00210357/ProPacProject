@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5064770234828173210}
   - component: {fileID: 5064770234828173209}
   - component: {fileID: 5064770234828173208}
+  - component: {fileID: -2615917643072602962}
   m_Layer: 7
   m_Name: tankEnemy
   m_TagString: Untagged
@@ -69,12 +70,15 @@ MonoBehaviour:
     enemyType: 0
     detect: 0
     gunType: 0
-    gun:
-    - {fileID: 0}
+    gun: []
     turConnect:
-    - {fileID: 0}
+    - {fileID: 5064770235910744128}
     level: {fileID: 0}
     player: {fileID: 0}
+    sounds:
+    - {fileID: 8300000, guid: 37a76f939acf2be468f8fd7f504e2624, type: 3}
+    - {fileID: 8300000, guid: 821cc8c6a17c0a942991b7cd37379d0c, type: 3}
+    source: {fileID: 0}
     gunSize: {x: 1, y: 1, z: 1}
   scan:
     rad: 250
@@ -84,12 +88,6 @@ MonoBehaviour:
     spotted: 0
   ani:
     model: {fileID: 0}
-    particles:
-    - {fileID: 1112782064181425020}
-    - {fileID: 7485007194931982694}
-    - {fileID: 5124792388708720150}
-    - {fileID: 5009219766171239806}
-    - {fileID: 4984130322582487553}
     anim: {fileID: 0}
   plaPos: {x: 0, y: 0, z: 0}
 --- !u!195 &5064770234828173208
@@ -114,6 +112,102 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &-2615917643072602962
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5064770234828173215}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5064770234885270355
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +219,7 @@ GameObject:
   - component: {fileID: 5064770234885270348}
   - component: {fileID: 5064770234885270351}
   - component: {fileID: 5064770234885270350}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: mapMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,6 +369,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: nitro (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -393,11 +491,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
---- !u!198 &7485007194931982694 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7454493512526023963, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
-  m_PrefabInstance: {fileID: 41579373605207165}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7485007194931982695 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
@@ -413,6 +506,10 @@ PrefabInstance:
     - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_Name
       value: nitro (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_RootOrder
@@ -532,11 +629,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
---- !u!198 &5124792388708720150 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7454493512526023963, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
-  m_PrefabInstance: {fileID: 2336600596461294349}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5124792388708720151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
@@ -552,6 +644,10 @@ PrefabInstance:
     - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_Name
       value: nitro (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_RootOrder
@@ -676,11 +772,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
   m_PrefabInstance: {fileID: 2474902017338314522}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &4984130322582487553 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7454493512526023963, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
-  m_PrefabInstance: {fileID: 2474902017338314522}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2519760199025281125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -691,6 +782,10 @@ PrefabInstance:
     - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_Name
       value: nitro (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_RootOrder
@@ -810,11 +905,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
---- !u!198 &5009219766171239806 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7454493512526023963, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
-  m_PrefabInstance: {fileID: 2519760199025281125}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5009219766171239807 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
@@ -916,6 +1006,10 @@ PrefabInstance:
     - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_Name
       value: nitro
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454493512526023961, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
       propertyPath: m_RootOrder
@@ -1035,11 +1129,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
---- !u!198 &1112782064181425020 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7454493512526023963, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}
-  m_PrefabInstance: {fileID: 7494776199686979175}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1112782064181425021 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7454493512526023962, guid: e0558566c6c3f1a44b37872eded07be0, type: 3}

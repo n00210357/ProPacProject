@@ -23,6 +23,8 @@ public class enemy : MonoBehaviour
         public Transform[] turConnect;
         public GameObject level;
         public GameObject player;
+        public AudioClip[] sounds;
+        public AudioSource source;
         public Vector3 gunSize;
     }
 
@@ -51,6 +53,7 @@ public class enemy : MonoBehaviour
     public Vector3 plaPos;
     private NavMeshAgent agent;
 
+    //scans for the player
     public bool InFOV()
     {
         Collider[] overlaps = new Collider[10];
@@ -93,9 +96,11 @@ public class enemy : MonoBehaviour
         //grabs the maps patrol points
         pat = basic.level.GetComponent<levelCon>().patrolPoint;
         agent = GetComponent<NavMeshAgent>();
+        basic.source = GetComponent<AudioSource>();
 
         basic.gun = new Transform[basic.turConnect.Length];
 
+        //sets up multiple guns
         for(int i = 0; i < basic.turConnect.Length; i++)
         { 
             basic.gunType = UnityEngine.Random.Range(0, 1);
@@ -110,6 +115,39 @@ public class enemy : MonoBehaviour
                 basic.gun[i].GetComponent<enemyGuns>().basic.spin = true;
             }
         }
+
+        //play shortly after start once
+        StartCoroutine(LateStart(0.1f));
+    }
+
+    IEnumerator LateStart(float waitTime)
+    {
+        //plays enemy idle sound
+        yield return new WaitForSeconds(waitTime);
+        basic.source.clip = basic.sounds[1];
+        if (basic.enemyType == 4)
+        {
+            basic.source.volume = 0.05f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            basic.source.pitch = 2;
+        }
+        else if (basic.enemyType == 3)
+        {
+            basic.source.volume = 0.07f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            basic.source.pitch = 0.8f;
+        }
+        else if (basic.enemyType == 1)
+        {
+            basic.source.volume = 0.05f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            basic.source.pitch = 3;
+        }
+        else if(basic.enemyType == 0)
+        {
+            basic.source.volume = 0.3f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            basic.source.pitch = 1;
+        }
+
+        basic.source.loop = true;
+        basic.source.Play();
     }
 
     // Update is called once per frame
@@ -117,14 +155,14 @@ public class enemy : MonoBehaviour
     {
         //scans for player
         scanning();
-
+        
         //runs the tank enemies enemies
         if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2 || basic.enemyType == 3 || basic.enemyType == 4)
         {
             groundTroop();
         }
 
-
+        //animates the ufo
         if (basic.enemyType == 2)
         {
             animate();
@@ -136,12 +174,14 @@ public class enemy : MonoBehaviour
     {
          scan.spotted = InFOV();
 
+        //the enemy is looking for the player
         if (scan.searching <= 1 && basic.detect == 1)
         {            
             basic.detect = 0;
             scan.searching = -1;
         }
 
+        //the enemy lose sight of the player
         if (basic.detect == 2 && scan.spotted == false)
         {
             basic.detect = 2;
@@ -159,6 +199,7 @@ public class enemy : MonoBehaviour
             scan.searching -= 1 * Time.deltaTime;
         }
 
+        //the enemy see the player
         if (scan.spotted == true)
         {
             basic.detect = 2;
@@ -200,22 +241,36 @@ public class enemy : MonoBehaviour
         }
     }
 
+    //animates the ufo enemy
     void animate()
     {
         ani.model.Rotate(0, 1, 0, Space.Self);
     }
 
+    //damages enemy
     public void takeDamage(int dam)
     {
         basic.health -= dam;
 
+        //animates some enemies
         if (basic.enemyType == 4 && dam >= 10)
         {
             ani.anim.SetTrigger("hit");
         }
 
+        //kills enemy and plays death effects
         if (basic.health <= 0)
-        {           
+        {
+            GameObject blasty = new GameObject();
+            blasty.transform.position = transform.position;
+            blasty.AddComponent<AudioSource>();
+            blasty.GetComponent<AudioSource>().clip = basic.sounds[0];
+            blasty.GetComponent<AudioSource>().volume = 0.025f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            blasty.GetComponent<AudioSource>().pitch = 3f;
+            blasty.GetComponent<AudioSource>().loop = false;
+            blasty.GetComponent<AudioSource>().Play();
+            Destroy(blasty, 0.5f);
+
             if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2)
             {
                 Destroy(gameObject);
@@ -228,21 +283,25 @@ public class enemy : MonoBehaviour
         }
     }
 
+    //draws gizmos
     private void OnDrawGizmos()
     {
+        //draws a yellow sphere
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, scan.rad);
 
+        //sets up vectors
         Vector3 fovLine1 = Quaternion.AngleAxis(scan.ang, transform.up) * transform.forward * scan.rad;
         Vector3 fovLine2 = Quaternion.AngleAxis(-scan.ang, transform.up) * transform.forward * scan.rad;
-
         Vector3 fovLine3 = Quaternion.AngleAxis(360, -transform.up) * -transform.up * 15;
 
+        //draws lines
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, fovLine1);
         Gizmos.DrawRay(transform.position, fovLine2);
         Gizmos.DrawRay(transform.position, fovLine3);
 
+        //sets ray colour
         if (!scan.spotted)
         {
             Gizmos.color = Color.red;
@@ -252,6 +311,7 @@ public class enemy : MonoBehaviour
             Gizmos.color = Color.green;
         }
 
+        //draws ray
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * scan.rad);
     }

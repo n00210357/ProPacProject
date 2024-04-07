@@ -369,10 +369,13 @@
 "Assets/Scripts/keybindings.cs"
 "Assets/Scripts/levelCon.cs"
 "Assets/Scripts/levelLoader.cs"
+"Assets/Scripts/levelTimer.cs"
 "Assets/Scripts/menu.cs"
+"Assets/Scripts/pickUp.cs"
 "Assets/Scripts/player.cs"
 "Assets/Scripts/saveData.cs"
 "Assets/Scripts/sceneTran.cs"
+"Assets/Scripts/turUI.cs"
 "Assets/Scripts/UIcon.cs"
 "Assets/Scripts/upgrades.cs"
 -langversion:9.0

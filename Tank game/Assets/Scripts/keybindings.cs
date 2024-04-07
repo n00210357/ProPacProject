@@ -14,6 +14,6 @@ public class keybindings : ScriptableObject
     public float[] cam = {90, 1, 10, 5};
 
      //0 = master 1 = player 2 = enemies 3 = music 4 = enviroment
-    public float[] noise = { 1, 1, 1, 1, 1};
+    public float[] noise = {1, 1, 1, 1, 1};
 }
 

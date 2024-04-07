@@ -16,7 +16,8 @@ public class saveData : MonoBehaviour
     public upgrades upgrad;
     public static int difficulty;
     public int diff;
-    public bool UI;
+    public static bool UI;
+    public bool ui;
     public static Transform[] levels;
     public Transform[] maps;
     public GameObject[] player;
@@ -24,10 +25,12 @@ public class saveData : MonoBehaviour
 
     private bool start = false;
 
+    //refresh statics
     void Start()
     {
         levels = maps;
         difficulty = diff;
+        UI = ui;
 
         if (keybindings != null && keybinds == null)
         {
@@ -109,6 +112,31 @@ public class saveData : MonoBehaviour
             keybindings.cam[3] = 5;
         }
 
+        if (keybindings.noise[0] < 0 || keybindings.noise[0] > 1)
+        {
+            keybindings.noise[0] = 1;
+        }
+
+        if (keybindings.noise[1] < 0 || keybindings.noise[1] > 1)
+        {
+            keybindings.noise[1] = 1;
+        }
+
+        if (keybindings.noise[2] < 0 || keybindings.noise[2] > 1)
+        {
+            keybindings.noise[2] = 1;
+        }
+
+        if (keybindings.noise[3] < 0 || keybindings.noise[3] > 1)
+        {
+            keybindings.noise[3] = 1;
+        }
+
+        if (keybindings.noise[4] < 0 || keybindings.noise[4] > 1)
+        {
+            keybindings.noise[4] = 1;
+        }
+
         if (upgrades != null && upgrad == null)
         {
             upgrad = upgrades;
@@ -125,11 +153,12 @@ public class saveData : MonoBehaviour
         }
     }
 
+    //controls settings
     void Update()
     {
         vcam.m_Lens.FieldOfView = keybindings.cam[0];
         RenderSettings.ambientIntensity = keybindings.cam[1];
-        difficulty = diff;
+        diff = difficulty;
 
         if (Input.GetKeyDown(saveData.keybindings.keys[9]) && Time.timeScale == 1)
         {
@@ -160,23 +189,6 @@ public class saveData : MonoBehaviour
         else
         {
             UI = true;
-        }
-
-        cursorCon();
-    }
-
-    void cursorCon()
-    {
-        // Hides the cursor
-        if (UI == false)
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+        }               
     }
 }
