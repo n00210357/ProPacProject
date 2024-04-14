@@ -135,12 +135,17 @@ public class enemy : MonoBehaviour
             basic.source.volume = 0.07f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
             basic.source.pitch = 0.8f;
         }
+        else if (basic.enemyType == 2)
+        {
+            basic.source.volume = 0.5f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
+            basic.source.pitch = 1;
+        }
         else if (basic.enemyType == 1)
         {
             basic.source.volume = 0.05f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
             basic.source.pitch = 3;
         }
-        else if(basic.enemyType == 0)
+        else if (basic.enemyType == 0)
         {
             basic.source.volume = 0.3f * saveData.keybindings.noise[0] * saveData.keybindings.noise[2];
             basic.source.pitch = 1;
@@ -153,19 +158,22 @@ public class enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //scans for player
-        scanning();
-        
-        //runs the tank enemies enemies
-        if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2 || basic.enemyType == 3 || basic.enemyType == 4)
+        if (saveData.pause == false)
         {
-            groundTroop();
-        }
+            //scans for player
+            scanning();
 
-        //animates the ufo
-        if (basic.enemyType == 2)
-        {
-            animate();
+            //runs the tank enemies enemies
+            if (basic.enemyType == 0 || basic.enemyType == 1 || basic.enemyType == 2 || basic.enemyType == 3 || basic.enemyType == 4)
+            {
+                groundTroop();
+            }
+
+            //animates the ufo
+            if (basic.enemyType == 2)
+            {
+                animate();
+            }
         }
     }
 

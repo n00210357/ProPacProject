@@ -14,8 +14,6 @@ public class menu : MonoBehaviour
     public AudioClip sound;
     public AudioSource source;
 
-    private bool pause = false;
-
     void Start()
     {
         source = GetComponent<AudioSource>();
@@ -28,14 +26,13 @@ public class menu : MonoBehaviour
 
         if (inGame == true)
         {
-            if (Input.GetKeyDown(saveData.keybindings.keys[9]) && Time.timeScale == 1)
-            {
-                move = 1;
-                pause = false;
-            }
-            else if (Input.GetKeyDown(saveData.keybindings.keys[9]) && Time.timeScale == 0)
+            if (Input.GetKeyDown(saveData.keybindings.keys[9]) && move >= 1)
             {
                 move = 0;
+            }
+            else if (Input.GetKeyDown(saveData.keybindings.keys[9]))
+            {
+                move = 1;
             }
         }
 
@@ -43,12 +40,16 @@ public class menu : MonoBehaviour
         {
             if (pla.GetComponent<player>().basic.dead == true)
             {
-                pause = false;
                 move = 7;
             }
         }
 
         cursorCon();
+    }
+
+    void unPause()
+    {
+        saveData.pause = false;
     }
 
     //moves level
@@ -60,23 +61,12 @@ public class menu : MonoBehaviour
         source.pitch = 1;
         source.loop = false;
         source.Play();
-
-        if (pause == true)
-        {
-            Time.timeScale = 1;    
-        }
-    }
-
-    //pauses
-    public void unPause()
-    {
-        pause = true;
     }
 
     void cursorCon()
     {
         // Hides the cursor
-        if (saveData.UI == false && pause == true)
+        if (saveData.UI == false && saveData.pause == false)
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

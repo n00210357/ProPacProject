@@ -87,68 +87,71 @@ public class player : MonoBehaviour
 
     void Update()
     {
-        if (basic.dead == false)
+        if (saveData.pause == false)
         {
-            angle();
-
-            //activates lights
-            if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.activeInHierarchy == false)
+            if (basic.dead == false)
             {
-                basic.lights.SetActive(true);
-            }
-            else if (Input.GetKeyDown(saveData.keybindings.keys[8]))
-            {
-                basic.lights.SetActive(false);
-            }
+                angle();
 
-            //sets drive type to tank
-            if (basic.vehicalType == false)
-            {
-                tankSteer();
-                car.steeringWheel.parent = transform;
-                car.tread.position = transform.position;
-                car.tread.rotation = transform.rotation;
-
-                //enables car mode
-                if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+                //activates lights
+                if (Input.GetKeyDown(saveData.keybindings.keys[8]) && basic.lights.activeInHierarchy == false)
                 {
-                    basic.source.Stop();
-                    basic.vehicalType = true;
-                    tankRB.isKinematic = true;
-                    carRB.isKinematic = false;
-                    car.steeringWheel.localPosition = new Vector3(0, 0, 0);
-                    car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);
-                    tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0.09f, tank.treads.localPosition.z);
-                    foreach (Transform hud in car.hudCaps)
+                    basic.lights.SetActive(true);
+                }
+                else if (Input.GetKeyDown(saveData.keybindings.keys[8]))
+                {
+                    basic.lights.SetActive(false);
+                }
+
+                //sets drive type to tank
+                if (basic.vehicalType == false)
+                {
+                    tankSteer();
+                    car.steeringWheel.parent = transform;
+                    car.tread.position = transform.position;
+                    car.tread.rotation = transform.rotation;
+
+                    //enables car mode
+                    if (Input.GetKeyDown(saveData.keybindings.keys[6]))
                     {
-                        hud.localPosition = new Vector3(hud.localPosition.x, -0.2f, hud.localPosition.z);
+                        basic.source.Stop();
+                        basic.vehicalType = true;
+                        tankRB.isKinematic = true;
+                        carRB.isKinematic = false;
+                        car.steeringWheel.localPosition = new Vector3(0, 0, 0);
+                        car.steeringWheel.localRotation = new Quaternion(0, 0, 0, 0);
+                        tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0.09f, tank.treads.localPosition.z);
+                        foreach (Transform hud in car.hudCaps)
+                        {
+                            hud.localPosition = new Vector3(hud.localPosition.x, -0.2f, hud.localPosition.z);
+                        }
                     }
                 }
-            }
-            else
-            {
-                //sets driving type to car
-                carSteer();
-                car.steeringWheel.parent = null;
-                car.tread.position = transform.position;
-
-                //enables tank mode
-                if (Input.GetKeyDown(saveData.keybindings.keys[6]))
+                else
                 {
-                    basic.source.Stop();
-                    basic.vehicalType = false;
-                    tankRB.isKinematic = false;
-                    carRB.isKinematic = true;
-                    tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0, tank.treads.localPosition.z);
-                    foreach (Transform hud in car.hudCaps)
+                    //sets driving type to car
+                    carSteer();
+                    car.steeringWheel.parent = null;
+                    car.tread.position = transform.position;
+
+                    //enables tank mode
+                    if (Input.GetKeyDown(saveData.keybindings.keys[6]))
                     {
-                        hud.localPosition = new Vector3(hud.localPosition.x, 0, hud.localPosition.z);
+                        basic.source.Stop();
+                        basic.vehicalType = false;
+                        tankRB.isKinematic = false;
+                        carRB.isKinematic = true;
+                        tank.treads.localPosition = new Vector3(tank.treads.localPosition.x, 0, tank.treads.localPosition.z);
+                        foreach (Transform hud in car.hudCaps)
+                        {
+                            hud.localPosition = new Vector3(hud.localPosition.x, 0, hud.localPosition.z);
+                        }
                     }
                 }
-            }
 
-            //allows player to dash
-            dashes();
+                //allows player to dash
+                dashes();
+            }
         }
     }  
 

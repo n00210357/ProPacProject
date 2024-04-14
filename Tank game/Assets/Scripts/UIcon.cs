@@ -91,12 +91,14 @@ public class UIcon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthTrack();
-        primaryCannon();
-        secondaryGun();
-        dashTrack();
-        modeTrack();
-        
+        if (saveData.pause == false)
+        {
+            healthTrack();
+            primaryCannon();
+            secondaryGun();
+            dashTrack();
+            modeTrack();
+        }
     }
 
     //tracks health

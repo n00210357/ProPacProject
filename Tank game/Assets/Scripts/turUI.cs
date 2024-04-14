@@ -35,7 +35,10 @@ public class turUI : MonoBehaviour
     //looks at camera
     void Update()
     {
-        transform.LookAt(cam);
-        transform.RotateAround(transform.position, transform.up, 180f);
+        if (saveData.pause == false)
+        {
+            transform.LookAt(cam);
+            transform.RotateAround(transform.position, transform.up, 180f);
+        }
     }
 }

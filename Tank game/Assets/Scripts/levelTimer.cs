@@ -11,23 +11,26 @@ public class levelTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //detects level
-        if (level == null)
+        if (saveData.pause == false)
         {
-            level = GameObject.FindGameObjectWithTag("Map");
-            text.text = " ";
-        }
-
-        //starts time if it exists
-        if (level != null)
-        {
-            if (level.GetComponent<levelCon>().type == 0)
+            //detects level
+            if (level == null)
             {
+                level = GameObject.FindGameObjectWithTag("Map");
                 text.text = " ";
             }
-            else
+
+            //starts time if it exists
+            if (level != null)
             {
-                text.text = level.GetComponent<levelCon>().time.ToString();
+                if (level.GetComponent<levelCon>().type == 0)
+                {
+                    text.text = " ";
+                }
+                else
+                {
+                    text.text = level.GetComponent<levelCon>().time.ToString();
+                }
             }
         }
     }

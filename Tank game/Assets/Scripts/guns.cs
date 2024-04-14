@@ -77,11 +77,14 @@ public class guns : MonoBehaviour
 
     //runs every frame
     void Update()
-    {        
-        camCon();
-        gunAim();
-        mainTurret();
-        secTurret();
+    {
+        if (saveData.pause == false)
+        {
+            camCon();
+            gunAim();
+            mainTurret();
+            secTurret();
+        }
     }
 
     //runs after every update
@@ -298,7 +301,7 @@ public class guns : MonoBehaviour
             if (played == false)
             {
                 aim.source.clip = aim.sounds[1];
-                aim.source.volume = 0.1f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
+                aim.source.volume = 0.3f * saveData.keybindings.noise[0] * saveData.keybindings.noise[1];
                 aim.source.pitch = 3;
                 aim.source.loop = true;
                 aim.source.Play();

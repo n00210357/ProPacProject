@@ -18,6 +18,7 @@ public class saveData : MonoBehaviour
     public int diff;
     public static bool UI;
     public bool ui;
+    public static bool pause = false;
     public static Transform[] levels;
     public Transform[] maps;
     public GameObject[] player;
@@ -156,17 +157,22 @@ public class saveData : MonoBehaviour
     //controls settings
     void Update()
     {
+        if (SceneManager.GetActiveScene().name == "start")
+        {
+            pause = false;
+        }
+
         vcam.m_Lens.FieldOfView = keybindings.cam[0];
         RenderSettings.ambientIntensity = keybindings.cam[1];
         diff = difficulty;
 
-        if (Input.GetKeyDown(saveData.keybindings.keys[9]) && Time.timeScale == 1)
+        if (Input.GetKeyDown(saveData.keybindings.keys[9]) && pause == false)
         {
-            Time.timeScale = 0;
+            pause = true;
         }     
-        else if (Input.GetKeyDown(saveData.keybindings.keys[9]))
+        else if (Input.GetKeyDown(saveData.keybindings.keys[9]) && pause == true)
         {
-            Time.timeScale = 1;
+            pause = false;
         }   
 
         if (player[0] != null && start == false)

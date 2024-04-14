@@ -14,6 +14,7 @@ public class levelCon : MonoBehaviour
     public bool activate;
     public NavMeshSurface sur;
     public GameObject tunnel;
+    public GameObject player;
 
     public Transform[] connectionPoints;
 
@@ -36,6 +37,8 @@ public class levelCon : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         //selects level type
         if (type == 3)
         {
@@ -57,6 +60,11 @@ public class levelCon : MonoBehaviour
             {
                 spawnPoint[i] = patrolPoint[i];
             }
+        }
+
+        if (player.GetComponent<player>().basic.health < player.GetComponent<player>().basic.maxHealth)
+        {
+            player.GetComponent<player>().basic.health += 1;
         }
 
         spawnTunnels();
@@ -97,23 +105,26 @@ public class levelCon : MonoBehaviour
 
     void Update()
     {
-        //the effects of each level type
-        if (type == 1)
+        if (saveData.pause == false)
         {
-            for (int i = 0; i <= spawnedEnemies.Length - 1; i++)
+            //the effects of each level type
+            if (type == 1)
             {
-                if (spawnedEnemies[i] == null)
+                for (int i = 0; i <= spawnedEnemies.Length - 1; i++)
                 {
-                    int ra = Random.Range(0, 10000);
-                    
-                    if (ra == 0)
+                    if (spawnedEnemies[i] == null)
                     {
-                        int pos = Random.Range(0, spawnPoint.Length);
-                        int type = Random.Range(0, enemiesToSpawn.Length);
-                        spawnedEnemies[i] = Instantiate(enemiesToSpawn[type], spawnPoint[pos].position, spawnPoint[pos].rotation);
-                        spawnedEnemies[i].transform.parent = transform;
+                        int ra = Random.Range(0, 10000);
+
+                        if (ra == 0)
+                        {
+                            int pos = Random.Range(0, spawnPoint.Length);
+                            int type = Random.Range(0, enemiesToSpawn.Length);
+                            spawnedEnemies[i] = Instantiate(enemiesToSpawn[type], spawnPoint[pos].position, spawnPoint[pos].rotation);
+                            spawnedEnemies[i].transform.parent = transform;
+                        }
                     }
-                }                
+                }
             }
         }
         else if (type == 2)

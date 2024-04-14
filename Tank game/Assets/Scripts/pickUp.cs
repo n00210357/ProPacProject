@@ -16,91 +16,94 @@ public class pickUp : MonoBehaviour
     //select upgrades
     void Update()
     {
-        if (type == 0)
+        if (saveData.pause == false)
         {
-            if (saveData.upgrades.cannShots[saveData.upgrades.cannShots.Length - 1] == true)
+            if (type == 0)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.cannShots[saveData.upgrades.cannShots.Length - 1] == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "cannon shots + 1";
-        }
-        else if (type == 1)
-        {
-            if (saveData.upgrades.canReloadSpeed == true)
+                text.text = "cannon shots + 1";
+            }
+            else if (type == 1)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.canReloadSpeed == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "increase reload speed";
-        }
-        else if (type == 2)
-        {
-            if (saveData.upgrades.shotRadius == true)
+                text.text = "increase reload speed";
+            }
+            else if (type == 2)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.shotRadius == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "increase blast radius";
-        }
-        else if (type == 3)
-        {
-            if (saveData.upgrades.machSpeed[saveData.upgrades.machSpeed.Length - 1] == true)
+                text.text = "increase blast radius";
+            }
+            else if (type == 3)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.machSpeed[saveData.upgrades.machSpeed.Length - 1] == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "machine gun speed";
-        }
-        else if (type == 4)
-        {
-            if (saveData.upgrades.machAmmo[saveData.upgrades.machAmmo.Length - 1] == true)
+                text.text = "machine gun speed";
+            }
+            else if (type == 4)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.machAmmo[saveData.upgrades.machAmmo.Length - 1] == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "increase machine gun ammo";
-        }
-        else if (type == 5)
-        {
-            if (saveData.upgrades.machReloadSpeed == true)
+                text.text = "increase machine gun ammo";
+            }
+            else if (type == 5)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.machReloadSpeed == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "machine gun reload";
-        }
-        else if (type == 6)
-        {
-            if (saveData.upgrades.dashAmount[saveData.upgrades.dashAmount.Length - 1] == true)
+                text.text = "machine gun reload";
+            }
+            else if (type == 6)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.dashAmount[saveData.upgrades.dashAmount.Length - 1] == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "extra dash";
-        }
-        else if (type == 7)
-        {
-            if (saveData.upgrades.dashRechargeSpeed == true)
+                text.text = "extra dash";
+            }
+            else if (type == 7)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.dashRechargeSpeed == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "increase dash recharge";
-        }
-        else if (type == 8)
-        {
-            if (saveData.upgrades.health[saveData.upgrades.health.Length - 1] == true)
+                text.text = "increase dash recharge";
+            }
+            else if (type == 8)
             {
-                type = Random.Range(0, 10);
-            }
+                if (saveData.upgrades.health[saveData.upgrades.health.Length - 1] == true)
+                {
+                    type = Random.Range(0, 10);
+                }
 
-            text.text = "extra health";
-        }
-        else if (type == 9)
-        {
-            saveData.difficulty += 10;
-            Destroy(gameObject);
+                text.text = "extra health";
+            }
+            else if (type == 9)
+            {
+                saveData.difficulty += 10;
+                Destroy(gameObject);
+            }
         }
     }
 

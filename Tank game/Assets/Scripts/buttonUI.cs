@@ -83,6 +83,7 @@ public class buttonUI : MonoBehaviour
 
     public void Update()
     {
+
         if (buttonID >= 0)
         {
             //show keybind for the keybind settings
@@ -93,6 +94,7 @@ public class buttonUI : MonoBehaviour
                 promt.gameObject.SetActive(true);
             }
         }
+        
     }
 
     public void keyBinding()

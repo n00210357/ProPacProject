@@ -34,18 +34,21 @@ public class levelLoader : MonoBehaviour
     //selcet a random level
     void Update()
     {
-        if (nextType == 0 || nextType == 1 || nextType == 3)
+        if (saveData.pause == false)
         {
-            if (saveData.levels[nexLev].GetComponent<levelCon>().type != 3)
+            if (nextType == 0 || nextType == 1 || nextType == 3)
             {
-                nexLev = Random.Range(0, saveData.levels.Length);
+                if (saveData.levels[nexLev].GetComponent<levelCon>().type != 3)
+                {
+                    nexLev = Random.Range(0, saveData.levels.Length);
+                }
             }
-        }
-        else
-        {
-            if (saveData.levels[nexLev].GetComponent<levelCon>().type != 2)
+            else
             {
-                nexLev = Random.Range(0, saveData.levels.Length);
+                if (saveData.levels[nexLev].GetComponent<levelCon>().type != 2)
+                {
+                    nexLev = Random.Range(0, saveData.levels.Length);
+                }
             }
         }
     }

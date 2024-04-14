@@ -72,12 +72,15 @@ public class enemyGuns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        basic.detect = basic.enemy.GetComponent<enemy>().basic.detect;
-        targeter();
-
-        if (basic.gunType == 0)
+        if (saveData.pause == false)
         {
-            bulletBased();
+            basic.detect = basic.enemy.GetComponent<enemy>().basic.detect;
+            targeter();
+
+            if (basic.gunType == 0)
+            {
+                bulletBased();
+            }
         }
     }
 

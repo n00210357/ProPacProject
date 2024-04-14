@@ -35,30 +35,33 @@ public class doors : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (level != null)
+        if (saveData.pause == false)
         {
-            if (level.GetComponent<levelCon>().type == 1 && level.GetComponent<levelCon>().time >= 1 && tunnelExit == false)
+            if (level != null)
             {
-                doorType = 2;
+                if (level.GetComponent<levelCon>().type == 1 && level.GetComponent<levelCon>().time >= 1 && tunnelExit == false)
+                {
+                    doorType = 2;
+                }
+
+                if (level.GetComponent<levelCon>().type == 2)
+                {
+                    doorType = 0;
+                }
             }
 
-            if (level.GetComponent<levelCon>().type == 2)
+            if (doorType == 0)
             {
-                doorType = 0;
+                gate();
             }
-        }
-
-        if (doorType == 0)
-        {
-            gate();
-        }
-        else if (doorType == 1)
-        {
-            arena();
-        }
-        else if (doorType == 2)
-        {
-            survival();
+            else if (doorType == 1)
+            {
+                arena();
+            }
+            else if (doorType == 2)
+            {
+                survival();
+            }
         }
     }
 
