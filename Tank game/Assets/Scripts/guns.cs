@@ -73,6 +73,14 @@ public class guns : MonoBehaviour
         //draws a line at what the tank is aiming at
         main.aimAssets = main.canExit.GetComponent<LineRenderer>();
         main.aimAssets.positionCount = 2;
+
+        StartCoroutine(LateStart(0.1f));
+    }
+
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        sec.ammo = sec.maxAmmo;
     }
 
     //runs every frame
@@ -318,7 +326,8 @@ public class guns : MonoBehaviour
         {
             sec.ammo += sec.reloadSpeed;
         }
-        else if (sec.reloading == true)
+        
+        if (sec.reloading == true && sec.ammo >= sec.maxAmmo)
         {
             sec.ammo = sec.maxAmmo;
             sec.reloading = false;

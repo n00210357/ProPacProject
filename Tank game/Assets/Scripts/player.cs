@@ -83,6 +83,16 @@ public class player : MonoBehaviour
         baseRB = car.tread.GetComponent<Rigidbody>();
         basic.source = GetComponent<AudioSource>();
         basic.vehicalType = false;
+        StartCoroutine(LateStart(0.1f));
+    }
+
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        if (saveData.keybindings.health != 0 && saveData.upgrades.health[1] == true)
+        {
+            basic.health = saveData.keybindings.health;
+        }
     }
 
     void Update()

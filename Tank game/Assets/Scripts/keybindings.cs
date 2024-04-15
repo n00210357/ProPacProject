@@ -15,5 +15,7 @@ public class keybindings : ScriptableObject
 
      //0 = master 1 = player 2 = enemies 3 = music 4 = enviroment
     public float[] noise = {1, 1, 1, 1, 1};
+
+    public int health;
 }
 

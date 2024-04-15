@@ -3895,7 +3895,7 @@ MonoBehaviour:
   keybinds: {fileID: 11400000, guid: dcd4eeb4aefab674ab971e5ef009a1db, type: 2}
   upgrad: {fileID: 11400000, guid: 53e1e4b2e36436a4d832ae08f18df955, type: 2}
   diff: 20
-  UI: 0
+  ui: 0
   maps:
   - {fileID: 2312249474837410951, guid: 174e084a41690534eae573bd1a81e147, type: 3}
   - {fileID: 4378515145566863726, guid: b922368a09f42bd4b9c522d38c1bd506, type: 3}
