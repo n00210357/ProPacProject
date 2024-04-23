@@ -103,7 +103,7 @@ public class enemy : MonoBehaviour
         //sets up multiple guns
         for(int i = 0; i < basic.turConnect.Length; i++)
         { 
-            basic.gunType = UnityEngine.Random.Range(0, 1);
+            basic.gunType = UnityEngine.Random.Range(1, 2);
             basic.gun[i] = Instantiate(basic.level.GetComponent<levelCon>().enemyGuns[basic.gunType].transform, basic.turConnect[i].position, basic.turConnect[i].rotation);
             basic.gun[i].localScale = basic.gunSize;
             basic.gun[i].parent = basic.turConnect[i].parent;

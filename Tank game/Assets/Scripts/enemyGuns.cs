@@ -66,7 +66,10 @@ public class enemyGuns : MonoBehaviour
         basic.gunType = basic.enemy.GetComponent<enemy>().basic.gunType;
         basic.player = basic.enemy.GetComponent<enemy>().basic.player;
 
-        gun.line = gun.gunEnd.GetComponent<LineRenderer>();
+        if (basic.gunType == 0)
+        {
+            gun.line = gun.gunEnd.GetComponent<LineRenderer>();
+        }
     }
 
     // Update is called once per frame
@@ -96,7 +99,7 @@ public class enemyGuns : MonoBehaviour
         {
             transform.Rotate(0, gun.speed * Time.deltaTime, 0);
         }
-        else
+        else if (basic.gunType == 0)
         {
             //turns the turret to look at the player
             if (m_lastKnownPosition != basic.player.transform.position)
