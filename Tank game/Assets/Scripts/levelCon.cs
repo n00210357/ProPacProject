@@ -125,35 +125,35 @@ public class levelCon : MonoBehaviour
                         }
                     }
                 }
-            }
-        }
-        else if (type == 2)
-        {
-            if (time <= 0)
-            {
-                for (int i = 0; i <= spawnedEnemies.Length - 1; i++)
+            }        
+            else if (type == 2)
+            {            
+                if (time <= 0)
                 {
-                    if (spawnedEnemies[i] == null)
+                    for (int i = 0; i <= spawnedEnemies.Length - 1; i++)
                     {
-                        int ra = Random.Range(0, 10000);
-
-                        if (ra == 0)
+                        if (spawnedEnemies[i] == null)
                         {
-                            int pos = Random.Range(0, spawnPoint.Length);
-                            int type = Random.Range(0, enemiesToSpawn.Length);
-                            spawnedEnemies[i] = Instantiate(enemiesToSpawn[type], spawnPoint[pos].position, spawnPoint[pos].rotation);
-                            spawnedEnemies[i].transform.parent = transform;
+                            int ra = Random.Range(0, 100);
+
+                            if (ra <= saveData.difficulty)
+                            {
+                                int pos = Random.Range(0, spawnPoint.Length);
+                                int type = Random.Range(0, enemiesToSpawn.Length);
+                                spawnedEnemies[i] = Instantiate(enemiesToSpawn[type], spawnPoint[pos].position, spawnPoint[pos].rotation);
+                                spawnedEnemies[i].transform.parent = transform;
+                            }
                         }
                     }
+
+                    time = Random.Range(low, hig);                
                 }
-
-                time = Random.Range(low, hig);                
             }
-        }
 
-        if (time >= 0 && activate == true)
-        {
-            time -= 1 * Time.deltaTime;            
+            if (time >= 0 && activate == true)
+            {
+                time -= 1 * Time.deltaTime;            
+            }
         }
     }
 

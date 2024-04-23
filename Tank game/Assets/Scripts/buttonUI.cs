@@ -63,7 +63,7 @@ public class buttonUI : MonoBehaviour
                 promt.GetComponent<Slider>().value = saveData.keybindings.noise[4];
             }
         }
-        else if (buttonID <= -1)
+        else if (buttonID <= -8)
         {
             promt.GetComponent<Slider>().minValue = 0;
             promt.GetComponent<Slider>().maxValue = 25;

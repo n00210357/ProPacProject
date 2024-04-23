@@ -191,6 +191,11 @@ public class saveData : MonoBehaviour
                 player[0].GetComponent<UIcon>().enabled = true;
                 player[1].GetComponent<guns>().enabled = true;
             }
+
+            if (player[0].GetComponent<player>().basic.health != 1)
+            {
+                keybindings.health = player[0].GetComponent<player>().basic.health;
+            }
         }
         else
         {
