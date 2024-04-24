@@ -464,6 +464,7 @@ MonoBehaviour:
   activate: 0
   sur: {fileID: 4378515145566863724}
   tunnel: {fileID: 3784539608197314002, guid: 498dbbcf4a321ff4fa7a6e98a1a5bef9, type: 3}
+  player: {fileID: 0}
   connectionPoints:
   - {fileID: 4378515146068476849}
   - {fileID: 4378515146666068380}
@@ -505,6 +506,8 @@ MonoBehaviour:
   - {fileID: 8724439616008757151, guid: 18c6454f03b133b41b211e2c48f79350, type: 3}
   enemyGuns:
   - {fileID: 7819646738890955699, guid: 07976757811279d40aa45771786df7f7, type: 3}
+  - {fileID: 2110168348209671535, guid: df7cbb50910211249a9a63640b38ad72, type: 3}
+  - {fileID: 6681977809592638103, guid: 0e768103f1307b64bb25404762230016, type: 3}
   spawnedEnemies:
   - {fileID: 0}
 --- !u!114 &4378515145566863724

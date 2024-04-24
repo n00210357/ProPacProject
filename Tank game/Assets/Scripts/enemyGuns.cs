@@ -57,6 +57,7 @@ public class enemyGuns : MonoBehaviour
         public ParticleSystem explode;
     }
 
+    private float ran;
     private Vector3 m_lastKnownPosition = Vector3.zero;
     private Quaternion m_lookAtRotation;
 
@@ -84,6 +85,17 @@ public class enemyGuns : MonoBehaviour
             {
                 bulletBased();
             }
+
+            if (basic.gunType == 1 || basic.gunType == 2)
+            {               
+                if (ran <= 0)
+                {
+                    ran = UnityEngine.Random.Range(1, 15);
+                    shoot();
+                }
+
+                ran -= 1 * Time.deltaTime;
+            }
         }
     }
 
@@ -91,11 +103,11 @@ public class enemyGuns : MonoBehaviour
     void targeter()
     {
         //spins the turret when it has can't see the player
-        if (basic.detect == 0 && basic.spin == true)
+        if (basic.detect == 0 && basic.spin == true && basic.gunType != 2)
         {
             transform.Rotate(0, (gun.speed / 2) * Time.deltaTime, 0);
         }
-        else if (basic.detect == 1 && basic.spin == true)
+        else if (basic.detect == 1 && basic.spin == true && basic.gunType != 2)
         {
             transform.Rotate(0, gun.speed * Time.deltaTime, 0);
         }
