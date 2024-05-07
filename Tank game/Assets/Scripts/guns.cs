@@ -226,6 +226,11 @@ public class guns : MonoBehaviour
                     tar.GetComponent<enemy>().takeDamage(main.damage);
                 }
 
+                if (tar.GetComponent<bullet>())
+                {
+                    tar.GetComponent<bullet>().takeDamage(main.damage);
+                }
+
                 GameObject blasty = new GameObject();
                 blasty.transform.position = tar.transform.position;
                 blasty.AddComponent<AudioSource>();
@@ -293,6 +298,11 @@ public class guns : MonoBehaviour
                 if (hit.transform.GetComponent<enemy>())
                 {
                     hit.transform.GetComponent<enemy>().takeDamage(sec.fireSpeed);
+                }
+
+                if (hit.transform.GetComponent<bullet>())
+                {
+                    hit.transform.GetComponent<bullet>().takeDamage(sec.fireSpeed);
                 }
             }
 

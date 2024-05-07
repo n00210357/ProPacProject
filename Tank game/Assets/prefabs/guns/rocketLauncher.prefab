@@ -130,18 +130,18 @@ MonoBehaviour:
     - {r: 1, g: 1, b: 0, a: 0}
     - {r: 0, g: 1, b: 0, a: 0}
     gunEnd: {fileID: 9101328815871160639}
-    bullet: {fileID: 7155480981111625652, guid: c474487d626a2aa4190d82a8ae89fd50, type: 3}
+    bullet: {fileID: 2992923834327962702, guid: 85c44d31cfdac5843b8660bd3335d564, type: 3}
     line: {fileID: 0}
   pro:
-    speed: 1
-    range: 0.1
+    speed: 0.2
+    range: 2
     lifeTime: 15
     health: 1
     damage: 1
-    type: 0
+    type: 2
     killable: 1
     scale: {x: 1, y: 1, z: 1}
-    bullet: {fileID: 7155480981111625652, guid: c474487d626a2aa4190d82a8ae89fd50, type: 3}
+    bullet: {fileID: 2992923834327962702, guid: 85c44d31cfdac5843b8660bd3335d564, type: 3}
     bullLayer:
       serializedVersion: 2
       m_Bits: 128
@@ -150,7 +150,7 @@ MonoBehaviour:
       m_Bits: 64
     notBull:
       serializedVersion: 2
-      m_Bits: 119
+      m_Bits: 64
     explode: {fileID: 4402831619136587078, guid: 2170da423244b2c4bab48a321b937177, type: 3}
 --- !u!82 &4364895070049533422
 AudioSource:

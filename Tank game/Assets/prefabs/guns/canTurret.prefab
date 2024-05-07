@@ -199,7 +199,7 @@ MonoBehaviour:
     - {r: 0, g: 1, b: 0, a: 0}
     gunEnd: {fileID: 893258682002090682}
     bullet: {fileID: 7155480981111625652, guid: c474487d626a2aa4190d82a8ae89fd50, type: 3}
-    line: {fileID: 0}
+    line: {fileID: 7754581808701976808}
   pro:
     speed: 1
     range: 0.1

@@ -102,14 +102,14 @@ MonoBehaviour:
     line: {fileID: 0}
   pro:
     speed: 1
-    range: 0.1
+    range: 4
     lifeTime: 50
     health: 1
     damage: 1
     type: 1
     killable: 1
     scale: {x: 1, y: 1, z: 1}
-    bullet: {fileID: 3719901829510318869, guid: 9625cbb25e981ef47a07ca091b351286, type: 3}
+    bullet: {fileID: 1242498988038922499, guid: 5f7d7f40f72d5ca44b884f6265886986, type: 3}
     bullLayer:
       serializedVersion: 2
       m_Bits: 128
@@ -118,7 +118,7 @@ MonoBehaviour:
       m_Bits: 64
     notBull:
       serializedVersion: 2
-      m_Bits: 119
+      m_Bits: 64
     explode: {fileID: 4402831619136587078, guid: 2170da423244b2c4bab48a321b937177, type: 3}
 --- !u!82 &8586957375438985937
 AudioSource:

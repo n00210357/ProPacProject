@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf320d7d4d6417647839eac0b083454d, type: 3}
-  m_Name: keybindings
+  m_Name: Keybindings
   m_EditorClassIdentifier: 
   keys: 4301000044010000450100003001000020000000320100007100000072000000660000001b000000
   cam:

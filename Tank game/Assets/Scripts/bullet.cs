@@ -11,6 +11,7 @@ public class bullet : MonoBehaviour
     public int damage;
     public int type;
     public bool killable;
+    public GameObject player;
     public LayerMask bullLayer;
     public LayerMask tarLayer;
     public LayerMask notBull;
@@ -26,6 +27,7 @@ public class bullet : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -78,6 +80,11 @@ public class bullet : MonoBehaviour
 
             //moves the bullet
             rigid.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+
+            if (type == 2)
+            {
+                transform.LookAt(player.transform);
+            }
 
             //destroys the bullet after a set amount of time
             if (lifeTime <= 0)
